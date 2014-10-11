@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//Dtd html 4.0 transitional//EN">
+<html>
+<head>
+<title>飞燕鞋厂</title>
+<META http-equiv=Content-Type content="text/html; charset=utf-8">
+<style type=text/css> 
+{
+	FONT-SIZE: 12px
+}
+#menutree A {
+	COLOR: #566984; TEXT-DECORATION: none
+}
+</style>
+<META content="MShtml 6.00.2900.5848" name=GENERATOR></head>
+<body 
+style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACKGROUND-REPEAT: repeat-x">
+<table height="100%" cellSpacing=0 cellPadding=0 width="100%">
+	<tbody>
+	<tr>
+		<td width=10 height=29>
+			<img src="__IMG__bg_left_tl.gif"></td>
+		<td style="FONT-SIZE: 18px; BACKGROUND-IMAGE: url(__IMG__bg_left_tc.gif); COLOR: white; FONT-FAMILY: system">
+			<strong>飞燕</strong> 
+		</td>
+		<td width=10>
+			<img src="__IMG__bg_left_tr.gif"></td>
+	</tr>
+	<tr>
+		<td style="BACKGROUND-IMAGE: url(__IMG__bg_left_ls.gif)"></td>
+		<td id=menutree 
+			style="PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; HEIGHT: 100%; BACKGROUND-COLOR: white" vAlign=top></td>
+		<td style="BACKGROUND-IMAGE: url(__IMG__bg_left_rs.gif)"></td>
+	</tr>
+	<tr>
+		<td width=10>
+			<img src="__IMG__bg_left_bl.gif"></td>
+		<td style="BACKGROUND-IMAGE: url(__IMG__bg_left_bc.gif)"></td>
+		<td width=10>
+			<img src="__IMG__bg_left_br.gif"></td>
+	</tr>
+	</tbody>
+</table>
+<script src="__JS__TreeNode.js" type=text/javascript></script>
+<script src="__JS__Tree.js" type=text/javascript></script>
+<script type="text/javascript">
+		var img_path="__IMG__"; 
+		var tree = null;
+		var root = new TreeNode('系统菜单');
+
+	//管理员start
+		  var modelAA = new TreeNode('管理员');
+		  var A11 = new TreeNode('我的信息', '__MODULE__/Admininfo/index', 'tree_node.gif', null, 'tree_node.gif', null);
+		  modelAA.add(A11);
+		  var A22=new TreeNode('修改信息','__MODULE__/Admininfo/updateBaseInfoUi','tree_node.gif',null,'tree_node.gif',null);
+		  modelAA.add(A22);
+		  var A33=new TreeNode('修改密码','__MODULE__/Admininfo/passwordUi','tree_node.gif',null,'tree_node.gif',null);
+		  modelAA.add(A33);
+		   var A44=new TreeNode('管理员组','__MODULE__/Admininfo/adminList','tree_node.gif',null,'tree_node.gif',null);
+		  modelAA.add(A44);
+		  var A55=new TreeNode('添加管理员','__MODULE__/Admininfo/getMemberKindByAdd','tree_node.gif',null,'tree_node.gif',null);
+		  modelAA.add(A55);
+
+		   var A66=new TreeNode('管理员类型','__MODULE__/Admininfo/addoneadminkindUi','tree_node.gif',null,'tree_node.gif',null);
+		  modelAA.add(A66);
+
+		  root.add(modelAA);
+          //管理员end
+		//员工管理start
+
+		var modelA = new TreeNode('员工管理');
+
+			var A1 = new TreeNode('员工列表', '__MODULE__/User/userlist', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelA.add(A1);
+
+			var A2=new TreeNode('员工添加','__MODULE__/User/usertype','tree_node.gif',null,'tree_node.gif',null);
+			modelA.add(A2);
+
+		root.add(modelA);
+
+		//员工管理end
+
+
+
+
+
+		//仓库管理start
+
+		var modelB=new TreeNode('仓库管理');
+
+			var B1=new TreeNode('仓库列表', '__MODULE__/Storehouse/goodlist', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelB.add(B1);
+
+			var B2=new TreeNode('添加库存', '__MODULE__/Storehouse/addGoodDetailUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelB.add(B2);
+
+			var B2=new TreeNode('添加货物类型', '__MODULE__/Storehouse/addgoodUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelB.add(B2);
+
+		root.add(modelB);
+
+
+
+
+
+		//仓库管理end
+
+
+
+
+		//样品管理start 
+		var modelC = new TreeNode('样品管理');
+			var C1 = new TreeNode('样品列表', '__MODULE__/Sample/index', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelC.add(C1);
+
+			var C2 = new TreeNode('添加样品', '__MODULE__/Sample/addSampleUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelC.add(C2);
+
+			var C3 = new TreeNode('下架样品', '__MODULE__/Sample/soldoutList', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelC.add(C3);
+
+		root.add(modelC);
+
+		//样品管理end
+
+
+
+		//订单管理start
+		var modelD = new TreeNode('订单管理');
+			var D1 = new TreeNode('未完成订单', '__MODULE__/Orders/index', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelD.add(D1);
+
+			var D2 = new TreeNode('添加订单', '__MODULE__/Orders/addOrdersUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelD.add(D2);
+
+			var D3 = new TreeNode('已完成订单', '__MODULE__/Orders/doneOrders', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelD.add(D3);
+
+			var D4 = new TreeNode('生产跟踪订单', '__MODULE__/Orders/followOrders', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelD.add(D4);
+
+		root.add(modelD);
+
+
+		//订单管理end
+
+
+
+		//客户管理start
+
+		var modelE = new TreeNode('客户管理');
+              var E1 = new TreeNode('客户列表', '__MODULE__/Customer/supplierlistUi', 'tree_node.gif', null, 'tree_node.gif', null);
+              modelE.add(E1);
+
+              var E2 = new TreeNode('增加客户', '__MODULE__/Customer/addSupplierUi', 'tree_node.gif', null, 'tree_node.gif', null);
+              modelE.add(E2);
+
+              
+              root.add(modelE);
+		//客户管理end
+
+
+
+		//生产管理start
+
+		var modelG = new TreeNode('生产管理');
+
+			var G1 = new TreeNode('生产单子', '__MODULE__/Produce/index', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelG.add(G1);
+
+
+			var G2 = new TreeNode('待发货单子', '__MODULE__/Orders/doneOrders', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelG.add(G2);
+
+			var G3 = new TreeNode('外包记录', '__MODULE__/Produce/getEpibolyList/type/all', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelG.add(G3);
+
+			var G4 = new TreeNode('未收回外包', '__MODULE__/Produce/getEpibolyList/type/no', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelG.add(G4);
+
+			var G5 = new TreeNode('收回外包', '__MODULE__/Produce/getEpibolyList/type/yes', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelG.add(G5);
+
+			var G6 = new TreeNode('新加外包', '__MODULE__/Produce/addEpibolyUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelG.add(G6);
+
+		root.add(modelG);
+
+
+
+		//生产管理end 
+
+
+		//财务管理start
+
+
+		//财务管理end
+
+
+
+
+
+		//生产管理end 
+
+
+		//财务管理start
+
+
+		//财务管理end
+
+
+
+		Tree = new Tree(root);
+		Tree.show('menutree');
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">员工管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">员工种类</a>
+				</li>
+			</ul>
+			<div class="pull-right">
+				<form class="navbar-form navbar-left" role="search" method="post" action="__CONTROLLER__/searchTypeUser/">
+					<div class="form-group">
+						<input type="text" class="form-control" value="search_str" placeholder="请输入要查找的"></div>
+					<select class="form-control" name="search_type">
+						<option value="m_id">员工编号</option>
+						<option value="m_name">员工姓名</option>
+						<option value="m_idcard">员工身份证</option>
+						<option value="m_phone">员工电话号码</option>
+					</select>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<div class="row ">
+		<table class="table table-bordered table-hover table-margin">
+			<thead>
+				<tr>
+					<th>工种编号</th>
+					<th>工种名称</th>
+					<th>工种单价</th>
+					<th colspan="2">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%foreach name="list" item="lists"%>
+			<tr>
+				<td><{$lists.mk_id}></td>
+				<td><{$lists.mk_name}></td>
+				<td><{$lists.mk_price}></td>
+				<td><a href="__MODULE__/User/deleteuserkind?uid=<{$lists.mk_id}>">删除</a></td>
+				<td><a href="__MODULE__/User/modifyuserkind?uid=<{$lists.mk_id}>">修过工价</a></td>
+			</tr>
+			<%/foreach%>
+			</tbody>
+		</table>
+
+	</div>
+	<div class="hrdivblack"></div>
+	<div class="divwhite"></div>
+	<div class="row">
+		<form action="__MODULE__/User/adduserkind" method="post" accept-charset="utf-8">
+			<div class="form-group col-md-6 col-md-offset-3">
+				<label for="albumtype" class="col-sm-3 control-label">工种名称:</label>
+				<div class="col-md-8">
+					<p class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-hand-right"></span>
+					</span>
+					<input type="text" class="form-control" name="mk_name" id="mk_name" placeholder="工种名称">
+					<label id="accounterror" class="input-group-addon small color-white">*</label>
+					</p>
+				</div>
+				<label for="albumtype" class="col-sm-3 control-label">工种单价:</label>
+				<div class="col-md-8">
+					<p class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-hand-right"></span>
+					</span>
+					<input type="text" class="form-control" name="mk_price" id="mk_price" placeholder="工种单价">
+					<label id="passworderror" class="input-group-addon small color-white">*</label>
+					</p>
+				</div>
+			</div>
+
+
+
+			<div>
+				<button type="submit" class="btn btn-primary">添加种类</button>
+				<div class="pull-right">
+					<a href="__MODULE__/User/adduserdetail" class="btn btn-primary">添加员工信息</a>
+				</div>
+			</div>
+
+		</form>
+
+	</div>
+
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		$("#mk_name").blur(function(){
+			var mkname_value=$("#mk_name").val();
+			if(mkname_value.length>0){
+			var post_data={mkname:mkname_value};
+			ajaxhelper.post(post_data,"__MODULE__/User/checkUserKind",check_user_kind);
+			}else{
+			jshelper.show_message("工种类型名称不能为空!!");
+			return;
+			}
+			})
+		})
+function check_user_kind(data){
+	var flag=data.flag;
+	if(flag==true){
+		if(!data.message){
+			$("#accounterror").text(" ").html("<span class='glyphicon glyphicon-ok'></span>");
+			return ;
+		}else{
+			$("#accounterror").text(data.message);
+		}
+	}else{
+		$("#accounterror").text(data.message);
+	}
+}
+</script>
+</body>
+</html>

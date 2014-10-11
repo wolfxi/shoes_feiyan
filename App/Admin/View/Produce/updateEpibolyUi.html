@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">生产管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">修改外包信息</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<!--==========================================样品基本属性start===============================================-->
+	<form name="addform" method="post" action="__CONTROLLER__/updateEpiboly/">
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">订单编号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$epiboly.o_id}>" readonly="readonly"  name="o_id" id="o_id" type="text"  /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外包商品型号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="e_models" value="<{$epiboly.e_models}>" readonly="readonly" type="text"  /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外包工艺名：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="e_producename" value="<{$epiboly.e_producename}>"  type="text"  /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外包商：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$epiboly.e_contractor}>"   name="e_contractor" type="text"  /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外包数量：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$epiboly.e_number}>" readonly="readonly"   name="e_number" type="text" p /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">发包人：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$epiboly.e_signer}>"   name="e_signer" type="text" p /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">是否收回：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+								<select name="e_iscallback" class="form-control">
+									<%if condition="$epiboly.e_iscallback eq 0"%>
+									<option value="0" selected="selected">未收回</option>
+									<option value="1" >已收回</option>
+									<%else/%>
+									<option value="0" >未收回</option>
+									<option value="1" selected="selected">已收回</option>
+									<%/if%>
+								</select>
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+
+
+		<div class="hrdivblack"></div>
+		<div class="row">
+			<div class="col-md-2 col-md-offset-10">
+				<input type="hidden" name="e_id" value="<{$epiboly.e_id}>" />
+				<button type="submit" class="btn btn-primary" >修改</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+</body>
+</html>

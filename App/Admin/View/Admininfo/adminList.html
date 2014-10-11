@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+   <link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+  <link rel="stylesheet" href="__CSS__manager.css"/>
+  <script type="text/javascript" src="__JS__html5.js" ></script>
+
+</head>
+<body>
+
+  <div class="container content-main">
+    <!--导航线 start-->
+    <div class="row">
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li >
+            <a href="#">管理员</a>
+          </li>
+          <li >
+            <a href="#">/</a>
+          </li>
+          <li>
+            <a href="#">管理员组</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="hrdivblack"></div>
+    <!--导航线 end-->
+    <div class="row ">
+    <!--form开始-->
+    <form name="form" method="post" id="form" action=" ">
+      <table class="table table-bordered table-hover table-margin" id="table1">
+        <thead>
+          <tr>
+            <th width="10px"></th>
+            <th>账号</th>
+            <th>姓名</th>
+            <th>电话</th>
+            <th>身份证号</th>
+            <th>联系地址</th>
+            <th>备注</th>
+            <th colspan="2">操作</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+         <%volist name="list" id="vo" key="k"%>
+                  <tr>
+                    <td><input type="checkbox" name="checkAll[]" id="checkAll[]" value="<?=$vo['m_id']?>" onclick="setSelectAll();"/></td>
+                    <td ><?=$vo['m_account']?></td>
+                    <td><?=$vo['m_name']?></td>
+                    <td><?=$vo['m_phone']?></td>
+                    <td><?=$vo['m_idcard']?></td>
+                    <td><?=$vo['m_address']?></td>
+                    <td><?=$vo['m_remark']?></td>
+                    <td>
+                     <a href="__MODULE__/User/userdelete?uid=<?=$vo['m_id']?>">删除管理员</a>
+                    </td>
+                    <td><a href="__MODULE__/Admininfo/updateAdminInfoUi?m_id=<?=$vo['m_id']?>">修改信息</a></td>
+                  </tr>
+         <%/volist%>
+        </tbody>
+      </table>
+      <!--form结束-->
+    </form>
+    </div>
+  </div>
+
+
+  <script type="text/javascript" src="<{$Think.const.JS_URL}>jquery-1.11.0.js"></script>
+  <script type="text/javascript" src="<{$Think.const.JS_URL}>bootstrap.js" ></script>
+</body>
+
+<script language="javascript">
+
+//选中全选按钮，下面的checkbox全部选中
+var selAll = document.getElementById("selAll");
+function selectAll()
+{
+  var obj = document.getElementsByName("checkAll[]");
+  if(document.getElementById("selAll").checked == false)
+  {
+  for(var i=0; i<obj.length; i++)
+  {
+    obj[i].checked=false;
+  }
+  }else
+  {
+  for(var i=0; i<obj.length; i++)
+  {  
+    obj[i].checked=true;
+  }
+  }
+ 
+}
+
+//当选中所有的时候，全选按钮会勾上
+function setSelectAll()
+{
+  var obj=document.getElementsByName("checkAll[]");
+  var count = obj.length;
+  var selectCount = 0;
+
+for(var i = 0; i < count; i++)
+{
+if(obj[i].checked == true)
+{
+  selectCount++;
+}
+}
+if(count == selectCount)
+{
+  document.all.selAll.checked = true;
+}
+else
+{
+  document.all.selAll.checked = false;
+}
+}
+</script>
+
+<script type="text/javascript">
+     function delMuti(){
+    if(window.confirm("确认要批量删除吗?")){
+    document.form.submit(); //表单提交的一种js方法 ,其中form是表单的
+      }
+    }
+  </script>
+</html>

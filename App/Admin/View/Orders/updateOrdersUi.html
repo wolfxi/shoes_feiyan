@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">订单管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">修改订单信息</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<!--==========================================样品基本属性start===============================================-->
+	<form name="ordersform" action="__CONTROLLER__/updateOrders" method="post" >
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品型号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.s_models}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">订单客户：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_customer}>" name="customer" type="text" placeholder="请输入订单客户" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">订单装数：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="bunchnum" value="<{$orders.o_bunchnum}>" type="text" placeholder="请输入订单装数" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">订单双数：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_number}>" name="number" type="text" placeholder="请输入订单双数" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">订单单价：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_price}>" name="price" type="text" placeholder="请输入订单单价" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">订单备注：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_remark}>" name="remark" type="text" placeholder="请输入订单备注" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+
+		<!--==========================================样品基本属性end===============================================-->
+
+
+		<div class="hrdivblack"></div>
+
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">鞋样大概:</span></h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋子名称：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="shoes_name" value="<{$orders.o_attributes.shoes.name}>" name="shoes[name]" type="text" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋子材料:</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.shoes.material}>" id="shoes_material" name="shoes[material]" type="text" placeholder="请输入鞋底材料" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋子模型：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.shoes.mould}>"id="shoes_mould" name="shoes[mould]" type="text" placeholder="请输入鞋底重量" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋子颜色</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.shoes.color}>"id="shoes_color" name="shoes[color]" type="text" placeholder="请输入鞋底颜色" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+
+		<div class="hrdivblack"></div>
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">码段:输入格式：37，42</span>
+				</h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">码段范围：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control"  type="text" id="sizes" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+		</div>
+
+		<div class="row " id="sizesdiv">
+			<%foreach name="orders.o_size" item="one" key="one_key"%>
+			<div class="col-md-6">
+				<div class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-4 control-label"><{$one_key}>码：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">：</span>
+							<input class="form-control" name="sizes[<{$one_key}>]" value="<{$one}>" type="text">
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<%/foreach%>
+		</div>
+
+		<div class="hrdivblack"></div>
+
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">鞋底:</span></h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋底型号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.sole.models}>" id="sole_models" name="sole[models]" type="text" placeholder="请输入鞋底型号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋底材料</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.sole.material}>" id="sole_material" name="sole[material]" type="text" placeholder="请输入鞋底材料" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋底重量：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.sole.wight}>" id="sole_wight" name="sole[wight]" type="text" placeholder="请输入鞋底重量" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋底颜色</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="sole_color" value="<{$orders.o_attributes.sole.color}>" name="sole[color]" type="text" placeholder="请输入鞋底颜色" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋底厂家：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.sole.firm}>" id="sole_firm" name="sole[firm]" type="text" placeholder="请输入鞋底厂家" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+		</div>
+		<div class="hrdivblack"></div>
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">鞋包:</span></h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋包货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.shoesbag.models}>" id="shoesbag_models" name="shoesbag[models]" type="text" placeholder="请输入鞋包材料" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋包材料：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.shoesbag.material}>" id="shoesbag_material" name="shoesbag[material]" type="text" placeholder="请输入鞋包材料" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋包颜色：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.shoesbag.color}>" id="shoesbag_color" name="shoesbag[color]" type="text" placeholder="请输入鞋包颜色" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="hrdivblack"></div>
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">中底:</span></h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">中底货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="insole_models" value="<{$orders.o_attributes.insole.models}>" name="insole[models]" type="text" placeholder="请输入中底货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">中底厂家</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="insole_firm" value="<{$orders.o_attributes.insole.firm}>" name="insole[firm]" type="text" placeholder="请输入中底厂家" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">中底颜色：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.insole.color}>" id="insole_color" name="insole[color]" type="text" placeholder="请输入中底颜色" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+		</div>
+		<div class="hrdivblack"></div>
+
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">内盒:</span></h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">内盒货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="innerbox_models" value="<{$orders.o_attributes.innerbox.models}>" name="innerbox[models]" type="text" placeholder="请输入内盒货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">内盒供应商：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="innerbox_firm" value="<{$orders.o_attributes.innerbox.firm}>" name="innerbox[firm]" type="text" placeholder="请输入内盒供应商" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">内盒规格：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="innerbox_format" value="<{$orders.o_attributes.innerbox.format}>" name="innerbox[format]" type="text" placeholder="请输入内盒规格" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">内盒货名：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="innerbox_name" name="innerbox[name]" value="<{$orders.o_attributes.innerbox.name}>" type="text" placeholder="请输入内盒货名" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+
+		</div>
+		<div class="hrdivblack"></div>
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">外箱:</span></h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外箱货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="outerbox_models" value="<{$orders.o_attributes.outerbox.models}>" name="outerbox[models]" type="text" placeholder="请输入外箱货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外箱供应商：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="outerbox_firm" value="<{$orders.o_attributes.outerbox.firm}>" name="outerbox[firm]" type="text" placeholder="请输入外箱供应商" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外箱规格：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="outerbox_format" value="<{$orders.o_attributes.outerbox.format}>" name="outerbox[format]" type="text" placeholder="请输入外箱规格" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外箱货名：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="outerbox_name" value="<{$orders.o_attributes.outerbox.name}>" name="outerbox[name]" type="text" placeholder="请输入外箱货名" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">外箱商标：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="outerbox_logo" name="outerbox[logo]" value="<{$orders.o_attributes.outerbox.logo}>" type="text" placeholder="请输入外箱商标" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+		</div>
+		<div class="hrdivblack"></div>
+		<div class="row" >
+			<div class="col-md-3 col-md-offset-1">
+				<h3>	<span class="label label-primary">其他小件:</span></h3>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">皮塑货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="other_pisu" value="<{$orders.o_attributes.other.pisu}>" name="other[pisu]" type="text" placeholder="请输入皮塑货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">扣件货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="other_koujian" value="<{$orders.o_attributes.other.koujian}>" name="other[koujian]" type="text" placeholder="请输入扣件货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋眼货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.other.xieyan}>" id="other_xieyan" name="other[xieyan]" type="text" placeholder="请输入鞋眼货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">帽钉货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="other_maoding" name="other[maoding]" value="<{$orders.o_attributes.other.maoding}>" type="text" placeholder="请输入帽钉货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">松紧条货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.other.songjintiao}>" id="other_songjintiao" name="other[songjintiao]" type="text" placeholder="请输入松紧条" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">拉链货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="other_lalian" name="other[lalian]" value="<{$orders.o_attributes.other.lalian}>" type="text" placeholder="请输入拉链货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">双面胶货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.other.shuangmianjiao}>" id="other_shuangmianjiao" name="other[shuangmianjiao]" type="text" placeholder="请输入双面胶货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">鞋带货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.other.xiedai}>" id="other_xiedai" name="other[xiedai]" type="text" placeholder="请输入鞋带货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">处理剂货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.other.chuliji}>" id="other_chuliji" name="other[chuliji]" type="text" placeholder="请输入处理剂货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">内里货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" id="other_neili" value="<{$orders.o_attributes.other.neili}>" name="other[neili]" type="text" placeholder="请输入内里货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+		</div>
+		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">垫脚货号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" value="<{$orders.o_attributes.other.dianjiao}>" id="other_dianjiao" name="other[dianjiao]" type="text" placeholder="请输入垫脚货号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+		</div>
+		<div class="hrdivblack"></div>
+		<div class="row" >
+			<div class="col-md-6 col-md-offset-1">
+				<h3>    <span class="label label-primary">样品模型:</span>
+				</h3>
+			</div>
+
+		</div>
+
+		<div class="row">
+			<div class="comtainer col-md-offset-1" id="imgview">
+				<%foreach name="orders.image" item="one"%>
+				<div class="col-md-4">
+					<img src="__ROOT__<{$upload_img}><{$one.i_url}>" style="width:250px;height:180px;">
+				</div>
+				<%/foreach%>
+			</div>
+		</div>
+
+
+		<div class="hrdivblack"></div>
+		<div class="row">
+			<div class="col-md-2 col-md-offset-9" id="submitdiv">
+				<input name="o_id" value="<{$orders.o_id}>" type="hidden"/>
+				<button class="btn btn-primary col-md-10" type="submit" > 修改订单</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+
+$(function(){
+
+		$("#models").blur(function(){
+			var models_value=$("#models").val();
+			if(models_value.length>0){
+			var post_data={models: models_value};
+			ajaxhelper.post(post_data,"__CONTROLLER__/getSampleInfo",call_get_sample);
+			}else{
+			jshelper.show_message("样品型号不能为空！！！");
+			return ;
+			}
+			});		
+
+		$("#sizes").blur(function(){
+
+			var yardag=$("#sizes").val(); 
+			if(yardag.length>0){
+			$("#sizesdiv").empty();
+			var minyarbag = yardag.substring(0,2);
+			var maxyarbag = yardag.substring(3,5);
+			for(i=minyarbag;i<=maxyarbag;i++){
+			var sizes_element="<div class='col-md-6'><div class='form-horizontal'><div class='form-group'><label  class='col-sm-4 control-label'>"+i+"码：</label><div class='col-md-8'><p class='input-group'><span class='input-group-addon'>：</span><input class='form-control' name='sizes["+i+"]'  type='text' /> </p></div></div></div></div>";
+			$("#sizesdiv").append(sizes_element);	
+			}	
+			}else{
+			jshelper.show_message("请输入正确格式的码段范围！！！");
+			}
+			});
+});
+
+//获取样品型号信息回调函数
+function call_get_sample(data){
+	var flag=data.flag;
+	if(flag==true){
+		//如果成功获取信息	
+		var info=data.message;
+		//console.log(info);
+		//添加缺少的信息
+		$("#submitdiv").append("<input name='s_id' type='hidden' value='"+info.s_id+"' >");
+		for(i=0;i<info.image.length;i++){
+			var imgdiv="<div class='col-md-4'><img src='__ROOT__<{$upload_img}>"+info.image[0].i_url+"' style='width:250px;height:180px;'/></div>";
+			$("#imgview").append(imgdiv);
+		}
+		//填充数据
+		$("#shoes_name").val(info.s_name);
+		$("#shoes_material").val(info.s_material);
+		$("#shoes_mould").val(info.s_mould);
+		$("#shoes_color").val(info.s_color);
+		$("#sole_models").val(info.s_attribute.sole.models);
+		$("#sole_material").val(info.s_attribute.sole.material);
+		$("#sole_wight").val(info.s_attribute.sole.wight);
+		$("#sole_color").val(info.s_attribute.sole.color);
+		$("#sole_firm").val(info.s_attribute.sole.firm);
+		$("#shoesbag_material").val(info.s_attribute.shoesbag.material);
+		$("#shoesbag_color").val(info.s_attribute.shoesbag.color);
+		$("#insole_models").val(info.s_attribute.insole.models);
+		$("#insole_firm").val(info.s_attribute.insole.firm);
+		$("#insole_color").val(info.s_attribute.insole.color);
+		$("#innerbox_models").val(info.s_attribute.innerbox.models);
+		$("#innerbox_firm").val(info.s_attribute.innerbox.firm);
+		$("#innerbox_format").val(info.s_attribute.innerbox.format);
+		$("#innerbox_name").val(info.s_attribute.innerbox.name);
+		$("#outerbox_format").val(info.s_attribute.outerbox.format);
+		$("#outerbox_firm").val(info.s_attribute.outerbox.firm);
+		$("#outerbox_models").val(info.s_attribute.outerbox.models);
+		$("#outerbox_name").val(info.s_attribute.outerbox.name);
+		$("#outerbox_logo").val(info.s_attribute.outerbox.logo);
+		$("#other_chuliji").val(info.s_attribute.other.chuliji);
+		$("#other_dianjiao").val(info.s_attribute.other.dianjiao);
+		$("#other_koujian").val(info.s_attribute.other.koujian);
+		$("#other_lalian").val(info.s_attribute.other.lalian);
+		$("#other_maoding").val(info.s_attribute.other.maoding);
+		$("#other_neili").val(info.s_attribute.other.neili);
+		$("#other_pisu").val(info.s_attribute.other.pisu);
+		$("#other_shuangmianjiao").val(info.s_attribute.other.shuangmianjiao);
+		$("#other_songjintiao").val(info.s_attribute.other.songjintiao);
+		$("#other_xiedai").val(info.s_attribute.other.xiedai);
+		$("#other_xieyan").val(info.s_attribute.other.xieyan);
+	}else{
+		jshelper.show_message(data.message);
+		$("#models").focus();
+	}
+}
+</script>
+</body>
+</html>

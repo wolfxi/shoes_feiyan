@@ -1,0 +1,183 @@
+ body{
+        background-image: url(../img/background_img1.png);
+      }
+
+
+      .blog-masthead {
+          background-color: #DD4814;
+          height: 52px;
+      }
+
+      .nav > li > a{
+        color: #fff;
+        font-size: 16px;
+      }
+      .navbar-brand{
+        color: #FFFFFF;
+        font-size:30px ;
+      }
+
+      .item > img {
+        max-height:410px;
+        min-height: 410px;
+        margin: 0px auto;
+      }
+      .fenge{
+        min-height: 20px;
+      }
+
+      .hrdivblack{
+        min-height: 2px;
+        background-color: #333333; 
+      }
+
+      .divwhite{
+        min-height: 10px;
+        margin: 5px auto;
+      }
+      .btn-warning{
+        background-color: #DD4814;
+      }
+
+      .link-img{
+        max-height: 35px;
+        min-height: 35px;
+        max-width: 100px;
+        min-width: 100px;
+      }
+      .footer{
+        min-height: 300px;
+        background-image: url(../img/footerbg.gif);
+        margin-top: 30px;
+      }
+
+      .footer-link{
+        max-width: 330px;
+        margin: 50px auto;
+        color: #FFFFFF;
+        font-size: 16px;
+        font-family: 华文新魏 |arial | georgia | verdana | helvetica |
+      }
+      .footer-h{
+        margin-top:60px;
+        margin-left: 350px;
+      }
+
+      .icon-block{
+        background-color:#272822 ;
+      }
+      /*
+      .sidebar-nav{
+        margin-top: 190px;
+      }
+       */
+      
+
+      /*导航线 样式*/
+      .nav-line-color{
+        background-color: #DD4814;
+        color: #1F1F1C;
+        font-family: 华文行楷;
+      }
+
+      .-font-family{
+        font-family: 华文行楷;
+      }
+
+      .-font-color-white{
+        color:#FFFFFF;
+      }
+
+      .img-center{
+        max-height:330px;
+        min-height: 330px;
+        max-width: 950px;
+        min-width: 950px;
+        margin: 0px auto;
+      }
+
+      .color-white{
+        background-color: #FFFFFF;
+      }
+
+      .border-circle{
+        border-radius:4px;
+      }
+
+      .submite-btn{
+        background-color: #B83A10;
+      }
+
+      .index-img{
+        max-height:263px;
+        max-width:350px;
+        min-height:263px ;
+        min-width:350px;
+      }
+
+
+      .case-img{
+        max-height:181px;
+        max-width:429px;
+        min-height:181px ;
+        min-width:429px;
+      }
+
+
+
+
+
+
+
+
+
+      .nav > li > a:hover,
+      .nav > li > a:focus {
+        font-family: 华文行楷;
+        font-size: 24px;
+        text-decoration: none;
+        background-color: #DD4814;
+      }
+
+      .navbar-nav > .active > a{
+        font-family: 华文行楷;
+        font-size: 24px;
+        background-color: #B83A10;
+      }
+
+      .nav .open > a,
+      .nav .open > a:hover,
+      .nav .open > a:focus {
+        font-family: 华文行楷;
+        font-size: 24px;
+        background-color: #DD4814;
+        border-color: #428bca;
+      }
+
+
+      .dropdown-menu > li > a:hover,
+      .dropdown-menu > li > a:focus {
+         font-family: 华文行楷;
+        font-size: 24px;
+        color: #262626;
+        text-decoration: none;
+        background-color: #FFFFFF;
+      }
+
+      a.list-group-item:hover,
+      a.list-group-item:focus {
+        font-family: 华文行楷;
+        font-size: 24px;
+        text-decoration: none;
+        background-color: #428BCA;
+      }
+
+      a.list-group-item.active {
+        font-family: 华文行楷;
+        font-size: 24px;
+        z-index: 2;
+        color: #fff;
+        background-color: #428bca;
+        border-color: #428bca;
+      }
+     

@@ -1,0 +1,10 @@
+Merge branch 'master' of https://github.com/wolfxi/shoes
+
+# By wolfxi
+# Via wolfxi
+* 'master' of https://github.com/wolfxi/shoes:
+  订单模块 #0
+  样品模块   #0
+
+Conflicts:
+	App/Admin/View/Admininfo/left.html
