@@ -376,7 +376,7 @@ class ProduceApi extends Api{
 
 	/**
 	 * 获取外包记录列表
-		</form>
+	 </form>
 	 * @param $data  搜索条件
 	 * return   success   array 二维数组
 	 * 			false     false
@@ -445,7 +445,7 @@ class ProduceApi extends Api{
 
 		$models=M();
 		$models->startTrans();
-		
+
 		//添加外包记录
 		$epiboly['fp_id']=$fp_result['fp_id'];
 		$flag1=$models->table("epiboly")->data($epiboly)->add();
@@ -464,10 +464,10 @@ class ProduceApi extends Api{
 		$storerecord['sr_time']=date("Y-m-d :H:i:s");
 		$flag2=$models->table("storerecord")->data($storerecord)->add();
 
-		
+
 		//减去库存量
 		$flag3=$models->table("goodslist")->where("gl_id = %d",intval($goods['gl_id']))->setDec("gl_number",$data['e_number']);
-		
+
 		if($flag3 && $flag2 && $flag1){
 			$models->commit();
 			return $flag1;
@@ -475,9 +475,127 @@ class ProduceApi extends Api{
 			$models->rollback();
 			return false;
 		}
-		
+
 	}
 
+
+
+
+	/**
+	 * 生成跟踪单excel文件
+	 * @param $status 跟踪状态
+	 * return string 文件名
+	 */
+	public function createExcelProduce($data){
+		$map['fp_status']=$data['status'];
+		switch ($data['time']){
+		case "month":
+			$map['fp_starttime']=array("LIKE",date("Y-m")."%");
+			$name=date("Y-m")."月份的订单跟踪";
+			break;
+		case "prevmonth":
+			$map['fp_starttime']=array("LIKE",date("Y-m",strtotime("-1 month"))."%");
+			$name=date("Y-m",strtotime("-1 month"))."月份的订单跟踪";
+			break;
+		case "prev3month":
+			$map['fp_starttime']=array("EGT",date("Y-m",strtotime("-3 month")));
+			$name=date("Y-m",strtotime("-3 month"))."月份至".date("Y-m-d")."的订单跟踪";
+			break;
+		case "halfyear":
+			$map['fp_starttime']=array("EGT",date("Y-m",strtotime("-6 month")));
+			$name="本半年的订单跟踪";
+			break;
+		case "oneyear":
+			$map['fp_starttime']=array("LIKE",date("Y-")."%");
+			$name="本年的订单跟踪";
+			break;
+		case "prevyear":
+			$map['fp_starttime']=array("LIKE",date("Y-",strtotime("-1 year"))."%");
+			$name="上一年的订单跟踪";
+			break;
+		case "all":
+			$map['fp_starttime']=array();
+			$name="所有的订单跟踪";
+			break;
+		default :
+			$map['fp_starttime']=array();
+			$name="所有的订单跟踪";
+		}
+
+
+		$fp_result=$this->model->getFollowproduceList($map);
+		if($fp_result && is_array($fp_result)){
+			import('Vendor.PhpExcel.PHPExcel');
+			$objPHPExcel= new \PHPExcel();
+			$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+				->setLastModifiedBy("Maarten Balliauw")
+				->setTitle("Office 2007 XLSX Test Document")
+				->setSubject("Office 2007 XLSX Test Document")
+				->setDescription("This document for Office 2007 XLSX.")
+				->setKeywords("office 2007 ")
+				->setCategory("office 2007");
+			//设置表头
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A1', '客户订单编号')
+				->setCellValue('B1', '发货日期')
+				->setCellValue('C1', '商标')
+				->setCellValue('D1', '鞋样型号')
+				->setCellValue('E1', '码段')
+				->setCellValue('F1', '颜色')
+				->setCellValue('G1', '件数')
+				->setCellValue('H1', '装数')
+				->setCellValue('J1', '双数')
+				->setCellValue('I1', '材料')
+				->setCellValue('K1', '鞋包加工户')
+				->setCellValue('L1', '鞋包进库日期')
+				->setCellValue('M1', '鞋包出库日期')
+				->setCellValue('N1', '成型合计')
+				->setCellValue('O1', '库存量')
+				->setCellValue('P1', '剩余量')
+				->setCellValue('Q1', '备注');
+
+			//填充数据
+			$counter=2;
+			foreach($fp_result as $one){
+				$sizes=unserialize($one['orders']['o_size']);
+				sort($sizes);
+				$min=$sizes[0];
+				$max=$sizes[count($sizes)-1];
+				$shoes=unserialize($one['orders']['o_attributes']);
+				var_dump($shoes);exit();
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A'.$counter, $one['o_id'])
+					->setCellValue('B'.$counter, $one['fp_endtime'])
+					->setCellValue('C'.$counter, $one['fp_logo'])
+					->setCellValue('D'.$counter, $one['fp_models'])
+					->setCellValue('E'.$counter, $min."-".$max)
+					->setCellValue('F'.$counter, $shoes['shoes']['color'])
+					->setCellValue('G'.$counter, ceil($one['orders']['o_number']/$one['orders']['o_bunchnum']))
+					->setCellValue('H'.$counter, $one['orders']['o_bunchnum'])
+					->setCellValue('I'.$counter, $shoes['shoes']['material'])
+					->setCellValue('J'.$counter, $one['orders']['o_number'])
+					->setCellValue('K'.$counter, $one['shoesbag']['e_contractor'])
+					->setCellValue('L'.$counter, $one['shoesbag']['e_gettime'])
+					->setCellValue('M'.$counter, $one['shoesbag']['e_posttime'])
+					->setCellValue('N'.$counter, $one['orders']['o_number'])
+					->setCellValue('O'.$counter, $one['store']['gl_number'])
+					->setCellValue('P'.$counter, $one['store']['gl_number']-$one['orders']['o_number'])
+					->setCellValue('Q'.$counter, $one['orders']['o_remark']);
+
+				$counter++;
+			}
+			$objPHPExcel->getActiveSheet()->setTitle($name);
+			Vendor("PhpExcel.PHPExcel.IOFactory");
+			$objWriter =\PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$filename=time()."orders.xls";
+			$path_name=C("DOCUMENT_SAVE_PATH").$filename;
+			$objWriter->save($path_name);
+			return $filename;
+		}else{
+			return false;
+		}
+
+	}
 
 
 

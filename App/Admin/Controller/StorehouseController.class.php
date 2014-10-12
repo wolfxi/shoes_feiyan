@@ -360,6 +360,25 @@ class StorehouseController extends AdminController
 	}
 
 
+	/**
+	 * 生成excel数据
+	 */
+	public function excelGoodsList(){
+		if(IS_AJAX){
+			$result=$this->storehouseapi->excelGoodsList();
+			if($result && is_string($result)){
+				$data['flag']=true;
+				$data['message']=$result;
+				$this->ajaxReturn($data);
+			}else{
+				$data['flag']=false;
+				$data['message']="下载失败！！！";
+				$this->ajaxReturn($data);
+			}
+		}else{
+			exit();
+		}
+	}
 
 
 

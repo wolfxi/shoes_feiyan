@@ -11,8 +11,8 @@ class EpibolyModel extends RelationModel{
 		
 		"followproduce"=>array(
 			"mapping_type" 	=> self::BELONGS_TO,
-			"class_name" 	=> "Produce",
-			"mapping_name"  => "produce",
+			"class_name" 	=> "Followproduce",
+			"mapping_name"  => "followproduce",
 			"foreign_key" 	=> "fp_id"
 		),
 

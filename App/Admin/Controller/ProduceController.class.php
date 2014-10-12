@@ -216,19 +216,19 @@ class ProduceController extends AdminController{
 		}
 		$map=array();
 		switch ($type){
-			case "all":
-				$kindepiboly="所有外包记录";
-				break;
-			case "yes":
-				$kindepiboly="完成的外包记录";
-				$map['e_iscallback']=1;
-				break;
-			case "no":
-				$kindepiboly="未完成的外包记录";
-				$map['e_iscallback']=0;
-				break;
-			default :
-				break;
+		case "all":
+			$kindepiboly="所有外包记录";
+			break;
+		case "yes":
+			$kindepiboly="完成的外包记录";
+			$map['e_iscallback']=1;
+			break;
+		case "no":
+			$kindepiboly="未完成的外包记录";
+			$map['e_iscallback']=0;
+			break;
+		default :
+			break;
 		}
 		$result=$this->produceapi->getEpibolyList($map);
 		if($result['datalist'] && is_array($result['datalist'])){
@@ -284,7 +284,7 @@ class ProduceController extends AdminController{
 	 * 修改外包记录
 	 */
 	public function updateEpiboly(){
-	
+
 		$data=I("post.");
 		unset($data['e_iscallback']);
 		$flag=true;
@@ -308,7 +308,7 @@ class ProduceController extends AdminController{
 				$this->error("修改失败！！");
 			}
 
-		
+
 		}else{
 			$this->error("请填写外包相关信息！！！");
 		}
@@ -368,7 +368,7 @@ class ProduceController extends AdminController{
 		}
 
 
-		
+
 	}
 
 
@@ -397,7 +397,36 @@ class ProduceController extends AdminController{
 		}
 
 
-		
+
+	}
+
+
+	/**
+	 * 生成跟踪单excel文件
+	 */
+	public function excelProduce(){
+		if(IS_AJAX){
+			$data['status']=I("post.select_status");
+			$data['time']=I("post.select_time");
+			if(!empty($data['status']) && !empty($data['time'])){
+				$result=$this->produceapi->createExcelProduce($data);
+				if($result && is_string($result)){
+					$data['flag']=true;
+					$data['message']=$result;
+					$this->ajaxReturn($data);
+				}else{
+					$data['flag']=false;
+					$data['message']="下载失败！！！";
+					$this->ajaxReturn($data);
+				}
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要下载的订单！！！";
+				$this->ajaxReturn($data);
+			}
+		}else{
+			exit();
+		}
 	}
 
 

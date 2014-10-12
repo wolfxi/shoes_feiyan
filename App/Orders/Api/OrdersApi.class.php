@@ -280,7 +280,7 @@ class OrdersApi extends Api{
 				$objPHPExcel->setActiveSheetIndex(0)
 					->setCellValue('A'.$counter, $one['o_id'])
 					->setCellValue('B'.$counter, $one['s_models'])
-					->setCellValue('C'.$counter, $one['s_customer'])
+					->setCellValue('C'.$counter, $one['o_customer'])
 					->setCellValue('D'.$counter, $one['o_bunchnum'])
 					->setCellValue('E'.$counter, $one['o_number'])
 					->setCellValue('F'.$counter, $min."-".$max)

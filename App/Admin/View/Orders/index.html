@@ -99,6 +99,20 @@
 	<div class="row">
 		<div class="col-md-offset-3">
 			<{$page}>
+	<div class="pull-right">
+		<form method="post" class="navbar-form navbar-left" role="search" name="excelform" action="__CONTROLLER__/excelOrders/">
+			<select class="form-control" id="select_time" name="select_time">
+				<option value="month">本月</option>
+				<option value="prevmonth">上月</option>
+				<option value="prev3month">前三月</option>
+				<option value="halfyear">半年</option>
+				<option value="oneyear">本年</option>
+				<option value="prevyear">上一年</option>
+				<option value="all">全部</option>
+			</select>
+			<button type="button" class="btn btn-primary" id="downloadbtn" >下载数据</button>
+		</form>
+	</div>
 		</div>
 
 	</div>
