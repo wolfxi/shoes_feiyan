@@ -323,8 +323,8 @@ class OrdersController extends AdminController{
 				$this->error("投入生产失败");
 			}
 		}
-	
-	
+
+
 	}
 
 
@@ -332,7 +332,7 @@ class OrdersController extends AdminController{
 	 * 搜索订单信息
 	 */
 	public function searchOrders(){
-		
+
 		$search_type=I("post.search_type");
 		$search_str=I("post.search_str");
 		if(!empty($search_str) && !empty($search_type)){
@@ -351,12 +351,39 @@ class OrdersController extends AdminController{
 			}else{
 				$this->error("搜索内容不存在！！！");
 			}
-		
+
 		}else{
 			$this->error("请输入要搜索的内容");
 		}
 	}
 
+	/**
+	 *生成订单execl文件，（包括生成文件，下载文件)
+	 */
+	public function excelOrders(){
+		if(IS_AJAX){
+			$select_time=I("post.select_time");
+			if(!empty($select_time)){
+				$result=$this->ordersapi->createOrdersExcel($select_time);
+				if($result && is_string($result)){
+					$data['flag']=true;
+					$data['message']=$result;
+					$this->ajaxReturn($data);
+				}else{
+					$data['flag']=false;
+					$data['message']="下载失败！！！";
+					$this->ajaxReturn($data);
+				}
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要下载的订单！！！";
+				$this->ajaxReturn($data);
+			}
+		}else{
+			exit();
+		}
+
+	}
 
 
 }

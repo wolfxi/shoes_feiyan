@@ -191,7 +191,7 @@ class SampleController extends AdminController{
 			$data[$search_type]=array("LIKE",$search_str);	
 			$result=$this->sampleapi->searchSampleList($data);
 			if($result && is_array($result)){
-				$this->assign("search","类型为".$search_type.",搜索".$search_str."的结果如下")；
+				$this->assign("search","类型为".$search_type.",搜索".$search_str."的结果如下");
 				$this->assign("datalist",$result['datalist']);
 				$this->assign("page",$result['page']);
 				$this->display();

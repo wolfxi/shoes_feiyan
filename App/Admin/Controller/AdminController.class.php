@@ -83,6 +83,23 @@ class AdminController extends Controller{
 
 	}
 
+	/**
+	 * 下载文件
+	 * @param $file_name  文件名
+	 * return void
+	 */
+	public function downloadFile(){
+		$file_name=I("get.filename");
+		if($file_name && is_string($file_name)){
+			$http=new \Org\Net\Http();
+			$file_path=C("DOCUMENT_SAVE_PATH").$file_name;
+			$http->download($file_path,"订单");
+		}else{
+			$this->error("没有该文件");
+		}
+
+
+	}
 
 
 

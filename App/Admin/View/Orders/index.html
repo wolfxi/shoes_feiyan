@@ -81,6 +81,20 @@
 			</tbody>
 		</table>
 	</div>
+	<div class="pull-right">
+		<form method="post" class="navbar-form navbar-left" role="search" name="excelform" action="__CONTROLLER__/excelOrders/">
+			<select class="form-control" id="select_time" name="select_time">
+				<option value="month">本月</option>
+				<option value="prevmonth">上月</option>
+				<option value="prev3month">前三月</option>
+				<option value="halfyear">半年</option>
+				<option value="oneyear">本年</option>
+				<option value="prevyear">上一年</option>
+				<option value="all">全部</option>
+			</select>
+			<button type="button" class="btn btn-primary" id="downloadbtn" >下载数据</button>
+		</form>
+	</div>
 	<!--分页 start-->
 	<div class="row">
 		<div class="col-md-offset-3">
@@ -92,5 +106,32 @@
 </div>
 <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		//鞋底
+		$("#downloadbtn").click(function(){
+			var select_time=$("#select_time").val();
+			if(select_time.length>0){
+				var post_data={select_time : select_time };
+				ajaxhelper.post(post_data,"__CONTROLLER__/excelOrders/",download_callback);
+			}else{
+				jshelper.show_message("请选择要下载的订单!");
+				return;
+			}
+			})
+
+		})
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+
+}
+
+</script>
 </body>
 </html>

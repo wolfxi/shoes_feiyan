@@ -206,6 +206,103 @@ class OrdersApi extends Api{
 
 
 
+	/**
+	 * 生成订单excel文件
+	 * @param $time  数据处于什么时间段
+	 * return  string   文件路劲
+	 */
+	public function createOrdersExcel($time){
+		$map=array();
+		switch ($time){
+		case "month":
+			$map['o_time']=array("LIKE",date("Y-m")."%");
+			$name=date("Y-m")."月份的订单";
+			break;
+		case "prevmonth":
+			$map['o_time']=array("LIKE",date("Y-m",strtotime("-1 month"))."%");
+			$name=date("Y-m",strtotime("-1 month"))."月份的订单";
+			break;
+		case "prev3month":
+			$map['o_time']=array("EGT",date("Y-m",strtotime("-3 month")));
+			$name=date("Y-m",strtotime("-3 month"))."月份至".date("Y-m-d")."的订单";
+			break;
+		case "halfyear":
+			$map['o_time']=array("EGT",date("Y-m",strtotime("-6 month")));
+			$name="本半年的订单";
+			break;
+		case "oneyear":
+			$map['o_time']=array("LIKE",date("Y-")."%");
+			$name="本年的订单";
+			break;
+		case "prevyear":
+			$map['o_time']=array("LIKE",date("Y-",strtotime("-1 year"))."%");
+			$name="上一年的订单";
+			break;
+		case "all":
+			$map=array();
+			$name="所有的订单";
+			break;
+		default :
+			$map=array();
+			$name="所有的订单";
+		}
+		$result=$this->model->relation(true)->where($map)->select();
+		if($result && is_array($result)){
+			import('Vendor.PhpExcel.PHPExcel');
+			$objPHPExcel= new \PHPExcel();
+			$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+				->setLastModifiedBy("Maarten Balliauw")
+				->setTitle("Office 2007 XLSX Test Document")
+				->setSubject("Office 2007 XLSX Test Document")
+				->setDescription("This document for Office 2007 XLSX.")
+				->setKeywords("office 2007 ")
+				->setCategory("office 2007");
+			//设置表头
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('A1', '订单编号')
+				->setCellValue('B1', '样品型号')
+				->setCellValue('C1', '订单客户')
+				->setCellValue('D1', '订单装数')
+				->setCellValue('E1', '订单双数')
+				->setCellValue('F1', '订单码段')
+				->setCellValue('G1', '订单单价')
+				->setCellValue('H1', '订单金额')
+				->setCellValue('J1', '订单状态')
+				->setCellValue('I1', '订单时间');
+
+			//设置内容数据
+			$counter=2;
+			foreach($result as $one){
+				$sizes=unserialize($one['o_size']);
+				sort($sizes);
+				$min=$sizes[0];
+				$max=$sizes[count($sizes)-1];
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('A'.$counter, $one['o_id'])
+					->setCellValue('B'.$counter, $one['s_models'])
+					->setCellValue('C'.$counter, $one['s_customer'])
+					->setCellValue('D'.$counter, $one['o_bunchnum'])
+					->setCellValue('E'.$counter, $one['o_number'])
+					->setCellValue('F'.$counter, $min."-".$max)
+					->setCellValue('G'.$counter, $one['o_price'])
+					->setCellValue('H'.$counter, $one['o_totalprice'])
+					->setCellValue('I'.$counter, $one['orderstatus']['os_name'])
+					->setCellValue('J'.$counter, $one['o_time']);
+
+				$counter++;
+			}
+			$objPHPExcel->getActiveSheet()->setTitle($name);
+			Vendor("PhpExcel.PHPExcel.IOFactory");
+			$objWriter =\PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$filename=time()."orders.xls";
+			$path_name=C("DOCUMENT_SAVE_PATH").$filename;
+			$objWriter->save($path_name);
+			return $filename;
+
+		}else{
+			return false;
+		}
+	}
 
 
 
