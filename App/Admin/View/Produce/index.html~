@@ -20,24 +20,21 @@
 				<a href="#">/</a>
 				</li>
 				<li>
-				<a href="#">订单管理</a>
+				<a href="#">生产管理</a>
 				</li>
 				<li >
 				<a href="#">/</a>
 				</li>
 				<li>
-				<a href="#">未完成的订单</a>
+				<a href="#">生产的单子</a>
 				</li>
 			</ul>
 			<div class="pull-right">
-				<form class="navbar-form navbar-left" role="search" method="post" action="__CONTROLLER__/searchOrders/">
+				<form class="navbar-form navbar-left" role="search" method="post" action="__MODULE__/Cases/find">
 					<div class="form-group">
-						<input type="text" class="form-control" name="search_str" placeholder="请输入要查询的订单编号">
-					</div>
+						<input type="text" class="form-control" name="search_str"  placeholder="请输入订单编号"></div>
 					<select class="form-control"  name="search_type">
 						<option value="o_id">订单编号</option>
-						<option value="s_id">样品编号</option>
-						<option value="o_customer">下单客户</option>
 					</select>
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</form>
@@ -53,29 +50,29 @@
 					<th>订单编号</th>
 					<th>鞋样型号</th>
 					<th>订单客户</th>
-					<th>订单双数</th>
-					<th>订单单价</th>
-					<th>订单总价</th>
-					<th>订单时间</th>
-					<th>订单状态</th>
-					<th>查看详情</th>
-					<th colspan="2" class="text-center">操作</th>
+					<th>生产双数</th>
+					<th>已经生产</th>
+					<th>开始时间</th>
+					<th>生产状态</th>
+					<th>生产进程</th>
+					<th colspan="2" class="text-center">查看详情</th>
+					<th >操作</th>
 				</tr>
 			</thead>
 			<tbody>
 			<%foreach name="datalist" item="one" %>
 			<tr>
 				<td><{$one.o_id}></td>
-				<td><{$one.s_models}></td>
-				<td><{$one.o_customer}></td>
-				<td><{$one.o_number}></td>
-				<td><{$one.o_price}></td>
-				<td><{$one.o_totalprice}></td>
-				<td><{$one.o_time}></td>
-				<td><{$one.orderstatus.os_name}></td>
-				<td><a href="__CONTROLLER__/ordersDetail/id/<{$one.o_id}>">查看</a></td>
-				<td><a href="__CONTROLLER__/updateOrdersUi/id/<{$one.o_id}>">修改</a></td>
-				<td><a  onclick="if(confirm('确定删除?')==false)return false;" href="__CONTROLLER__/deleteOrders/id/<{$one.o_id}>" >删除</a></td>
+				<td><{$one.fp_models}></td>
+				<td><{$one.orders.o_customer}></td>
+				<td><{$one.fp_number}></td>
+				<td><{$one.fp_finishnum}></td>
+				<td><{$one.fp_starttime}></td>
+				<td><{$one.fp_status}></td>
+				<td><{$one.fp_progress}></td>
+				<td><a href="__CONTROLLER__/produceDetail/id/<{$one.fp_id}>">查看</a></td>
+				<td><a href="__CONTROLLER__/getProduceMaterial/id/<{$one.o_id}>">查看配料</a></td>
+				<td><a href="__CONTROLLER__/updateProduceUi/id/<{$one.fp_id}>">修改</a></td>
 			</tr>
 			<%/foreach%>
 			</tbody>
@@ -92,9 +89,16 @@
 				<option value="prevyear">上一年</option>
 				<option value="all">全部</option>
 			</select>
+
+			<select class="form-control" id="select_status" name="select_status">
+				<option value="投入生产">投入生产</option>
+				<option value="生产完结">生产完结</option>
+				<option value="发货完结">发货完结</option>
+			</select>
 			<button type="button" class="btn btn-primary" id="downloadbtn" >下载数据</button>
 		</form>
 	</div>
+
 	<!--分页 start-->
 	<div class="row">
 		<div class="col-md-offset-3">
@@ -112,13 +116,15 @@
 $(function(){
 		//鞋底
 		$("#downloadbtn").click(function(){
+			var select_status=$("#select_status").val();
 			var select_time=$("#select_time").val();
-			if(select_time.length>0){
-				var post_data={select_time : select_time };
-				ajaxhelper.post(post_data,"__CONTROLLER__/excelOrders/",download_callback);
+
+			if(select_status.length>0 && select_time.length>0){
+			var post_data={select_status : select_status ,select_time :select_time};
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelProduce/",download_callback);
 			}else{
-				jshelper.show_message("请选择要下载的订单!");
-				return;
+			jshelper.show_message("请选择要下载的订单!");
+			return;
 			}
 			})
 
@@ -129,7 +135,6 @@ function download_callback(data){
 		var filename=data.message;
 		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
 	}
-
 }
 
 </script>

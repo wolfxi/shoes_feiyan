@@ -30,14 +30,14 @@
 				</li>
 			</ul>
 			<div class="pull-right">
-				<form class="navbar-form navbar-left" role="search" method="post" action="__MODULE__/Cases/find">
+				<form class="navbar-form navbar-left" role="search" method="post" action="__CONTROLLER__/searchOrders/">
 					<div class="form-group">
-						<!--<input type="text" class="form-control" placeholder="Search">--></div>
-					<select class="form-control"  name="search">
-						<option value="" selected>--选择样品类型--</option>
-						<%volist name="op" id="value"%>
-						<option  value="<?=$value['c_title']?>"><?=$value['c_title']?></option>
-						<%/volist%>
+						<input type="text" class="form-control" name="search_str" placeholder="请输入要查询的订单编号">
+					</div>
+					<select class="form-control"  name="search_type">
+						<option value="o_id">订单编号</option>
+						<option value="s_id">样品编号</option>
+						<option value="o_customer">下单客户</option>
 					</select>
 					<button type="submit" class="btn btn-primary">Submit</button>
 				</form>

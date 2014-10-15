@@ -157,10 +157,10 @@ class StorehouseApi extends Api{
 		$storerecord['gl_id']=$flag1;
 		$storerecord['sr_number']=$data['gl_number'];
 		$storerecord['sr_time']=date("Y-m-d :H:i:s");
-		$storerecord['sr_totalprice']=$data['gl_number']*$data['gl_price'];
+		$storerecord['sr_totalpeice']=$data['gl_number']*$data['gl_price'];
 		$storerecord['sr_settled']=1;
 		$storerecord['f_id']=$firm['f_id'];
-		$storerecord['sr_payedmoney']=$storerecord['sr_totalprice'];
+		$storerecord['sr_payedmoney']=$storerecord['sr_totalpeice'];
 		$flag2=$models->table("storerecord")->data($storerecord)->add();
 		if($flag2 && $flag1){
 			$models->commit();

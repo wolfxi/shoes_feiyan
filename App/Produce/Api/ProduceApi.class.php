@@ -53,11 +53,13 @@ class ProduceApi extends Api{
 	 * return  array  一维数组
 	 */
 	public function getOneFollowProduce($id ,$o_id=null){
+		$map=array();
 		if(empty($id)){
-			$result=$this->model->relation(true)->where("o_id = %d", intval($o_id))->find();
+			$map['o_id']=array("EQ",intval($o_id));
 		}else{
-			$result=$this->model->relation(true)->where("fp_id = %d", intval($id))->find();
+			$map['fp_id']=array("EQ",intval($id));
 		}
+		$result=$this->model->getOneFollowproduce($map);
 		if($result && is_array($result)){
 			$result['orders']['o_attributes']=unserialize($result['orders']['o_attributes']);
 			$result['orders']['o_size']=unserialize($result['orders']['o_size']);
@@ -290,7 +292,7 @@ class ProduceApi extends Api{
 	 * 			false  false
 	 */
 	public function sendGoods($data){
-		$fp_result=$this->model->realtion(true)->where("fp_id =%d ",intval($data['fp_id']))->find();
+		$fp_result=$this->model->relation(true)->where("fp_id =%d ",intval($data['fp_id']))->find();
 		if(!$fp_result || !is_array($fp_result)){
 			return false;	
 		}
@@ -320,7 +322,7 @@ class ProduceApi extends Api{
 		$delivergoods['o_id']=$data['o_id'];
 		$delivergoods['dg_productname']=$goods['gl_name'];
 		$delivergoods['dg_models']=$goods['gl_models'];
-		$delivergoods['dg_proson']=$data['sendperson'];
+		$delivergoods['dg_person']=$data['sendperson'];
 		$delivergoods['dg_number']=$fp_result['fp_finishnum'];
 		$delivergoods['dg_customer']=$fp_result['orders']['o_customer'];
 		$delivergoods['dg_totalnum']=$fp_result['fp_number'];
@@ -362,11 +364,11 @@ class ProduceApi extends Api{
 		$flag9=$models->table("storerecord")->data($storerecord)->add();
 
 
-		if($flag1 && $flag2 && $flag3 && $flag4 && $flag5 && $flag6 && $flag7 && $flag8 && $flag9){
+		if($flag1 && $flag2 && $flag3  && $flag7 && $flag8 && $flag9){
 			$models->commit();
 			return TRUE;
 		}else{
-			$models->rooback();
+			$models->rollback();
 			return FALSE;
 		}
 
@@ -562,7 +564,6 @@ class ProduceApi extends Api{
 				$min=$sizes[0];
 				$max=$sizes[count($sizes)-1];
 				$shoes=unserialize($one['orders']['o_attributes']);
-				var_dump($shoes);exit();
 				$objPHPExcel->setActiveSheetIndex(0)
 					->setCellValue('A'.$counter, $one['o_id'])
 					->setCellValue('B'.$counter, $one['fp_endtime'])

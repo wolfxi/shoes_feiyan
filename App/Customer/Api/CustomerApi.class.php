@@ -402,9 +402,7 @@ class CustomerApi extends Api{
 		$result['page'] = $Page->show();// 分页显示输出
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 		 $result['datalist'] = $model->where($data)->limit($Page->firstRow.','.$Page->listRows)->select();
-		 $this->assign('list',$list);// 赋值数据集
-		 $this->assign('page',$show);// 赋值分页输出
-		 if($result['datalist'] && is_array($result['datalist']){
+		 if($result['datalist'] && is_array($result['datalist'])){
 			 return $result;
 		 }else{
 		 	return false;

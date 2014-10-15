@@ -15,7 +15,6 @@ class FollowproduceModel extends RelationModel{
 			"mapping_name"  => "orders",
 			"foreign_key" 	=> "o_id"
 		),
-
 		"epiboly"=>array(
 			"mapping_type" 	=> self::HAS_MANY,
 			"class_name" 	=> "Epiboly",
@@ -61,6 +60,23 @@ class FollowproduceModel extends RelationModel{
 
 
 
+	/**
+	 * 获取单个生产过程信息
+	 * @param $data array
+	 * return array
+	 */
+	public function getOneFollowproduce($data){
+		$result=$this->relation("orders")->where($data)->find();
+		if($result){
+			//加入外包
+			$models=M();
+			$result['epiboly']=$models->table("epiboly")->where("fp_id = %d ",intval($result['fp_id']))->select();
+			return $result;
+		}else{
+			return false;
+		}
+	
+	}
 
 
 

@@ -41,7 +41,7 @@
         <%foreach name="list" item="lists"%>
           <tr>
             <td><{$lists.gk_id}></td>
-            <td><{$lists.gk_name}></td>
+			<td><a href="__CONTROLLER__/getOneKindGoods/id/<{$lists.gk_id}>"><{$lists.gk_name}></a></td>
              <td><a href="__MODULE__/Storehouse/modifygoodkindUi?gk_id=<{$lists.gk_id}>">修改</a></td>
           </tr>
         <%/foreach%>

@@ -344,11 +344,11 @@ class StorehouseController extends AdminController
 				$map["gk_id"]=array('EQ',$search_type);
 				$map['gl_name']=array("LIKE",$search_str);
 			}
-			$result=$this->storehouseapi->searchGoods($data);
+			$result=$this->storehouseapi->searchGoods($map);
 			if($result){
 				$this->assign("list",$result['datalist']);
-				$this->assign("page",$result['page']);
-				$this->assign("search","搜索".$search_type."类型下的".$search_str."结果如下：");
+				$this->assign("show",$result['page']);
+				$this->assign("search","搜索".$search_str."结果如下：");
 				$this->display();
 			}else{
 				$this->error("搜索的内容不存在！！！");
@@ -380,6 +380,26 @@ class StorehouseController extends AdminController
 		}
 	}
 
+
+	/**
+	 * 获取某一类型下的仓库列表
+	 */
+	public function getOneKindGoods(){
+		$data['gk_id']=I("param.id");
+		if(!empty($data['gk_id'])){
+			$result=$this->storehouseapi->searchGoods($data);
+			if($result && is_array($result)){
+				$this->assign("list",$result['datalist']);
+				$this->assign("show",$result['page']);
+				$this->assign("search","货物类型");
+				$this->display("searchGoods");
+			}else{
+				$this->error("获取数据失败！！！");
+			}
+		}else{
+			$this->error("请选择你要查看的类型");
+		}
+	}
 
 
 

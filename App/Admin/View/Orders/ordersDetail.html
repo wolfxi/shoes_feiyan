@@ -962,6 +962,7 @@
 		</div>
 
 
+		<%if condition="$orders.o_isproduce eq 0"%>
 		<div class="hrdivblack"></div>
 		<div class="row">
 			<div class="col-md-2 col-md-offset-9" id="submitdiv">
@@ -969,6 +970,7 @@
 				<button class="btn btn-primary col-md-10" type="submit" > 投入生产</button>
 			</div>
 		</div>
+		<%/if%>
 	</form>
 </div>
 <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>

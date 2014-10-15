@@ -20,25 +20,26 @@
 				<a href="#">/</a>
 				</li>
 				<li>
-				<a href="#">样品管理</a>
+				<a href="#">订单管理</a>
 				</li>
 				<li >
 				<a href="#">/</a>
 				</li>
 				<li>
-				<a href="#">样品列表</a>
+				<a href="#">已完结订单</a>
 				</li>
 			</ul>
 			<div class="pull-right">
-				<form class="navbar-form navbar-left" role="search" method="post" action="__CONTROLLER__/searchSample/">
+				<form class="navbar-form navbar-left" role="search" method="post" action="__MODULE__/Cases/find">
 					<div class="form-group">
-						<input type="text" name="search_str" class="form-control" placeholder="请输入要查找的内容">
-					</div>
-					<select class="form-control"  name="search_type">
-						<option value="s_models" >样品型号</option>
-						<option value="s_mould" >样品楦性</option>
+						<!--<input type="text" class="form-control" placeholder="Search">--></div>
+					<select class="form-control"  name="search">
+						<option value="" selected>--选择样品类型--</option>
+						<%volist name="op" id="value"%>
+						<option  value="<?=$value['c_title']?>"><?=$value['c_title']?></option>
+						<%/volist%>
 					</select>
-					<button type="submit" class="btn btn-primary">搜索</button>
+					<button type="submit" class="btn btn-primary">Submit</button>
 				</form>
 			</div>
 		</div>
@@ -49,11 +50,14 @@
 		<table class="table table-bordered table-hover table-margin" id="table1">
 			<thead>
 				<tr>
-					<th>样品型号</th>
-					<th>样品名称</th>
-					<th>样品材料</th>
-					<th>样品码段</th>
-					<th>样品单价</th>
+					<th>订单编号</th>
+					<th>鞋样型号</th>
+					<th>订单客户</th>
+					<th>订单双数</th>
+					<th>订单单价</th>
+					<th>订单总价</th>
+					<th>订单时间</th>
+					<th>订单状态</th>
 					<th>查看详情</th>
 					<th colspan="2" class="text-center">操作</th>
 				</tr>
@@ -61,14 +65,17 @@
 			<tbody>
 			<%foreach name="datalist" item="one" %>
 			<tr>
+				<td><{$one.o_id}></td>
 				<td><{$one.s_models}></td>
-				<td><{$one.s_name}></td>
-				<td><{$one.s_material}></td>
-				<td><{$one.s_sizes}></td>
-				<td><{$one.s_price}></td>
-				<td><a href="__CONTROLLER__/detail/id/<{$one.s_id}>">查看</a></td>
-				<td><a href="__CONTROLLER__/updateSampleUi/id/<{$one.s_id}>">修改</a></td>
-				<td><a  onclick="if(confirm('确定下架?')==false)return false;" href="__CONTROLLER__/deleteSample/id/<{$one.s_id}>" >下架</a></td>
+				<td><{$one.o_customer}></td>
+				<td><{$one.o_number}></td>
+				<td><{$one.o_price}></td>
+				<td><{$one.o_totalprice}></td>
+				<td><{$one.o_time}></td>
+				<td><{$one.orderstatus.os_name}></td>
+				<td><a href="__CONTROLLER__/ordersDetail/id/<{$one.o_id}>">查看</a></td>
+				<td><a href="__CONTROLLER__/updateOrdersUi/id/<{$one.o_id}>">修改</a></td>
+				<td><a  onclick="if(confirm('确定删除?')==false)return false;" href="__CONTROLLER__/deleteOrders/id/<{$one.o_id}>" >删除</a></td>
 			</tr>
 			<%/foreach%>
 			</tbody>

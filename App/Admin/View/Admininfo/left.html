@@ -115,19 +115,6 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 
 
 
-		//客户管理start
-
-		var modelE = new TreeNode('客户管理');
-		
-			var E1 = new TreeNode('客户列表', '__MODULE__/Customer/supplierlistUi', 'tree_node.gif', null, 'tree_node.gif', null);
-			modelE.add(E1);
-
-			var E2 = new TreeNode('增加客户', '__MODULE__/Customer/addSupplierUi', 'tree_node.gif', null, 'tree_node.gif', null);
-			modelE.add(E2);
-
-
-		root.add(modelE);
-		//客户管理end
 
 
 
@@ -166,6 +153,42 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 
 		//财务管理end
 
+
+		//客户管理start
+
+		var modelE = new TreeNode('客户管理');
+		
+			var E1 = new TreeNode('客户列表', '__MODULE__/Customer/supplierlistUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelE.add(E1);
+
+			var E2 = new TreeNode('增加客户', '__MODULE__/Customer/addSupplierUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelE.add(E2);
+
+
+		root.add(modelE);
+		//客户管理end
+
+
+
+		//员工管理start
+
+		var modelA = new TreeNode('员工管理');
+
+			var A1 = new TreeNode('员工列表', '__MODULE__/User/userlist', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelA.add(A1);
+
+			var A2=new TreeNode('员工种类','__MODULE__/User/usertype','tree_node.gif',null,'tree_node.gif',null);
+			modelA.add(A2);
+
+
+			var A3=new TreeNode('添加员工','__MODULE__/User/adduserdetail','tree_node.gif',null,'tree_node.gif',null);
+			modelA.add(A3);
+
+
+		root.add(modelA);
+
+		//员工管理end
+
 		//管理员start
 		var modelAA = new TreeNode('管理员');
 
@@ -190,25 +213,6 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 		root.add(modelAA);
 		//管理员end
 
-
-		//员工管理start
-
-		var modelA = new TreeNode('员工管理');
-
-			var A1 = new TreeNode('员工列表', '__MODULE__/User/userlist', 'tree_node.gif', null, 'tree_node.gif', null);
-			modelA.add(A1);
-
-			var A2=new TreeNode('员工种类','__MODULE__/User/usertype','tree_node.gif',null,'tree_node.gif',null);
-			modelA.add(A2);
-
-
-			var A3=new TreeNode('添加员工','__MODULE__/User/adduserdetail','tree_node.gif',null,'tree_node.gif',null);
-			modelA.add(A3);
-
-
-		root.add(modelA);
-
-		//员工管理end
 
 
 

@@ -41,7 +41,7 @@ class OrdersController extends AdminController{
 	 * 已经完成的订单
 	 */
 	public function doneOrders(){
-		$statusid=$this->ordersapi->getOrdersStatus("发送完结",null);
+		$statusid=$this->ordersapi->getOrdersStatus("发货完结",null);
 		$map['os_id']=array('IN',$statusid);
 		$map['o_isdelete']=array('EQ',0);
 		$result=$this->ordersapi->getOrdersList($map);	

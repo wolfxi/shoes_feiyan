@@ -95,6 +95,7 @@ class OrdersApi extends Api{
 		$orders['o_size']=serialize($data['sizes']);
 		$orders['s_models']=$data['models'];
 		$orders['o_isdelete']=0;
+		$orders['o_isproduce']=0;
 
 		$orders['o_attributes']['sole']=$data['sole'];
 		$orders['o_attributes']['shoes']=$data['shoes'];
@@ -174,6 +175,7 @@ class OrdersApi extends Api{
 			//改变订单状态
 			$orderstatus=$this->getOrdersStatus("投入生产");
 			$orders['os_id']=$orderstatus;
+			$orders['o_isproduce']=1;
 
 			$models=M();
 			$models->startTrans();
