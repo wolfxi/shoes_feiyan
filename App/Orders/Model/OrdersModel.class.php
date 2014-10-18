@@ -17,12 +17,14 @@ class OrdersModel extends RelationModel{
 			'foreign_key' 	=> "os_id"
 		),
 
-		"sample" 	=> array(
-			'mapping_type' 	=>self::HAS_ONE,
-			'mapping_name' 	=>"sample",
-			'class_name' 	=>"Sample",
-			'foreign_key' 	=>"s_id"
+		"ordersdetail" 	=>array(
+			"mapping_type" 	=> self::HAS_MANY,
+			"mapping_name" 	=>"ordersdetail",
+			"class_name" 	=>"Ordersdetail",
+			"foreign_key" 	=>"o_id"
+		
 		)
+
 
 	
 	

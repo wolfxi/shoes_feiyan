@@ -28,10 +28,23 @@ class OrdersApi extends Api{
 		$count = $this->model->where($data)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(15)
 		$show = $Page->show();// 分页显示输出
-		$list = $this->model->relation("orderstatus")->where($data)->order('o_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+		$list = $this->model->relation(true)->where($data)->order('o_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 		$result['page']=$show;
 		$result['datalist']=$list;
 		if($list && is_array($list)){
+			$models=M();
+			$datalist=array();
+			foreach($result['datalist'] as $one){
+				$datalist1=array();
+				foreach($one['ordersdetail'] as $one_one){
+					$one_one['imgurl']=$models->table("image")->where("s_id =%d",$one_one['s_id'])->getField("i_url");
+					array_push($datalist1,$one_one);
+				}
+				$one['ordersdetail']=$datalist1;
+				array_push($datalist,$one);
+			}
+			$result['datalist']=$datalist;
+				
 			return $result;
 		}else{
 			return false;
@@ -83,35 +96,60 @@ class OrdersApi extends Api{
 	 */
 	public function addOrders($data){
 
-		$orders['s_id']=$data['s_id'];
-		$orders['os_id']=$this->getOrdersStatus("下单完结",null);	
+		//订单总表信息
+		$ordersstatus=C("ORDERS_STATUS");
+		$orders['os_id']=$this->getOrdersStatus($ordersstatus['ORDERS_PRE'],null);	
+		$orders['o_displayid']=$data['display_id'];
+		unset($data['display_id']);
+		$orders['oc_id']=$data['oc_id'];
+		unset($data['oc_id']);
 		$orders['o_customer']=$data['customer'];
-		$orders['o_bunchnum']=$data['bunchnum'];
+		unset($data['customer']);
 		$orders['o_number']=$data['number'];
-		$orders['o_price']=$data['price'];
+		unset($data['number']);
+		$orders['o_totalprice']=$data['totalprice'];
+		unset($data['totalprice']);
 		$orders['o_remark']=$data['remark'];
-		$orders['o_totalprice']=floatval($data['price'])*intval($data['number']);
+		unset($data['remark']);
 		$orders['o_time']=date("Y-m-d :H:i:s");
-		$orders['o_size']=serialize($data['sizes']);
-		$orders['s_models']=$data['models'];
 		$orders['o_isdelete']=0;
 		$orders['o_isproduce']=0;
 
-		$orders['o_attributes']['sole']=$data['sole'];
-		$orders['o_attributes']['shoes']=$data['shoes'];
-		$orders['o_attributes']['shoesbag']=$data['shoesbag'];
-		$orders['o_attributes']['insole']=$data['insole'];
-		$orders['o_attributes']['innerbox']=$data['innerbox'];
-		$orders['o_attributes']['outerbox']=$data['outerbox'];
-		$orders['o_attributes']['other']=$data['other'];
+		
+		$models=M();
+		$models->startTrans();
+		$result1=$models->table("orders")->data($orders)->add();
 
-		$orders['o_attributes']=serialize($orders['o_attributes']);
+		var_dump($models->_sql());
 
-		$id=$this->model->data($orders)->add();
-		if($id){
-			return $id;
+		//订单详细
+
+
+		$datalist=array();
+		foreach($data as $one){
+			$temp['o_id']=$result1;
+			$temp['s_id']=$one['s_id'];
+			$temp['od_number']=$one['number'];
+			$temp['od_bunchnum']=$one['bunchnum'];
+			$temp['od_price']=$one['price'];
+			$temp['od_sizes']=$one['sizes'];
+			$temp['s_models']=$one['s_models'];
+			$temp['od_totalprice']=$one['number']*$one['price'];
+			$temp['od_isproduce']=0;
+
+			array_push($datalist,$temp);
+			unset($temp);
+		}
+
+
+		$result2=$models->table("ordersdetail")->addAll($datalist);
+		if($result1 && $result2){
+			$models->commit();
+			return $result1;
 		}else{
+			$models->rollback();
 			return FALSE; 
+		$id=$this->model->data($orders)->add();
 		} 
 	}
 

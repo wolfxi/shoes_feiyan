@@ -43,18 +43,21 @@
 			</div>
 		</div>
 	</div>
-	<div class="hrdivblack"></div>
 	<!--导航线 end-->
 	<div class="row ">
-		<table class="table table-bordered table-hover table-margin" id="table1">
+		<table class="table table-condensed table-bordered table-hover " id="table1">
 			<thead>
 				<tr>
+					<th>样品图片</th>
 					<th>样品型号</th>
 					<th>样品名称</th>
-					<th>样品材料</th>
+					<th>样品面料</th>
 					<th>样品码段</th>
+					<th>样品车线</th>
+					<th>样品内里</th>
+					<th>样品大底</th>
 					<th>样品单价</th>
-					<th>样品状态</th>
+					<th>样品备注</th>
 					<th>查看详情</th>
 					<th colspan="2" class="text-center">操作</th>
 				</tr>
@@ -62,24 +65,34 @@
 			<tbody>
 			<%foreach name="datalist" item="one" %>
 			<tr>
+				<td><img src="__ROOT__<{$upload_img}><{$one['image'][0]['i_url']}>" class="img-responsive"/></td>
 				<td><{$one.s_models}></td>
 				<td><{$one.s_name}></td>
 				<td><{$one.s_material}></td>
 				<td><{$one.s_sizes}></td>
+				<td><{$one.s_chexian}></td>
+				<td><{$one.s_neili}></td>
+				<td><{$one.s_dadi}></td>
 				<td><{$one.s_price}></td>
-				<%if condition="$one['s_soldout'] eq 1"%>
-				<td>样品已经下架</td>
-				<%else/%>
-				<td>--------</td>
-				<%%/if>
-				<td><a href="__CONTROLLER__/detail/id/<{$one.s_id}>">查看</a></td>
+				<td><{$one.s_remark}></td>
+				<td>
+					<a href="__CONTROLLER__/detail/id/<{$one.s_id}>">
+						<%if condition="$one.s_isproduce eq 1"%>
+						投产样品
+						<%else/%>
+						未投产样品
+						<%/if%>
+					</a>
+				</td>
 				<td><a href="__CONTROLLER__/updateSampleUi/id/<{$one.s_id}>">修改</a></td>
-				<td><a  onclick="if(confirm('确定删除?')==false)return false;" href="__CONTROLLER__/deleteSample/id/<{$one.s_id}>" >删除</a></td>
+				<td><a  onclick="if(confirm('确定下架?')==false)return false;" href="__CONTROLLER__/deleteSample/id/<{$one.s_id}>" >下架</a></td>
 			</tr>
 			<%/foreach%>
 			</tbody>
 		</table>
 	</div>
+
+	<!--导航线 end-->
 	<!--分页 start-->
 	<div class="row">
 		<div class="col-md-offset-3">

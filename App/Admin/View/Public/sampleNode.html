@@ -1,0 +1,37 @@
+<table class="table table-bordered table-condensed">
+	<thead>
+		<tr>
+			<th>样品图片</th>
+			<th>样品型号</th>
+			<th>样品名称</th>
+			<th>样品面料</th>
+			<th>样品码段</th>
+			<th>样品车线</th>
+			<th>样品内里</th>
+			<th>样品大底</th>
+			<th>样品单价</th>
+			<th>选择</th>
+		</tr>
+
+	</thead>
+	<tbody >
+	<%foreach name="sample" item="one"%>
+	<tr>
+		<td><img src="__ROOT__<{$img_url}><{$one['image'][0]['i_url']}>"/></td>
+		<td><{$one.s_models}></td>
+		<td><{$one.s_name}></td>
+		<td><{$one.s_material}></td>
+		<td><{$one.s_sizes}></td>
+		<td><{$one.s_chexian}></td>
+		<td><{$one.s_neili}></td>
+		<td><{$one.s_dadi}></td>
+		<td><{$one.s_price}></td>
+		<td><button class="btn btn-primary" onclick="into_orders(<{$one.s_id}>)" >加入订单</button></td>
+	</tr>
+	<%/foreach%>
+	</tbody>
+	<tfoot>
+	</tfoot>
+</table>
+
+

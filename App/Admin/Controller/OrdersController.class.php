@@ -18,42 +18,57 @@ class OrdersController extends AdminController{
 
 
 	/**
-	 * 未完成的订单
+	 * 订单列表
 	 */
 	public function index(){
-		$statusid=$this->ordersapi->getOrdersStatus("发货完结",null);
-		$map['os_id']=array('NOT IN', $statusid);
-		$map['o_isdelete']=array('EQ',0);
+		
+		$type=I("get.type");
+		$orderstatus=C("ORDERS_STATUS");
+		switch($type){
+		case "orders_pre":
+			$status_name=$orderstatus['ORDERS_PRE'];
+			break;
+		case "orders_produce":
+			$status_name=$orderstatus['ORDERS_PRODUCE'];
+			break;
+		case "orders_ok":
+			$status_name=$orderstatus['ORDERS_OK'];
+			break;
+		case "orders_send":
+			$status_name=$orderstatus['ORDERS_SEND'];
+			break;
+		case "all":
+			break;
+		case "null":
+			$is_delete=1;
+			break;
+		default:
+			break;	
+		
+		}
+		$map=array();
+		if(isset($status_name)){
+			$map['os_id']=array("EQ",$this->ordersapi->getOrdersStatus($status_name));
+			$map['o_isdelete']=array("EQ",0);
+			$this->assign("title_name",$status_name);
+		}
+		if(isset($is_delete)){
+			$map['o_isdelete']=array("EQ",$is_delete);
+			$this->assign("title_name","作废的订单");
+		}
 		$result=$this->ordersapi->getOrdersList($map);	
 		if($result){
 			$this->assign("datalist",$result['datalist']);
 			$this->assign('page',$result['page']);
+			$this->assign("img_url",C("UPLOADIMG_URL"));
 			$this->display();
 		}else{
-			$this->error('没有未完成的订单');	
+			$this->error('没有该类型的订单');	
 		}
 	}
 
 
 
-
-	/**
-	 * 已经完成的订单
-	 */
-	public function doneOrders(){
-		$statusid=$this->ordersapi->getOrdersStatus("发货完结",null);
-		$map['os_id']=array('IN',$statusid);
-		$map['o_isdelete']=array('EQ',0);
-		$result=$this->ordersapi->getOrdersList($map);	
-		if($result){
-			$this->assign("datalist",$result['datalist']);
-			$this->assign('page',$result['page']);
-			$this->display();
-		}else{
-			$this->error('没有未完成的订单');	
-		}
-
-	}
 
 
 
@@ -127,6 +142,9 @@ class OrdersController extends AdminController{
 	 * 添加订单界面
 	 */
 	public function addOrdersUi(){
+		$models=M();
+		$count=$models->table("sample")->where("s_soldout= %d ",0)->count();
+		$this->assign("sample_count",$count);
 		$this->display();
 	}
 
@@ -136,7 +154,7 @@ class OrdersController extends AdminController{
 	public function addOrders(){
 
 		$data=I("post.");
-
+		unset($data['remark']);
 		$check=true;
 		foreach($data as $one){
 			if(is_array($one)){
@@ -162,6 +180,7 @@ class OrdersController extends AdminController{
 		if(!$check){
 			$this->error("请填写订单详情");
 		}
+		$data['remark']=I("post.remark");
 		$result=$this->ordersapi->addOrders($data);
 		if($result){
 			$this->redirect("/Orders/ordersDetail/",array('id'=>intval($result)));
@@ -384,6 +403,6 @@ class OrdersController extends AdminController{
 		}
 
 	}
-
+		
 
 }

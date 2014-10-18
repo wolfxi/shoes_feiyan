@@ -33,17 +33,13 @@ class SampleApi extends Api{
 		$sample['s_sizes']=$data['sizes'];
 		$sample['s_price']=$data['price'];
 		$sample['s_mould']=$data['mould'];
-		$sample['s_color']=$data['color'];
 		$sample['s_soldout']= 0;
+		$sample['s_isproduce']=0;
+		$sample['s_neili']=$data['neili'];
+		$sample['s_dadi']=$data['dadi'];
+		$sample['s_chexian']=$data['chexian'];
+		$sample['s_remark']=$data['remark'];
 
-		$sample['s_attribute']['sole']=$data['sole'];
-		$sample['s_attribute']['shoesbag']=$data['shoesbag'];
-		$sample['s_attribute']['insole']=$data['insole'];
-		$sample['s_attribute']['innerbox']=$data['innerbox'];
-		$sample['s_attribute']['outerbox']=$data['outerbox'];
-		$sample['s_attribute']['other']=$data['other'];
-
-		$sample['s_attribute']=serialize($sample['s_attribute']);
 
 		//开启数据库事务
 		$models=M();
@@ -91,18 +87,31 @@ class SampleApi extends Api{
 		}
 	}
 
+	/**
+	 * ajax获取样品列表
+	 * @param @map  array 搜索数据
+	 * $page 页码
+	 */
+	public function mySampleList($map,$page){
+		$result=$this->model->relation(true)->where($map)->page($page.',15')->select();
+		if($result && is_array($result)){
+			return $result;	
+		}else{
+			return false;
+		}
+	}
 
 	/**
 	 * 获取分页的样品信息
 	 * return array
 	 */
-	public function getSampleList($soldout=0){
+	public function getSampleList($map){
 
-		$count = $this->model->where('s_soldout = %d',intval($soldout))->count();// 查询满足要求的总记录数
-		$Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(15)
+		$count = $this->model->where($map)->count();// 查询满足要求的总记录数
+		$Page = new \Think\Page($count,2);// 实例化分页类 传入总记录数和每页显示的记录数(15)
 		$show = $Page->show();// 分页显示输出
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-		$list = $this->model->where('s_soldout = %d',$soldout)->order('s_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+		$list = $this->model->relation(true)->where($map)->order('s_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 
 		$result['page']=$show;
 		$result['datalist']=$list;
@@ -174,19 +183,16 @@ class SampleApi extends Api{
 			$sample['s_sizes']=$data['sizes'];
 			$sample['s_price']=$data['price'];
 			$sample['s_mould']=$data['mould'];
-			$sample['s_color']=$data['color'];
 			$sample['s_soldout']= 0;
 
-			$sample['s_attribute']['sole']=$data['sole'];
-			$sample['s_attribute']['shoesbag']=$data['shoesbag'];
-			$sample['s_attribute']['insole']=$data['insole'];
-			$sample['s_attribute']['innerbox']=$data['innerbox'];
-			$sample['s_attribute']['outerbox']=$data['outerbox'];
-			$sample['s_attribute']['other']=$data['other'];
+			$sample['s_neili']=$data['neili'];
+			$sample['s_dadi']=$data['dadi'];
+			$sample['s_chexian']=$data['chexian'];
+			$sample['s_remark']=$data['remark'];
 
-			$sample['s_attribute']=serialize($sample['s_attribute']);
 
-			$result=$this->model->where("s_id = %d" , intval($data['id']))->data($sample)->save();
+
+			$result=$this->model->where("s_id = %d" , intval($data['s_id']))->data($sample)->save();
 			if($result){
 				return TRUE;
 			}else{

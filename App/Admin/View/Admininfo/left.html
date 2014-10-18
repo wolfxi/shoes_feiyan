@@ -78,14 +78,20 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 		//样品管理start 
 		var modelC = new TreeNode('样品管理');
 
-			var C1 = new TreeNode('样品列表', '__MODULE__/Sample/index', 'tree_node.gif', null, 'tree_node.gif', null);
+			var C1 = new TreeNode('样品库', '__MODULE__/Sample/index/', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelC.add(C1);
 
-			var C2 = new TreeNode('添加样品', '__MODULE__/Sample/addSampleUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			var C2 = new TreeNode('投产样品', '__MODULE__/Sample/index/type/1', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelC.add(C2);
 
-			var C3 = new TreeNode('下架样品', '__MODULE__/Sample/soldoutList', 'tree_node.gif', null, 'tree_node.gif', null);
+			var C3 = new TreeNode('未投产样品', '__MODULE__/Sample/index/type/0', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelC.add(C3);
+
+			var C4 = new TreeNode('新建样品', '__MODULE__/Sample/addSampleUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelC.add(C4);
+
+			var C5 = new TreeNode('已下架样品', '__MODULE__/Sample/soldoutList', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelC.add(C5);
 
 		root.add(modelC);
 
@@ -96,17 +102,26 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 		//订单管理start
 		var modelD = new TreeNode('订单管理');
 
-			var D1 = new TreeNode('未完成订单', '__MODULE__/Orders/index', 'tree_node.gif', null, 'tree_node.gif', null);
+			var D1 = new TreeNode('预产订单', '__MODULE__/Orders/index/type/orders_pre', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelD.add(D1);
 
-			var D2 = new TreeNode('添加订单', '__MODULE__/Orders/addOrdersUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			var D2 = new TreeNode('投产订单', '__MODULE__/Orders/index/type/orders_produce', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelD.add(D2);
 
-			var D3 = new TreeNode('已完成订单', '__MODULE__/Orders/doneOrders', 'tree_node.gif', null, 'tree_node.gif', null);
+			var D3 = new TreeNode('待发货单', '__MODULE__/Orders/index/type/orders_ok', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelD.add(D3);
 
-			var D4 = new TreeNode('生产跟踪订单', '__MODULE__/Orders/followOrders', 'tree_node.gif', null, 'tree_node.gif', null);
+			var D4 = new TreeNode('发完货订单', '__MODULE__/Orders/index/type/orders_send', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelD.add(D4);
+
+			var D5 = new TreeNode('作废订单', '__MODULE__/Orders/index/type/null', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelD.add(D5);
+
+			var D5 = new TreeNode('所有订单', '__MODULE__/Orders/index/type/all', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelD.add(D5);
+
+			var D6 = new TreeNode('新建订单', '__MODULE__/Orders/addOrdersUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			modelD.add(D6);
 
 		root.add(modelD);
 

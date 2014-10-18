@@ -26,7 +26,7 @@
 				<a href="#">/</a>
 				</li>
 				<li>
-				<a href="#">未完成的订单</a>
+				<a href="#"><{$title_name}></a>
 				</li>
 			</ul>
 			<div class="pull-right">
@@ -51,12 +51,9 @@
 			<thead>
 				<tr>
 					<th>订单编号</th>
-					<th>鞋样型号</th>
 					<th>订单客户</th>
 					<th>订单双数</th>
-					<th>订单单价</th>
-					<th>订单总价</th>
-					<th>订单时间</th>
+					<th>订单金额</th>
 					<th>订单状态</th>
 					<th>查看详情</th>
 					<th colspan="2" class="text-center">操作</th>
@@ -65,14 +62,11 @@
 			<tbody>
 			<%foreach name="datalist" item="one" %>
 			<tr>
-				<td><{$one.o_id}></td>
-				<td><{$one.s_models}></td>
-				<td><{$one.o_customer}></td>
-				<td><{$one.o_number}></td>
-				<td><{$one.o_price}></td>
-				<td><{$one.o_totalprice}></td>
-				<td><{$one.o_time}></td>
-				<td><{$one.orderstatus.os_name}></td>
+				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_displayid}></td>
+				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_customer}></td>
+				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_number}></td>
+				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_totalprice}></td>
+				<td rowspan="<{$one.ordersdetail|count}>"><{$one.orderstatus.os_name}></td>
 				<td><a href="__CONTROLLER__/ordersDetail/id/<{$one.o_id}>">查看</a></td>
 				<td><a href="__CONTROLLER__/updateOrdersUi/id/<{$one.o_id}>">修改</a></td>
 				<td><a  onclick="if(confirm('确定删除?')==false)return false;" href="__CONTROLLER__/deleteOrders/id/<{$one.o_id}>" >删除</a></td>
@@ -114,11 +108,11 @@ $(function(){
 		$("#downloadbtn").click(function(){
 			var select_time=$("#select_time").val();
 			if(select_time.length>0){
-				var post_data={select_time : select_time };
-				ajaxhelper.post(post_data,"__CONTROLLER__/excelOrders/",download_callback);
+			var post_data={select_time : select_time };
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelOrders/",download_callback);
 			}else{
-				jshelper.show_message("请选择要下载的订单!");
-				return;
+			jshelper.show_message("请选择要下载的订单!");
+			return;
 			}
 			})
 

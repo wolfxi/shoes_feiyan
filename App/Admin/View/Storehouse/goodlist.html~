@@ -21,7 +21,7 @@
 				<a href="#">/</a>
 				</li>
 				<li>
-				<a href="#"><{$search}></a>
+				<a href="#">仓库列表</a>
 				</li>
 
 			</ul>
@@ -105,14 +105,36 @@
 			<!--form结束-->
 		</form>
 	</div>
+	<div class="pull-right">
+		<button type="button" class="btn btn-primary" id="downloadbtn" >下载仓库数据</button>
+	</form>
+</div>
+
 </div>
 
 
-<script type="text/javascript" src="<{$Think.const.JS_URL}>jquery-1.11.0.js"></script>
-<script type="text/javascript" src="<{$Think.const.JS_URL}>bootstrap.js" ></script>
-</body>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		$("#downloadbtn").click(function(){
+			var post_data={};
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelGoodsList/",download_callback);
+			})
+		})
 
-<script language="javascript">
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+
+}
+
+
 
 //选中全选按钮，下面的checkbox全部选中
 var selAll = document.getElementById("selAll");
@@ -159,5 +181,5 @@ function setSelectAll()
 	}
 }
 </script>
-
+</body>
 </html>

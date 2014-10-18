@@ -22,16 +22,71 @@ class SampleController extends AdminController{
 	//显示样品列表
 	public function index(){
 
-		$result=$this->sampleapi->getSampleList();
+		$type=I("get.type");
+		$map['s_soldout']=array('EQ',0);
+		if(isset($type)){
+			$map['s_isproduce']=array("EQ",$type);
+		}
+		$result=$this->sampleapi->getSampleList($map);
 		if($result && is_array($result)){
 			$this->assign('datalist',$result['datalist']);
 			$this->assign('page',$result['page']);
 			$this->display();
 		}else{
-			$this->error('还没有样品，请添加样品');
+			$this->error('还没有样品，请新建样品');
 		}
 	}
 
+	//AJAX获取样品列表
+	public function ajaxSampleList(){
+		if(IS_AJAX){
+			$page=I("post.page");
+			$map['s_soldout']=array("EQ",0);
+			$result=$this->sampleapi->mySampleList($map,$page);
+			if($result){
+				$this->assign("img_url",C("UPLOADIMG_URL"));
+				$this->assign("sample",$result);
+				$content=$this->fetch("Public:sampleNode");
+				$data['flag']=true;
+				$data['message']=$content;
+
+			}else{
+				$data['flag']=false;
+				$data['message']="获取数据失败！！请检查是否有样品";
+			}
+			$this->ajaxReturn($data);
+		}else{
+			exit();
+		}
+	}
+
+
+	//AJAX获取某个样品信息
+	public function ajaxGetOneSample(){
+		if(IS_AJAX){
+			$s_id=I("post.s_id");
+			if(!empty($s_id)){
+				$result=$this->sampleapi->getOneSample($s_id);
+				if($result){
+					$this->assign("sample",$result);
+					$this->assign("img_url",C("UPLOADIMG_URL"));
+					$content=$this->fetch("Public:oneSampleNode");
+					$data['flag']=true;
+					$data['id']=$s_id;
+					$data['message']=$content;
+				}else{
+					$data['flag']=false;
+					$data['message']="获取信息失败！！！";
+				}
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要添加的样品";
+			}
+			$this->ajaxReturn($data);
+		}else{
+			exit();
+		}
+	}
 
 
 	//修改样品信息界面
@@ -50,7 +105,7 @@ class SampleController extends AdminController{
 		}else{
 			$this->error('要修改的样品不存在！！！');
 			return ;
-		
+
 		}
 	}
 
@@ -61,7 +116,7 @@ class SampleController extends AdminController{
 		$data=I('post.');
 		$flag=$this->sampleapi->updateSample($data);
 		if($flag){
-			$this->redirect('/Sample/detail/',array('id'=>$data['id']));
+			$this->redirect('/Sample/detail/',array('id'=>$data['s_id']));
 		}else{
 			$this->error("修改失败！！！");
 		}
@@ -76,12 +131,12 @@ class SampleController extends AdminController{
 			$flag=$this->sampleapi->statusSample($id);
 			if($flag){
 				$this->success('下架成功');
-			
+
 			}else{
 				$this->error('下架失败');
 			}
 
-		
+
 		}else{
 			$this->error('请选择你要下架的样品');
 		}
@@ -108,7 +163,7 @@ class SampleController extends AdminController{
 		}	
 		$data=I('post.');
 		//数据检测是否合理
-		if(empty($data['name']) || empty($data['models']) || empty($data['sizes']) || empty($data['price']) || empty($data['sole']['models']) || empty($data['sole']['wight']) || empty($data['insole']['models']) || empty($data['insole']['firm']) || empty($data['innerbox']['models']) || empty($data['innerbox']['format']) || empty($data['outerbox']['models']) || empty($data['outerbox']['format'])){
+		if(empty($data['name']) || empty($data['models']) || empty($data['sizes']) || empty($data['price'])){
 			$this->error('请填写样品重要信息！！！');
 			return ;	
 		}else{
@@ -151,16 +206,19 @@ class SampleController extends AdminController{
 	}
 
 
-
+	/**
+	 * 下架的样品
+	 */
 	public function soldoutList(){
-		$result=$this->sampleapi->getSampleList("1");
+		$map['s_soldout']=array('EQ',1);
+		$result=$this->sampleapi->getSampleList($map);
 		if($result && is_array($result) && count($result)>0){
 			$this->assign('datalist',$result['datalist']);
 			$this->assign('page',$result['page']);
 			$this->display();
 		}else{
 			$this->error('还没有下架的样品');
-		
+
 		}
 	}
 
@@ -174,7 +232,7 @@ class SampleController extends AdminController{
 			}else{
 				$this->error("上架失败");
 			}
-		
+
 		}else{
 			$this->error("请选择要上架的样品信息");
 		}

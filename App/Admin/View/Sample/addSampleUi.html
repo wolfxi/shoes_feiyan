@@ -25,35 +25,15 @@
 				<a href="#">/</a>
 				</li>
 				<li >
-				<a href="#">添加样品</a>
+				<a href="#">新建样品</a>
 				</li>
 			</ul>
 		</div>
 	</div>
 	<div class="hrdivblack"></div>
 	<!--导航线 end-->
-	<!--==========================================样品基本属性start===============================================-->
 	<form name="sampleform" action="__CONTROLLER__/addSample" method="post" enctype="multipart/form-data">
 		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">样品名称：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input class="form-control" name="name" type="text" placeholder="请输入样品名称" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
 			<!--右边 start-->
 			<div class="col-md-6">
 				<div class="form-horizontal" >
@@ -65,7 +45,7 @@
 							<span class="input-group-addon">
 								：
 							</span>
-								<input class="form-control" name="models" type="text" placeholder="请输入样品型号" /> 
+							<input class="form-control" name="models" type="text" placeholder="请输入样品型号" /> 
 							</p>
 						</div>
 					</div>
@@ -73,21 +53,38 @@
 				</div>
 			</div>
 			<!--右边 end-->
-		</div>
-
-		<div class="row ">
 			<!--左边 start-->
 			<div class="col-md-6">
 				<div class="form-horizontal" >
 					<!--一行开始 start-->
 					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">样品材料：</label>
+						<label for="1" class="col-sm-4 control-label">样品名称：</label>
 						<div class="col-md-8">
 							<p class="input-group">
 							<span class="input-group-addon">
 								：
 							</span>
-								<input class="form-control" name="material" type="text" placeholder="请输入样品材料" /> 
+							<input class="form-control" name="name" type="text" placeholder="请输入样品名称" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品面料：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="material" type="text" placeholder="请输入样品面料" /> 
 							</p>
 						</div>
 					</div>
@@ -106,17 +103,15 @@
 							<span class="input-group-addon">
 								：
 							</span>
-								<input class="form-control" name="sizes" type="text" placeholder="请输入样品码段" /> 
+							<input class="form-control" name="sizes" type="text" placeholder="请输入样品码段" /> 
 							</p>
 						</div>
 					</div>
 					<!--一行结束  end-->
 				</div>
 			</div>
-			<!--右边 end-->
-		</div>
 
-		<div class="row ">
+
 			<!--左边 start-->
 			<div class="col-md-6">
 				<div class="form-horizontal" >
@@ -128,7 +123,7 @@
 							<span class="input-group-addon">
 								：
 							</span>
-								<input class="form-control" name="price" type="text" placeholder="请输入样品单价" /> 
+							<input class="form-control" name="price" type="text" placeholder="请输入样品单价" /> 
 							</p>
 						</div>
 					</div>
@@ -141,13 +136,13 @@
 				<div class="form-horizontal" >
 					<!--一行开始 start-->
 					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">样品颜色：</label>
+						<label for="1" class="col-sm-4 control-label">样品内里：</label>
 						<div class="col-md-8">
 							<p class="input-group">
 							<span class="input-group-addon">
 								：
 							</span>
-								<input class="form-control" name="color" type="text" placeholder="请输入样品颜色" /> 
+							<input class="form-control" name="neili" type="text" placeholder="请输入样品内里" /> 
 							</p>
 						</div>
 					</div>
@@ -155,9 +150,47 @@
 				</div>
 			</div>
 			<!--右边 end-->
-		</div>
 
-		<div class="row ">
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品车线：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="chexian" type="text" placeholder="请输入样品车线" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品大底：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="dadi" type="text" placeholder="请输入样品大底" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
 			<!--左边 start-->
 			<div class="col-md-6">
 				<div class="form-horizontal" >
@@ -169,7 +202,7 @@
 							<span class="input-group-addon">
 								：
 							</span>
-								<input class="form-control" name="mould" type="text" placeholder="请输入样品楦型" /> 
+							<input class="form-control" name="mould" type="text" placeholder="请输入样品大底" /> 
 							</p>
 						</div>
 					</div>
@@ -177,1105 +210,57 @@
 				</div>
 			</div>
 			<!--左边 end-->
-		</div>
-		<!--==========================================样品基本属性end===============================================-->
-		<div class="hrdivblack"></div>
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">备注：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<textarea class="form-control" name="remark"  placeholder="请输入样品备注信息"></textarea> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
 
-		<div class="row" >
-			<div class="col-md-3 col-md-offset-1">
-				<h3>	<span class="label label-primary">鞋底:</span></h3>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋底型号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input class="form-control" id="shoesmodels" name="sole[models]" type="text" placeholder="请输入鞋底型号" /> 
-								<label style="display:none" id="accounterror" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--右边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋底材料</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesmaterial" class="form-control" name="sole[material]" type="text" placeholder="请输入鞋底材料" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--右边 end-->
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋底重量：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesweight" class="form-control" name="sole[wight]" type="text" placeholder="请输入鞋底重量" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--右边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋底颜色</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoescolor" class="form-control" name="sole[color]" type="text" placeholder="请输入鞋底颜色" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--右边 end-->
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋底厂家：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesfirm" class="form-control" name="sole[firm]" type="text" placeholder="请输入鞋底厂家" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-		</div>
-		<div class="hrdivblack"></div>
-		<div class="row" >
-			<div class="col-md-3 col-md-offset-1">
-				<h3>	<span class="label label-primary">鞋包:</span></h3>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋包货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesbao" class="form-control" name="shoesbag[models]" type="text" placeholder="请输入鞋包货号" /> 
-								<label style="display:none" id="xiebao" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋包材料：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesbaomaterial" class="form-control" name="shoesbag[material]" type="text" placeholder="请输入鞋包材料" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--右边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋包颜色：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesbaocolor" class="form-control" name="shoesbag[color]" type="text" placeholder="请输入鞋包颜色" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--右边 end-->
-		</div>
-		<div class="hrdivblack"></div>
-		<div class="row" >
-			<div class="col-md-3 col-md-offset-1">
-				<h3>	<span class="label label-primary">中底:</span></h3>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">中底货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoeszhong" class="form-control" name="insole[models]" type="text" placeholder="请输入中底货号" /> 
-								<label style="display:none" id="zhongdi" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--右边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">中底厂家</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoeszhongfirm" class="form-control" name="insole[firm]" type="text" placeholder="请输入中底厂家" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--右边 end-->
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">中底颜色：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoeszhongcolor" class="form-control" name="insole[color]" type="text" placeholder="请输入中底颜色" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-		</div>
-		<div class="hrdivblack"></div>
 
-		<div class="row" >
-			<div class="col-md-3 col-md-offset-1">
-				<h3>	<span class="label label-primary">内盒:</span></h3>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">内盒货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesneihe" class="form-control" name="innerbox[models]" type="text" placeholder="请输入内盒货号" /> 
-								<label style="display:none" id="neihe" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--右边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">内盒供应商：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesneihefirm" class="form-control" name="innerbox[firm]" type="text" placeholder="请输入内盒供应商" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--右边 end-->
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">内盒规格：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesneiheformat" class="form-control" name="innerbox[format]" type="text" placeholder="请输入内盒规格" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">内盒货名：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesneihename" class="form-control" name="innerbox[name]" type="text" placeholder="请输入内盒货名" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
 
 		</div>
-		<div class="hrdivblack"></div>
-		<div class="row" >
-			<div class="col-md-3 col-md-offset-1">
-				<h3>	<span class="label label-primary">外箱:</span></h3>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">外箱货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesouter" class="form-control" name="outerbox[models]" type="text" placeholder="请输入外箱货号" /> 
-								<label style="display:none" id="outer" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--右边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">外箱供应商：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesouterfirm" class="form-control" name="outerbox[firm]" type="text" placeholder="请输入外箱供应商" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--右边 end-->
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">外箱规格：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesouterformat" class="form-control" name="outerbox[format]" type="text" placeholder="请输入外箱规格" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">外箱货名：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesoutername" class="form-control" name="outerbox[name]" type="text" placeholder="请输入外箱货名" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">外箱商标：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesouterlogo" class="form-control" name="outerbox[logo]" type="text" placeholder="请输入外箱商标" /> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-		</div>
-		<div class="hrdivblack"></div>
-		<div class="row" >
-			<div class="col-md-3 col-md-offset-1">
-				<h3>	<span class="label label-primary">其他小件:</span></h3>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">皮塑货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoespisu" class="form-control" name="other[pisu]" type="text" placeholder="请输入皮塑货号" /> 
-								<label style="display:none" id="pishu" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<!--右边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">扣件货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoeskoujian" class="form-control" name="other[koujian]" type="text" placeholder="请输入扣件货号" /> 
-								<label style="display:none" id="koujian" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--右边 end-->
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋眼货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesxieyan" class="form-control" name="other[xieyan]" type="text" placeholder="请输入鞋眼货号" />
-								<label style="display:none" id="xieyan" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">帽钉货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesmaoding" class="form-control" name="other[maoding]" type="text" placeholder="请输入帽钉货号" /> 
-								<label style="display:none" id="maoding" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">松紧条货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="songjintiao" class="form-control" name="other[songjintiao]" type="text" placeholder="请输入松紧条" /> 
-								<label style="display:none" id="songjin" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">拉链货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoeslalian" class="form-control" name="other[lalian]" type="text" placeholder="请输入拉链货号" /> 
-								<label style="display:none" id="lalian" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">双面胶货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesshuangmianjiao" class="form-control" name="other[shuangmianjiao]" type="text" placeholder="请输入双面胶货号" /> 
-								<label style="display:none" id="shuangmianjiao" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">鞋带货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesxiedai"  class="form-control" name="other[xiedai]" type="text" placeholder="请输入鞋带货号" /> 
-								<label style="display:none" id="xiedai" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">处理剂货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoeschuliji" class="form-control" name="other[chuliji]" type="text" placeholder="请输入处理剂货号" /> 
-								<label style="display:none" id="chuliji" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">内里货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesneili" class="form-control" name="other[neili]" type="text" placeholder="请输入内里货号" /> 
-								<label style="display:none" id="neili" class="input-group-addon small color-white">*</label> 
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-		</div>
-		<div class="row ">
-			<!--左边 start-->
-			<div class="col-md-6">
-				<div class="form-horizontal" >
-					<!--一行开始 start-->
-					<div class="form-group">
-						<label for="1" class="col-sm-4 control-label">垫脚货号：</label>
-						<div class="col-md-8">
-							<p class="input-group">
-							<span class="input-group-addon">
-								：
-							</span>
-								<input id="shoesdianjiao" class="form-control" name="other[dianjiao]" type="text" placeholder="请输入垫脚货号" /> 
-								<label style="display:none" id="dianjiao" class="input-group-addon small color-white">*</label>
-							</p>
-						</div>
-					</div>
-					<!--一行结束  end-->
-				</div>
-			</div>
-			<!--左边 end-->
-		</div>
-		<div class="hrdivblack"></div>
+
+
+
 
 		<div class="row" >
 			<div class="col-md-6 col-md-offset-1">
-				<h3>	<span class="label label-primary">样品模型:</span>
 
-					<small>	<button type="button" class="btn btn-primary col-md-offset-1" onclick="choseImage('imgview','sampleimage[]');"  > 上传图片</button></small>
-				</h3>
-			</div>
+				<small>	<button type="button" class="btn btn-primary col-md-offset-1" onclick="choseImage('imgview','sampleimage[]');"  > 上传图片</button></small>
+			</h3>
 		</div>
-		<div class="row">
-			<div class="comtainer col-md-offset-1" id="imgview">
-				<!--图片展示区-->
-			</div>
+	</div>
+	<div class="row">
+		<div class="comtainer col-md-offset-1" id="imgview">
+			<!--图片展示区-->
 		</div>
-		<div class="hrdivblack"></div>
+	</div>
 
-		<div class="row">
-			<div class="col-md-2 col-md-offset-9">
-				<button class="btn btn-primary col-md-10" type="submit" > 添加</button>
-			</div>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-9">
+			<button class="btn btn-primary col-md-10" type="submit" > 添加</button>
 		</div>
-	</form>
+	</div>
+</form>
 </div>
 <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
 <script type="text/javascript" src="__JS__fileupload.js"></script>
   <script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
   <script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
-  <script type="text/javascript">
-  	  $(function(){
-  	  		//鞋底
-  	  		$("#shoesmodels").blur(function(){
-  	  			var shoesmodels_value=$("#shoesmodels").val();
-  	  			if(shoesmodels_value.length>0){
-  	  				var post_data={shoesmodel:shoesmodels_value};
-  	  				ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShoseInfo",get_shoesmodel_info);
-  	  			}else{
-  	  				jshelper.show_message("鞋底型号不能为空!!");
-              		return;
-  	  			}
-  	  		})
-
-  	  		//鞋包
-  	  		$("#shoesbao").blur(function(){
-  	  			var shoesbao_value=$("#shoesbao").val();
-  	  			if(shoesbao_value.length>0){
-  	  				var post_data={shoesbao:shoesbao_value};
-  	  				ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosebaoInfo",get_shoesbao_info);
-
-  	  			}else{
-  	  				jshelper.show_message("鞋包型号不能为空！！");
-  	  				return;
-  	  			}
-  	  		})
-
-
-  	  		//中底
-  	  		$("#shoeszhong").blur(function(){
-  	  			var shoeszhong_value=$("#shoeszhong").val();
-  	  			if(shoeszhong_value.length>0){
-  	  				var post_data={shoeszhong:shoeszhong_value};
-  	  				ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShoseZhong",get_shoeszhong_info);
-  	  			}else{
-  	  				jshelper.show_message("中底货号不能为空!!");
-  	  				return;
-  	  			}
-  	  		})
-
-  	  		//内盒
-  	  		$("#shoesneihe").blur(function(){
-  	  			var shoesneihe_value=$("#shoesneihe").val();
-  	  			if(shoesneihe_value.length>0){
-  	  				var post_data={shoesnei:shoesneihe_value};
-  	  				ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShoseNeihe",get_shoes_neihe_info);
-  	  			}else{
-  	  				jshelper.show_message("内盒货号不能为空!!");
-  	  				return;
-  	  			}
-  	  		})
-
-
-  	  		//外箱
-  	  		$("#shoesouter").blur(function(){
-  	  			var shoesouter_value=$("#shoesouter").val();
-  	  			if(shoesouter_value.length>0){
-  	  				var post_data={shoesouter:shoesouter_value};
-  	  				ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShoseOuter",get_shoes_outer_info);
-  	  			}else{
-  	  				jshelper.show_message("外箱货号不能为空");
-  	  				return;
-  	  			}
-  	  		})
-
-  	  		//匹数
-  	  		$("#shoespisu").blur(function(){
-  	  			var shoespisu_value=$("#shoespisu").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_pisu);
-
-  	  		})
-
-  	  		//扣件
-  	  		$("#shoeskoujian").blur(function(){
-  	  			var shoespisu_value=$("#shoeskoujian").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_koujian);
-
-  	  		})
-
-  	  		//鞋眼
-  	  		$("#shoesxieyan").blur(function(){
-  	  			var shoespisu_value=$("#shoesxieyan").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_xieyan);
-
-  	  		})
-
-  	  		//铆钉
-  	  		$("#shoesmaoding").blur(function(){
-  	  			var shoespisu_value=$("#shoesmaoding").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_maoding);
-
-  	  		})
-
-  	  		//松紧条
-  	  		$("#songjintiao").blur(function(){
-  	  			var shoespisu_value=$("#songjintiao").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_songjintiao);
-
-  	  		})
-
-  	  		//拉链
-  	  		$("#shoeslalian").blur(function(){
-  	  			var shoespisu_value=$("#shoeslalian").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_shoeslalian);
-
-  	  		})
-
-  	  		//双面胶
-  	  		$("#shoesshuangmianjiao").blur(function(){
-  	  			var shoespisu_value=$("#shoesshuangmianjiao").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_shoesshuangmianjiao);
-
-  	  		})
-
-  	  		//鞋带
-  	  		$("#shoesxiedai").blur(function(){
-  	  			var shoespisu_value=$("#shoesxiedai").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_shoesxiedai);
-
-  	  		})
-
-  	  		//处理剂
-  	  		$("#shoeschuliji").blur(function(){
-  	  			var shoespisu_value=$("#shoeschuliji").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_shoeschuliji);
-
-  	  		})
-
-  	  		//内里
-  	  		$("#shoesneili").blur(function(){
-  	  			var shoespisu_value=$("#shoesneili").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_shoesneili);
-
-  	  		})
-
-  	  		//垫脚
-  	  		$("#shoesdianjiao").blur(function(){
-  	  			var shoespisu_value=$("#shoesdianjiao").val();
-  	  			var post_data={shoespisu:shoespisu_value};
-  	  			ajaxhelper.post(post_data,"__MODULE__/Storehouse/getShosePisu",get_shoes_shoesdianjiao);
-
-  	  		})
-
-
-
-
-
-
-
-  	  })
-
-
-  	  //鞋底返回函数
-  	  function get_shoesmodel_info(data){
-  	  	var flag=data.flag;
-  	  	if(flag==true){
-  	  		if(data.message){
-  	  			var shoeinfo=data.message;
-  	  			$("#shoesmaterial").val(shoeinfo.gl_material);
-  	  			$("#shoescolor").val(shoeinfo.gl_color);
-  	  			$("#shoesfirm").val(shoeinfo.gl_supplier);
-  	  			$("#shoesweight").val(shoeinfo.gl_format);
-  	  		}else{
-  	  			$("#accounterror").show();
-  	  			$("#accounterror").text("没有此型号");
-  	  		}
-  	  	}else{
-  	  		$("#accounterror").show();
-  	  		$("#accounterror").text(data.message);
-  	  	}
-  	  }
-
-  	  //鞋包
-  	  function get_shoesbao_info(data){
-  	  	var flag=data.flag;
-  	  	if(flag==true){
-  	  		if(data.message){
-  	  			var shoebaoinfo=data.message;
-  	  			$("#shoesbaomaterial").val(shoebaoinfo.gl_material);
-  	  			$("#shoesbaocolor").val(shoebaoinfo.gl_color);
-  	  		}else{
-  	  			$("#xiebao").show();
-  	  			$("#xiebao").text("没有此鞋包型号！");
-  	  		}
-  	  	}else{
-  	  		$("#xiebao").show();
-  	  		$("#xiebao").text(data.message);
-  	  	}
-  	  }
-
-  	  //中底
-  	  function get_shoeszhong_info(data){
-  	  	var flag=data.flag;
-  	  	if(flag==true){
-  	  		if(data.message){
-  	  			var shoeszhongdi=data.message;
-  	  			$("#shoeszhongfirm").val(shoeszhongdi.gl_supplier);
-  	  			$("#shoeszhongcolor").val(shoeszhongdi.gl_color);
-  	  		}else{
-  	  			$("#zhongdi").show();
-  	  			$("#zhongdi").text("没有此中底货号");
-  	  		}
-  	  	}else{
-  	  		$("#zhongdi").show();
-  	  		$("#zhongdi").text(data.message);
-  	  	}
-  	  }
-
-  	  //内盒
-  	  function get_shoes_neihe_info(data){
-  	  	var flag=data.flag;
-  	  	if(flag==true){
-  	  		if(data.message){
-  	  			var shoesneihe=data.message;
-  	  			$("#shoesneihefirm").val(shoesneihe.gl_supplier);
-  	  			$("#shoesneiheformat").val(shoesneihe.gl_format);
-  	  			$("#shoesneihename").val(shoesneihe.gl_name);
-  	  		}else{
-  	  			$("#neihe").show();
-  	  			$("#neihe").text("没有此内盒货号");
-  	  		}
-  	  	}else{
-  	  		$("#neihe").show();
-  	  		$("#neihe").text(data.message);
-  	  	}
-  	  }
-
-  	  //外箱
-  	  function get_shoes_outer_info(data){
-  	  	var flag=data.flag;
-  	  	if(flag==true){
-  	  		if(data.message){
-  	  			var shoesouter=data.message;
-  	  			$("#shoesouterfirm").val(shoesouter.gl_supplier);
-  	  			$("#shoesouterformat").val(shoesouter.gl_format);
-  	  			$("#shoesoutername").val(shoesouter.gl_name);
-  	  			$("#shoesouterlogo").val(shoesouter.gl_logo);
-  	  		}else{
-  	  			$("#outer").show();
-  	  			$("#outer").text("没有此外箱货号");
-  	  		}
-  	  	}else{
-  	  		$("#outer").show();
-  	  		$("#outer").text(data.message);
-  	  	}
-  	  }
-
-
-  	  //匹数
-  	  function get_shoes_pisu(data){
-  	  		var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#pishu").show();
-  	  				$("#pishu").text(data.message);
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //扣件
-  	  function get_shoes_koujian(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#koujian").show();
-  	  				$("#koujian").text("没有此扣件货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //鞋眼
-  	  function get_shoes_xieyan(data){
-  	  		var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#xieyan").show();
-  	  				$("#xieyan").text("没有此鞋眼货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //铆钉
-  	  function get_shoes_maoding(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#maoding").show();
-  	  				$("#maoding").text("没有此帽钉货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //松紧条
-  	  function get_shoes_songjintiao(data){
-  	  		var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#songjin").show();
-  	  				$("#songjin").text("没有此松紧条货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-  	  //拉链
-  	  function get_shoes_shoeslalian(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#lalian").show();
-  	  				$("#lalian").text("没有此拉链货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //双面胶
-  	  function get_shoes_shoesshuangmianjiao(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#shuangmianjiao").show();
-  	  				$("#shuangmianjiao").text("没有此双面胶货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //鞋带
-  	  function get_shoes_shoesxiedai(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#xiedai").show();
-  	  				$("#xiedai").text("没有此鞋带货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //处理剂
-  	  function get_shoes_shoeschuliji(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#chuliji").show();
-  	  				$("#chuliji").text("没有此处理剂货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //内里
-  	  function get_shoes_shoesneili(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#neili").show();
-  	  				$("#neili").text("没有此内里货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-  	  //垫脚
-  	  function get_shoes_shoesdianjiao(data){
-  	  	var flag=data.flag;
-  	  		if(flag==true){
-  	  			if(data.message){
-  	  				$("#dianjiao").show();
-  	  				$("#dianjiao").text("没有此垫脚货号");
-  	  			}else{
-
-  	  			}
-  	  		}
-  	  }
-
-
-
-  </script>
 </body>
 </html>
