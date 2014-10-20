@@ -47,33 +47,94 @@
 	<div class="hrdivblack"></div>
 	<!--导航线 end-->
 	<div class="row ">
-		<table class="table table-bordered table-hover table-margin" id="table1">
-			<thead>
-				<tr>
-					<th>订单编号</th>
-					<th>订单客户</th>
-					<th>订单双数</th>
-					<th>订单金额</th>
-					<th>订单状态</th>
-					<th>查看详情</th>
-					<th colspan="2" class="text-center">操作</th>
-				</tr>
-			</thead>
-			<tbody>
-			<%foreach name="datalist" item="one" %>
+		<table border="1" cellpadding="0" cellspacing="0" align="center" width="100%">
+
+
+			<%foreach name="datalist" item="one" key="key"%>
 			<tr>
-				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_displayid}></td>
-				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_customer}></td>
-				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_number}></td>
-				<td rowspan="<{$one.ordersdetail|count}>"><{$one.o_totalprice}></td>
-				<td rowspan="<{$one.ordersdetail|count}>"><{$one.orderstatus.os_name}></td>
-				<td><a href="__CONTROLLER__/ordersDetail/id/<{$one.o_id}>">查看</a></td>
-				<td><a href="__CONTROLLER__/updateOrdersUi/id/<{$one.o_id}>">修改</a></td>
-				<td><a  onclick="if(confirm('确定删除?')==false)return false;" href="__CONTROLLER__/deleteOrders/id/<{$one.o_id}>" >删除</a></td>
+				<td>
+					<table  class="table table-condensed">
+						<%if condition="$key eq 0"%>
+						<tr>
+							<td> 订单编号</td>
+							<td> 订单客户</td>
+							<td> 订单双数</td>
+							<td> 订单金额</td>
+							<td> 订单状态</td>
+						</tr>
+						<%/if%>
+						<tr>
+							<td><{$one.o_displayid}></td>
+							<td><{$one.o_customer}></td>
+							<td><{$one.o_number}></td>
+							<td><{$one.o_totalprice}></td>
+							<td><{$one.orderstatus.os_name}></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table border="1" cellspacing="0" cellpadding="0" width="100%">
+						<%if condition="$key eq 0"%>
+						<tr>
+							<td>样品图片</td>
+							<td>订单型号</td>
+							<td>订单尺码</td>
+							<td>订单单价</td>
+							<td>订单双数</td>
+							<td>订单装数</td>
+						</tr>
+						<%/if%>
+						<%foreach name="one['ordersdetail']" item="one_one"%>
+						<tr>
+							<td><img src="__ROOT__/<{$img_url}><{$one_one.imgurl}>"></td>
+							<td><{$one_one.s_models}></td>
+							<td><{$one_one.od_sizes}></td>
+							<td><{$one_one.od_price}></td>
+							<td><{$one_one.od_number}></td>
+							<td><{$one_one.od_bunchnum}></td>
+						</tr>
+
+						<%/foreach%>
+					</table>
+				</td>
+				<td>
+					<table class="table table-condensed">
+						<%if condition="$key eq 0"%>
+						<tr>
+							<td>查看详情</td>
+							<td>修改订单</td>
+							<td>删除</td>
+							<td>投产</td>
+						</tr>
+						<%/if%>
+						<tr>
+							<td><a href="__CONTROLLER__/ordersDetail/id/<{$one.o_id}>">查看</a></td>
+							<td><a href="__CONTROLLER__/updateOrdersUi/id/<{$one.o_id}>">修改</a></td>
+							<td><a  onclick="if(confirm('确定删除?')==false)return false;" href="__CONTROLLER__/deleteOrders/id/<{$one.o_id}>" >删除</a></td>
+							<%if condition="$one.orderstatus.os_name eq $orderstatus.ORDERS_PRE"%>
+							<td><a href="__CONTROLLER__/produceOrders/o_id/<{$one.o_id}>">投产</a></td>
+							<%/if%>
+						</tr>
+
+					</table>
+				</td>
 			</tr>
 			<%/foreach%>
-			</tbody>
 		</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</div>
 	<div class="pull-right">
 		<form method="post" class="navbar-form navbar-left" role="search" name="excelform" action="__CONTROLLER__/excelOrders/">

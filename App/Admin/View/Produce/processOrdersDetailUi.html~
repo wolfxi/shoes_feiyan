@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">生产管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">工艺单</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row">
+
+		<form name="gongyiform" method="post" action="__CONTROLLER__/saveProcessOrdersDetail/"/>
+			<table class="table table-condensed table-bordered">
+				<tr>
+					<td>客人订单号：</td>
+					<td colspan="2"><label  ><{$orders.oc_id}></label></td>
+					<td>工厂订单号:</td>
+					<td colspan="2"><label ><{$orders.o_displayid}></label></td>
+					<td>客人货号:</td>
+					<td colspan="2"><input name="shoes[c_sampleid]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+				<tr>
+					<td>工厂货号：</td>
+					<td><{$sample.s_models}></td>
+					<td>楦型：</td>
+					<td colspan="2" ><input name="shoes[mould]" value="<{$sample.s_mould}>" class="form-control" type="text"/></td>
+					<td> 大底：</td>
+					<td><input name="shoes[dadi]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" type="text"/> </td>
+					<td>码差：</td>
+					<td><input name="shoes[macha]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" type="text" /> </td>
+				</tr>
+				<tr class="info">
+					<td>部件名称</td>
+					<td colspan="2">型号 </td>
+					<td colspan="2">名称</td>
+					<td colspan="2">复合方法 </td>
+					<td colspan="2">针车工艺说明</td>
+				</tr>
+				<tr>
+					<td> 面料(1)</td>
+					<td colspan="2"> <input type="text" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material1[models]"/> </td>
+					<td colspan="2"> <input type="text" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material1[name]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material1[method]"/> </td>
+					<td colspan="2" rowspan="7">
+						<textarea class="form-control" name="shoes[zhencheinfo]" rows="14">
+ value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" 
+						</textarea>
+					</td>
+				</tr>
+
+				<tr>
+					<td> 面料(2) </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material2[models]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material2[name]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material2[method]"/> </td>
+				</tr>
+				<tr>
+					<td> 面料(3) </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material3[models]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material3[name]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="material3[method]"/> </td>
+				</tr>
+				<tr>
+					<td> 头排里</td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="toupaili[models]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="toupaili[name]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="toupaili[method]"/> </td>
+				</tr>
+				<tr>
+					<td> 中排里</td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="zhongpaili[models]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="zhongpaili[name]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="zhongpaili[method]"/> </td>
+				</tr>
+				<tr>
+					<td> 主跟里</td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="zhugenli[models]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="zhugenli[name]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="zhugenli[method]"/> </td>
+				</tr>
+				<tr>
+					<td> 鞋垫</td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="xiedian[models]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="xiedian[name]"/> </td>
+					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control" name="xiedian[method]"/> </td>
+				</tr>
+				<tr class="info">
+					<td>部件名称</td>
+					<td>型号</td>
+					<td>规格</td>
+					<td>部件名称</td>
+					<td>型号</td>
+					<td>规格</td>
+					<td>部件名称</td>
+					<td>型号</td>
+					<td>规格</td>
+				</tr>
+
+				<tr>
+					<td>包头衬</td>
+					<td><input name="baotou[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="baotou[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>帮面衬</td>
+					<td><input name="bangmian[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="bangmian[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>中底</td>
+					<td><input name="zhongdi[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="zhongdi[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+
+				<tr>
+					<td>围口料</td>
+					<td><input name="weikouliao[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="weikouliao[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>斜眼衬</td>
+					<td><input name="xieyanchen[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="xieyanchen[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>面线</td>
+					<td><input name="mianxian[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="mianxian[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+				<tr>
+					<td>口舌料</td>
+					<td><input name="kousheliao[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="kousheliao[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>松紧</td>
+					<td><input name="songjin[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="songjin[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>底线</td>
+					<td><input name="dixian[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="dixian[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+				<tr>
+					<td>拉链</td>
+					<td><input name="lalian[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="lalian[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>冲子</td>
+					<td><input name="chongzi[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="chongzi[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>逢包线</td>
+					<td><input name="fengbaoxian[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fengbaoxian[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+				<tr>
+					<td>辅强</td>
+					<td><input name="fuqiang[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fuqiang[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>鞋眼</td>
+					<td><input name="xieyan[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="xieyan[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>鞋带</td>
+					<td><input name="xiedai[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="xiedai[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+				<tr>
+					<td>饰扣</td>
+					<td><input name="koushi[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="koushi[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>滴塑标</td>
+					<td><input name="disubiao[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="disubiao[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>内盒</td>
+					<td><input name="innerbox[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="innerbox[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+				<tr>
+					<td>外箱</td>
+					<td><input name="outerbox[models]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="outerbox[format]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+				</tr>
+
+				<tr class="info">
+					<td>放码</td>
+					<td><input name="fangma[a]" type="text"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" class="form-control"/></td>
+					<td><input name="fangma[b]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fangma[c]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fangma[d]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fangma[e]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fangma[f]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fangma[g]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="fangma[h]"  value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+
+				<tr>
+					<td>牙尖</td>
+					<td><input name="yajian[a]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>"  type="text" class="form-control"/></td>
+					<td><input name="yajian[b]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="yajian[c]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="yajian[d]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="yajian[e]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="yajian[f]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="yajian[g]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+					<td><input name="yajian[h]" value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" type="text" class="form-control"/></td>
+				</tr>
+
+				<tr>
+					<td >前港宝</td>
+					<td colspan="2">
+						<textarea name="gangbao[pre]" class="form-control">
+value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" 
+						</textarea>
+					</td>
+					<td>后港宝</td>
+					<td colspan="2">
+
+						<textarea name="gangbao[back]"  class="form-control">
+value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" 
+						</textarea>
+					</td>
+					<td colspan="3"  class="text-center">成型工艺说明</td>	
+				</tr>
+				<tr>
+					<td colspan="4">图例</td>
+					<td colspan="2">备注</td>
+					<td colspan="3" rowspan="2">
+						<textarea name="shoes[chengxinginfo]" class="form-control" rows="11">
+value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" 
+						</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="4">
+						<img src="__ROOT__/<{$imgurl}><{$img.i_url}>" class="img-rounded" width="200px" height="150px"/>
+
+					</td>
+					<td colspan="2">
+						<textarea  name="shoes[remark]" class="form-control" rows="10">
+value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" 
+						</textarea>
+
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						下料批皮工艺说明：
+					</td>
+					<td colspan="7">
+						<textarea class="form-control" name="shoes[xiaoliaopipiinfo]" cols="" rows="">
+value="<{$ordersdetail.od_attribute.shoes.c_sampleid}>" 
+						</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2"> 上传面料示意图及冲料方向：</td>
+					<%if condition="$ordersdetail['od_isproduce'] eq 1"%>
+					<td colspan="2"><img src="__ROOT__/<{$imgurl}><{$ordersdetail.od_attribute.image.mianliao}>" width="200px" height="150px"class="img-rounded"/></td>
+					<%else/%>
+					<td colspan="2"> <input type="file" name="shoes[image1]" ></td>
+					<%/if%>
+					<td colspan="2"> 上传里料示意图及冲料方向：</td>
+					<%if condition="$ordersdetail['od_isproduce'] eq 1"%>
+					<td colspan="3"><img src="__ROOT__/<{$imgurl}><{$ordersdetail.od_attribute.image.neiliao}>" width="200px" height="150px"class="img-rounded"/></td>
+					<%else/%>
+					<td colspan="3"> <input type="file" name="shoes[image1]" ></td>
+					<%/if%>
+
+				</tr>
+			</table>
+			<div class="row ">
+				<!--左边 start-->
+				<div class="col-md-6">
+					<div class="form-horizontal" >
+						<!--一行开始 start-->
+						<div class="form-group">
+							<label for="1" class="col-sm-4 control-label">码段范围：</label>
+							<div class="col-md-8">
+								<p class="input-group">
+								<span class="input-group-addon">
+									：
+								</span>
+								<input class="form-control" readonly="readonly"  type="text" id="sizes" value="<{$ordersdetail.od_sizes}>"  />
+								</p>
+							</div>
+						</div>
+						<!--一行结束  end-->
+					</div>
+				</div>
+				<!--左边 end-->
+			</div>
+
+			<div class="row " id="sizesdiv">
+			</div>
+
+
+			<div class="row">
+				<div class="col-md-2 col-md-offset-10">
+					<input type="hidden" name="o_id" value="<{$orders.o_id}>"/>
+					<input type="hidden" name="od_id" value="<{$ordersdetail.od_id}>"/>
+					<input type="hidden" name="s_id" value="<{$sample.s_id}>"/>
+					<button type="submit" class="btn btn-primary" >保存工艺单 </button>
+				</div>
+			</div>
+		</form>
+
+
+	</div>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" >
+$(function(){
+
+
+			var yardag=$("#sizes").val();
+			if(yardag.length>0){
+			$("#sizesdiv").empty();
+			var minyarbag = yardag.substring(0,2);
+			var maxyarbag = yardag.substring(3,5);
+			for(i=minyarbag;i<=maxyarbag;i++){
+			var sizes_element="<div class='col-md-6'><div class='form-horizontal'><div class='form-group'><label  class='col-sm-4 control-label'>"+i+"码：</label><div class='col-md-8'><p class='input-group'><span class='input-group-addon'>：</span><input class='form-control' name='sizes["+i+"]'  type='text' /> </p></div></div></div></div>";
+			$("#sizesdiv").append(sizes_element);   
+			}   
+			}else{
+			jshelper.show_message("请输入正确格式的码段范围！！！");
+			}
+
+
+
+		});
+
+
+</script>
+</body>
+</html>

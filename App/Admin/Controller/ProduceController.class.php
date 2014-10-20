@@ -3,14 +3,18 @@
 namespace Admin\Controller;
 use Think\Controller;
 use Produce\Api\ProduceApi;
+use Orders\Api\OrdersApi;
 
 class ProduceController extends AdminController{
 
 	protected $produceapi=null;
+	protected $ordersapi=null;
 	function _initialize(){
 
 		parent::_initialize();
 		$this->produceapi=new ProduceApi();
+		$this->ordersapi=new OrdersApi();
+		$this->assign("imgurl",C("UPLOADIMG_URL"));
 	}
 
 	/**
@@ -18,8 +22,12 @@ class ProduceController extends AdminController{
 	 */
 	public function index(){
 
-		$map['fp_status']= array("NEQ", "发货完结");
-		$result=$this->produceapi->getFollowProduceList($map);
+		$ordersstatus=C('ORDERS_STATUS');
+		$os_id=$this->ordersapi->getOrdersStatus($ordersstatus['ORDERS_PRODUCE']);
+		$map['os_id']=$os_id;
+		$map['o_isproduce']=1;
+		$map['o_isdelete']=0;
+		$result=$this->ordersapi->getOrdersList($map);
 		if($result){
 			$this->assign("datalist",$result['datalist']);
 			$this->assign("page",$result['page']);
@@ -50,12 +58,12 @@ class ProduceController extends AdminController{
 
 
 	/**
-	 * 生产过程记录详细
+	 * 产看生产单详情
 	 */
 	public function produceDetail(){
 		$id=I("get.id");
 		if(!empty($id)){
-			$result=$this->produceapi->getOneFollowProduce($id);
+			$result=$this->ordersapi->getOneOrders($id);
 			if($result && is_array($result)){
 				$this->assign("result",$result);
 				$this->display();
@@ -64,6 +72,69 @@ class ProduceController extends AdminController{
 			}	
 		}else{
 			$this->error("请选择要查看的单子");
+		}
+	}
+
+
+	/**
+	 * 工艺单填鞋界面
+	 */
+	public function processOrdersDetailUi(){
+		$od_id=I("get.od_id");
+		if(!empty($od_id)){
+			$models=M();
+			$ordersdetail=$models->table("ordersdetail")->where("od_id = %d",$od_id)->find();
+			$ordersdetail['od_attribute']=unserialize($ordersdetail['od_attribute']);
+
+			$orders=$models->table("orders")->where("o_id = %d",$ordersdetail['o_id'])->find();
+
+			$sample=$models->table("sample")->where("s_id = %d",$ordersdetail['s_id'])->find();
+
+			$img=$models->table("image")->where("s_id = %d",$sample['s_id'])->find();
+
+			$this->assign("ordersdetail",$ordersdetail);
+			$this->assign("orders",$orders);
+			$this->assign("sample",$sample);
+			$this->assign("img",$img);
+			$this->display();
+
+		}else{
+			$this->error("请选择要查看工艺单的鞋样！！！");
+		}
+
+	}
+
+	/**
+	 * 保存工艺单
+	 */
+	public function saveProcessOrdersDetail(){
+		$img_info=$this->upload_img();
+		if(!$img_info && !is_array($img_info) && count($img_info)<=0 ){
+			//文件上传不成功
+			$this->error('文件上传不成功！！！');   
+			return ;
+		}   
+
+		$data=I("post.");
+
+		$data['image']['mianliao']=$img_info['image1']['savepath'].$img_info['image1']['savename'];
+		$data['image']['neiliao']=$img_info['image2']['savepath'].$img_info['image2']['savename'];
+		if(!empty($data['o_id']) && !empty($data['s_id']) && !empty($data['od_id']) ){
+			$map['od_id']=array("EQ",$data['od_id']);
+			$ordersdetail=$this->produceapi->getOneOrdersDetail($map);
+			if(!$ordersdetail['od_isproduce']){
+				$flag=$this->produceapi->saveProcess($data);
+				if($flag){
+					$this->success("保存成功！！！");
+				}else{
+					$this->error("保存失败！！！");
+				}
+
+			}else{
+				$this->error("已经投入生产，无法操作");
+			}
+		}else{
+			$this->error("请填写工艺单相关信息！！！");
 		}
 	}
 

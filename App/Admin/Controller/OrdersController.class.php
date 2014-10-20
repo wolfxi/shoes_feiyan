@@ -13,6 +13,7 @@ class OrdersController extends AdminController{
 		parent::_initialize();
 
 		$this->ordersapi=new OrdersApi();
+		$this->assign("img_url",C("UPLOADIMG_URL"));
 
 	}
 
@@ -21,7 +22,7 @@ class OrdersController extends AdminController{
 	 * 订单列表
 	 */
 	public function index(){
-		
+
 		$type=I("get.type");
 		$orderstatus=C("ORDERS_STATUS");
 		switch($type){
@@ -44,7 +45,7 @@ class OrdersController extends AdminController{
 			break;
 		default:
 			break;	
-		
+
 		}
 		$map=array();
 		if(isset($status_name)){
@@ -59,6 +60,7 @@ class OrdersController extends AdminController{
 		$result=$this->ordersapi->getOrdersList($map);	
 		if($result){
 			$this->assign("datalist",$result['datalist']);
+			$this->assign("orderstatus",$orderstatus);
 			$this->assign('page',$result['page']);
 			$this->assign("img_url",C("UPLOADIMG_URL"));
 			$this->display();
@@ -110,30 +112,6 @@ class OrdersController extends AdminController{
 			}
 		}
 	}
-
-
-	/**
-	 * 跟踪的订单
-	 */
-	public function followOrders(){
-		$statusid[]=$this->ordersapi->getOrdersStatus("投入生产",null);
-		$statusid[]=$this->ordersapi->getOrdersStatus("生产完结",null);
-		$map['os_id']=array('IN', $statusid);
-		$map['o_isdelete']=array('EQ',0);
-		$result=$this->ordersapi->getOrdersList($map);	
-		if($result){
-			$this->assign("datalist",$result['datalist']);
-			$this->assign('page',$result['page']);
-			$this->display();
-		}else{
-			$this->error('没有正在生产跟踪的订单');	
-		}
-	}
-
-
-
-
-
 
 
 
@@ -250,6 +228,9 @@ class OrdersController extends AdminController{
 		if(empty($id)){
 			$this->error("选择要修改的订单");
 		}else{
+			$models=M();
+			$count=$models->table("sample")->where("s_soldout= %d ",0)->count();
+			$this->assign("sample_count",$count);
 			$result=$this->ordersapi->getOneOrders($id);
 			if($result && is_array($result)){
 				$this->assign('orders',$result);
@@ -266,6 +247,7 @@ class OrdersController extends AdminController{
 	 */
 	public function updateOrders(){
 		$data=I("post.");
+		unset($data['remark']);
 
 		$check=true;
 		foreach($data as $one){
@@ -289,6 +271,7 @@ class OrdersController extends AdminController{
 			break;
 		}
 
+		$data['remark']=I("post.remark");
 		if(!$check){
 			$this->error("请填写订单详情");
 		}
@@ -296,26 +279,32 @@ class OrdersController extends AdminController{
 		if(!empty($data['s_id'])){
 			$orders['s_id']=$data['s_id'];
 		}
+
+		$orders['o_id']=$data['o_id'];
+		$orders['o_displayid']=$data['display_id'];
+		$orders['oc_id']=$data['oc_id'];
 		$orders['o_customer']=$data['customer'];
-		$orders['o_bunchnum']=$data['bunchnum'];
 		$orders['o_number']=$data['number'];
-		$orders['o_price']=$data['price'];
+		$orders['o_totalprice']=$data['totalprice'];
 		$orders['o_remark']=$data['remark'];
-		$orders['o_totalprice']=floatval($data['price'])*intval($data['number']);
-		$orders['o_size']=serialize($data['sizes']);
-		$orders['s_models']=$data['models'];
 
-		$orders['o_attributes']['sole']=$data['sole'];
-		$orders['o_attributes']['shoes']=$data['shoes'];
-		$orders['o_attributes']['shoesbag']=$data['shoesbag'];
-		$orders['o_attributes']['insole']=$data['insole'];
-		$orders['o_attributes']['innerbox']=$data['innerbox'];
-		$orders['o_attributes']['outerbox']=$data['outerbox'];
-		$orders['o_attributes']['other']=$data['other'];
+		$orders['ordersdetail']=array();
 
-		$orders['o_attributes']=serialize($orders['o_attributes']);
-
-
+		foreach($data as $one){
+			$temp=array();
+			if(is_array($one) && count($one)>0){
+				$temp['od_id']=$one['od_id'];
+				$temp['s_id']=$one['s_id'];
+				$temp['s_models']=$one['s_models'];
+				$temp['od_number']=$one['number'];
+				$temp['od_bunchnum']=$one['bunchnum'];
+				$temp['od_sizes']=$one['sizes'];
+				$temp['od_price']=$one['price'];
+				$temp['od_totalprice']=$one['price']*$one['number'];
+			}
+			array_push($orders['ordersdetail'],$temp);
+			unset($temp);
+		}
 
 		$result=$this->ordersapi->updateOrders($data['o_id'],$orders);
 		if($result){
@@ -331,7 +320,7 @@ class OrdersController extends AdminController{
 	 * 生成订单所需要的材料文档 
 	 */
 	public function produceOrders(){
-		$id=I("post.o_id");	
+		$id=I("get.o_id");	
 		if(empty($id)){
 			$this->error("请选择投入生产的订单");
 		}else{
@@ -403,6 +392,61 @@ class OrdersController extends AdminController{
 		}
 
 	}
-		
+
+	//删除订单详情中的某个订单条目
+	public function deleteOrderDetail(){
+		if(IS_AJAX){
+			$od_id=I("post.od_id");
+			if(!empty($od_id)){
+				$map['od_id']=array("EQ",$od_id);
+				$flag=$this->ordersapi->deleteOneOrderDetail($map);
+				if($flag){
+					$data['flag']=true;
+					$data['message']=I("post.s_id");
+				}else{
+					$data['flag']=true;
+					$data['message']="删除失败";
+				}
+
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要删除的条目";
+			}
+			$this->ajaxReturn($data);
+		}else{
+			exit();
+		}
+	}
+
+
+
+	//修改添加新鞋样到订单中
+	public function ajaxAddNewSample(){
+		if(IS_AJAX){
+			$data['s_id']=I("post.s_id");
+			$data['o_id']=I("post.o_id");
+			if(empty($data['s_id']) || empty($data['o_id'])){
+				$data['flag']=false;
+				$data['message']="请选择要添加的样品！！";
+			}else{
+				$result=$this->ordersapi->ajaxAddNewSample($data);
+				if($result && is_array($result)){
+					$this->assign("sample",$result['sample']);
+					$this->assign("od_id",$result['od_id']);
+					$content=$this->fetch("Public:oneSampleNode1");
+					$data['flag']=true;
+					$data['id']=$data['s_id'];
+					$data['message']=$content;
+				}else{
+					$data['flag']=false;
+					$data['message']="添加失败！！！";
+				}
+			}
+			$this->ajaxReturn($data);
+		}else{
+			exit();
+		}
+	}
+
 
 }

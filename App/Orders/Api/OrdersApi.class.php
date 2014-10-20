@@ -6,6 +6,7 @@ namespace Orders\Api;
 use Orders\Api\Api;
 use Orders\Model\OrdersModel;
 use Orders\Model\OrderstatusModel;
+use Sample\Api\SampleApi;
 
 
 class OrdersApi extends Api{
@@ -60,11 +61,20 @@ class OrdersApi extends Api{
 	public function getOneOrders($id){
 		$result=$this->model->relation(true)->where("o_id = %d",intval($id))->find();
 		if($result && is_array($result)){
-			$imgmodel=M("image");
-			$result['image']=$imgmodel->where("s_id = %d",intval($result['s_id']))->select();
-			$result['o_size']=unserialize($result['o_size']);
-			$result['o_attributes']=unserialize($result['o_attributes']);
+			$ordersdetail=array();
+			foreach($result['ordersdetail'] as $one){
+				$models=M();
+				//获取图片
+				$one['imgurl']=$models->table("image")->where("s_id= %d",$one['s_id'])->getField("i_url");
+				$one['od_attribute']=unserialize($one['od_attribute']);
+				//获取样品信息
+				$one['sample']=$models->table("sample")->where("s_id = %d",$one['s_id'])->find();
+				array_push($ordersdetail,$one);	
+			}
+
+			$result['ordersdetail']=$ordersdetail;
 			return $result;
+
 		}else{
 			return FALSE;
 		}
@@ -163,10 +173,31 @@ class OrdersApi extends Api{
 	 * 			flase: false 
 	 */
 	public function updateOrders($id,$data){
-		$flag=$this->model->where("o_id = %d",intval($id))->data($data)->save();
-		if($flag){
+		
+		$models=M();
+		$models->startTrans();
+
+		$ordersdetail=$data['ordersdetail'];
+		unset($data['ordersdetail']);
+		unset($data['o_id']);
+
+
+
+		$flag1=$models->table("orders")->where("o_id = %d",intval($id))->data($data)->save();
+
+
+		foreach($ordersdetail as $one){
+			$od_id=$one['od_id'];
+			unset($one['od_id']);
+			unset($one['s_id']);
+			$flag2=$models->table("ordersdetail")->where("od_id =%d",$od_id)->data($one)->save();
+		}
+
+		if($flag1 ||  $flag2){
+			$models->commit();
 			return true;
 		}else{
+			$models->rollback();
 			return false;
 		}
 	}
@@ -211,36 +242,72 @@ class OrdersApi extends Api{
 		$result=$this->getOneOrders($id);
 		if($result && is_array($result)){
 			//改变订单状态
-			$orderstatus=$this->getOrdersStatus("投入生产");
-			$orders['os_id']=$orderstatus;
+			$ordersstatus=C("ORDERS_STATUS");
+			$os_id=$this->getOrdersStatus($ordersstatus['ORDERS_PRODUCE']);
+			$orders['os_id']=$os_id;
 			$orders['o_isproduce']=1;
 
-			$models=M();
-			$models->startTrans();
-			$flag0=$models->table("orders")->where("o_id = %d",$id)->data($orders)->save();
-
-			//添加到生产跟踪单中
-			$follow['o_id']=$result['o_id'];
-			$follow['fp_starttime']=date("Y-m-d :H:i:s");
-			$follow['fp_status']="投入生产";
-			$follow['fp_progress']="";
-			$follow['fp_logo']=$result['o_attributes']['shoes']['name'];
-			$follow['fp_models']=$result['s_models'];
-			$follow['fp_number']=$result['o_number'];
-			$follow['fp_finishnum']=0;
-			$follow['fp_totalnum']=$result['o_number'];
-
-			$flag1=$models->table("followproduce")->data($follow)->add();
-
-			if($flag0 && $flag1){
-				$models->commit();
-				return intval($flag1);
+			$flag=$this->model->where("o_id =%d",$id)->data($orders)->save();
+			if($flag){
+				return intval($flag);
 			}else{
-				$models->rollback();
 				return FALSE; 
 			}
 		}else{
 			return FALSE; 
+		}
+	}
+
+
+	/**
+	 * 真正删除订单详情中的数据
+	 * @param $data array
+	 * return success true
+	 * 			false false
+	 */
+	public function deleteOneOrderDetail($data){
+		$models=M("ordersdetail");
+		$flag=$models->where($data)->delete();
+		if($flag){
+			return true;
+		}else{
+			return false;
+		}
+	
+	}
+
+
+	/**
+	 * 向已有的订单中添加新的鞋样
+	 * @param $data 数据
+	 * return array
+	 * 		false false
+	 */
+	public function ajaxAddNewSample($data){
+
+		$sampleapi=new SampleApi();
+		$sample_result=$sampleapi->getOneSample($data['s_id']);
+
+		//订单详情数据
+		$orderdetail['o_id']=$data['o_id'];
+		$orderdetail['s_id']=$sample_result['s_id'];
+		$orderdetail['s_models']=$sample_result['s_models'];
+		$orderdetail['od_isproduce']=0;
+		
+		$models=M();
+
+		$flag=$models->table("ordersdetail")->where("o_id =%d AND s_id= %d",$data['o_id'],$data['s_id'])->find();
+		if($flag){
+			return false;
+		}
+
+		$od_id=$models->table("ordersdetail")->data($orderdetail)->add();
+		if($od_id){
+			$result['od_id']=$od_id;
+			$result['sample']=$sample_result;
+			return $result;
+		}else{
+			return false;
 		}
 	}
 

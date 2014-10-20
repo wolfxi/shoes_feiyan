@@ -81,7 +81,7 @@ var ajaxhelper={
 	show_wrong:function(message){
 			   var error="";
 			   if(typeof($(message).flag)!="undefined"){//json格式数据
-				   error=message.msg;
+				   error=message.message;
 			   }else{//html格式数据
 				   error=$.trim($(message).children("#result").text());
 			   }

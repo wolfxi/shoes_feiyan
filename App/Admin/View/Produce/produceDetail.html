@@ -25,242 +25,80 @@
 				<a href="#">/</a>
 				</li>
 				<li >
-				<a href="#">查看生存跟踪详情</a>
+				<a href="#">生产单详情</a>
 				</li>
 			</ul>
 		</div>
 	</div>
-	<div class="hrdivblack"></div>
-	<!--导航线 end-->
-	<!--==========================================样品基本属性start===============================================-->
-	<div class="row ">
-		<!--左边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">订单编号：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.o_id}>" id="models" name="models" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--左边 end-->
-		<!--右边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">订单客户：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.orders.o_customer}>" name="customer" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--右边 end-->
-	</div>
 
-	<div class="row ">
-		<!--左边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">鞋样货号：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" name="bunchnum" value="<{$result.fp_models}>" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--左边 end-->
-		<!--右边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">楦型：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.orders.o_attributess.shoes.mould}>" name="number" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--右边 end-->
-		<!--右边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">生产双数：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.fp_number}>" name="number" type="text" p /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--右边 end-->
-		<!--右边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">完成双数：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.fp_finishnum}>" name="number" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--右边 end-->
-		<!--右边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">生产进程：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.fp_progress}>" name="number" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--右边 end-->
-		<!--右边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">生产状态：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.fp_status}>" name="number" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--右边 end-->
-		<!--右边 start-->
-		<div class="col-md-6">
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label">开始时间：</label>
-					<div class="col-md-8">
-						<p class="input-group">
-						<span class="input-group-addon">
-							：
-						</span>
-						<input class="form-control" readonly="readonly" value="<{$result.fp_starttime}>" name="number" type="text"  /> 
-						</p>
-					</div>
-				</div>
-				<!--一行结束  end-->
-			</div>
-		</div>
-		<!--右边 end-->
-	</div>
-
-	<div class="hrdivblack"></div>
-	<div class="row ">
-		<table class="table table-bordered table-hover table-margin" id="table1">
-			<thead>
-				<tr>
-					<%foreach name="result.orders.o_size" item="one" key="key_one"%>
-					<th><{$key_one}>码</th>
-					<%/foreach%>
-				</tr>
-			</thead>
+	<div class="row">
+		<table class="table table-hover table-bordered">
 			<tbody>
 			<tr>
-				<%foreach name="result.orders.o_size" item="one" key="key_one"%>
-				<th><{$one}>双</th>
-				<%/foreach%>
+				<td colspan="2">订单客户：</td>
+				<td colspan="2"><{$result.o_customer}></td>
+				<td>工厂订单号：</td>
+				<td colspan="2"><{$result.o_displayid}></td>
+				<td colspan="2">客户订单号</td>
+				<td colspan="2"><{$result.oc_id}></td>
+				<td>下单时间：</td>
+				<td colspan="3"><{$result.o_time}></td>
 			</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<div class="hrdivblack"></div>
-
-	<div class="row ">
-		<table class="table table-bordered table-hover table-margin" id="table1">
-			<thead>
-				<tr>
-					<td colspan="6" text-align="center">外包记录</td>
-				</tr>
-				<tr>
-					<th>外包商</th>
-					<th>外包数量</th>
-					<th>外包艺名</th>
-					<th>物品型号</th>
-					<th>外包发出时间</th>
-					<th>外包收回时间</th>
-				</tr>
-			</thead>
-			<tbody>
-			<%foreach name="result.epiboly" item="one" key="key_one"%>
 			<tr>
-				<td><{$one.e_contractor}></td>
-				<td><{$one.e_number}></td>
-				<td><{$one.e_producename}></td>
-				<td><{$one.e_models}></td>
-				<td><{$one.e_posttime}></td>
-				<td><{$one.e_gettime}></td>
+				<td colspan="2">双数：</td>
+				<td colspan="2"><{$result.o_number}></td>
+				<td>金额：</td>
+				<td colspan="2"><{$result.o_totalprice}></td>
+				<td colspan="2">订单状态：</td>
+				<td colspan="2"><{$result.orderstatus.os_name}></td>
+				<td>备注：</td>
+				<td colspan="3"><{$result.o_remark}></td>
+			</tr>
+
+			<tr class="info">
+				<td>图片</td>
+				<td>货号</td>
+				<td>规格</td>
+				<td>颜色</td>
+				<td>件数</td>
+				<td>双数</td>
+				<td>材料</td>
+				<td>内里</td>
+				<td>楦头型号</td>
+				<td>鞋底型号</td>
+				<td>内盒型号</td>
+				<td>大底</td>
+				<td>车线</td>
+				<td>备注</td>
+				<td>工艺单</td>
+			</tr>
+
+			<%foreach name="result['ordersdetail']" item="one"%>
+			<tr>
+				<td><img src="__ROOT__/<{$imgurl}><{$one.imgurl}>"/ width="150px" height="80px"></td>
+				<td><{$one.s_models}></td>
+				<td><{$one.od_sizes}></td>
+				<td><{$one.od_attribute.shoes.color}></td>
+				<td><{$one['od_number']/$one['od_bunchnum']|ceil}></td>
+				<td><{$one.od_number}></td>
+				<td><{$one.sample.s_material}></td>
+				<td><{$one.sample.s_neili}></td>
+				<td><{$one.od_attribute.shoes.xuantou}></td>
+				<td><{$one.od_attribute.sole.models}></td>
+				<td><{$one.od_attribute.innerbox.models}></td>
+				<td><{$one.od_attribute.shoes.dadi}></td>
+				<td><{$one.sample.s_chexian}></td>
+				<td><{$one.od_attribute.shoes.remark}></td>
+				<td><a href="__CONTROLLER__/processOrdersDetailUi/od_id/<{$one.od_id}>">工艺单</a></td>
 			</tr>
 			<%/foreach%>
+
 			</tbody>
+
 		</table>
+
 	</div>
+
 
 </div>
 <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>

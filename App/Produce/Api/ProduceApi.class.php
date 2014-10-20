@@ -11,10 +11,12 @@ use Produce\Model\FollowproduceModel;
 use Orders\Api\OrdersApi;
 use Storehouse\Api\StorehouseApi;
 use Produce\Model\EpibolyModel;
+use Produce\Model\OrdersdetailModel;
 
 class ProduceApi extends Api{
 
 	protected $ordersapi=null;
+	protected $ordersdetailmodel=null;
 
 	//初始化（构造函数的一部分）
 	//实例化用户模型
@@ -22,6 +24,7 @@ class ProduceApi extends Api{
 
 		$this->model=new FollowproduceModel();
 		$this->ordersapi=new OrdersApi();
+		$this->ordersdetailmodel=new OrdersdetailModel();
 	}
 
 
@@ -69,6 +72,7 @@ class ProduceApi extends Api{
 			return false;
 		}
 	}
+
 
 
 	/**
@@ -599,7 +603,63 @@ class ProduceApi extends Api{
 	}
 
 
+	//==============================================================================
 
+
+	/**
+	 * 保存工艺单
+	 * @param $data  保存的数据
+	 * return $od_id
+	 */
+	public function saveProcess($data){
+		$od_id=$data['od_id'];unset($data['od_id']);
+		$o_id=$data['o_id'];unset($data['o_id']);
+		$s_id=$data['s_id'];unset($data['s_id']);
+
+
+
+		$ordersdetail['od_isproduce']=1;
+		$ordersdetail['od_attribute']=$data;
+		$ordersdetail['od_attribute']=serialize($ordersdetail['od_attribute']);
+		$models=M();
+		$models->startTrans();
+		$flag1=$models->table("ordersdetail")->where("od_id = %d ",$od_id)->data($ordersdetail)->save();
+
+		$sample['s_isproduce']=1;
+		$sample['s_mould']=$data['shoes']['mould'];
+		$sample['s_dadi']=$data['shoes']['dadi'];
+		$sample['s_attribute']=$data;
+		$sample['s_attribute']=serialize($sample['s_attribute']);
+		$flag2=$models->table("sample")->where("s_id = %d ",$s_id)->data($sample)->save();
+
+		if($flag2 || $flag1){
+			$models->commit();
+			return true;
+		}else{
+			$models->rollback();
+			return false;
+		}
+	}
+
+
+
+	/**
+	 * 获取一个订单详情
+	 * @param $data 保存数据
+	 * return array 
+	 */
+	public function getOneOrdersDetail($data){
+		$orderdetail=$this->ordersdetailmodel->relation(true)->where($data)->find();
+		if($orderdetail && is_array($orderdetail)){
+
+			$models=M();
+			$img=$models->table("image")->where("s_id = %d ",$orderdetail['s_id'])->find();
+			$orderdetail['img']=$img;
+			return $orderdetail;
+		}else{
+			return false;
+		}
+	}
 
 
 
