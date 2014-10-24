@@ -10,7 +10,7 @@ class OrdersdetailModel extends RelationModel{
 	protected $_link=array(
 		
 		"followproduce"=>array(
-			"mapping_type" 	=> self::HAS_MANY,
+			"mapping_type" 	=> self::HAS_ONE,
 			"class_name" 	=> "Followproduce",
 			"mapping_name"  => "followproduce",
 			"foreign_key" 	=> "od_id"

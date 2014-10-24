@@ -72,6 +72,9 @@
 						</tr>
 					</table>
 				</td>
+
+
+
 				<td>
 					<table border="1" cellspacing="0" cellpadding="0" width="100%">
 						<%if condition="$key eq 0"%>
@@ -84,7 +87,7 @@
 							<td>订单装数</td>
 						</tr>
 						<%/if%>
-						<%foreach name="one['ordersdetail']" item="one_one"%>
+						<%foreach name="one['ordersdetail']" item="one_one" key="key_key"%>
 						<tr>
 							<td><img src="__ROOT__/<{$img_url}><{$one_one.imgurl}>"></td>
 							<td><{$one_one.s_models}></td>
@@ -109,10 +112,20 @@
 						<%/if%>
 						<tr>
 							<td><a href="__CONTROLLER__/ordersDetail/id/<{$one.o_id}>">查看</a></td>
+							<%if condition="$one['o_isproduce'] eq 0"%>
 							<td><a href="__CONTROLLER__/updateOrdersUi/id/<{$one.o_id}>">修改</a></td>
+							<%else/%>
+							<td>	已投产</td>
+							<%/if%>
+							<%if condition="$one['o_isproduce'] eq 0"%>
 							<td><a  onclick="if(confirm('确定删除?')==false)return false;" href="__CONTROLLER__/deleteOrders/id/<{$one.o_id}>" >删除</a></td>
-							<%if condition="$one.orderstatus.os_name eq $orderstatus.ORDERS_PRE"%>
+							<%else/%>
+								<td>无法删除</td>
+							<%/if%>
+							<%if condition="$one['orderstatus']['os_name'] eq $orderstatus['ORDERS_PRE']"%>
 							<td><a href="__CONTROLLER__/produceOrders/o_id/<{$one.o_id}>">投产</a></td>
+							<%else/%>
+								<td>	已投产</td>
 							<%/if%>
 						</tr>
 
@@ -121,18 +134,6 @@
 			</tr>
 			<%/foreach%>
 		</table>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	</div>

@@ -109,7 +109,9 @@
 		<div class="row" id="sample-div">
 		</div>
 		<div class="row" >
-			<div class="col-md-5 col-md-offset-4" id="pagination"></div>
+			<div class="col-md-5 col-md-offset-4" >
+				<ul class="pagination" id="pagination"></ul>	
+			</div>
 		</div>
 	</div>
 </div>
@@ -122,23 +124,36 @@
 $(function(){
 
 		$("#pagination").paging(<{$sample_count}>, {
-format: '[< nncnn >]',
-onSelect: function (page) {
-var post_data={page: page};
-ajaxhelper.post(post_data,"__MODULE__/Sample/ajaxSampleList/",paging_callback);		
-},
-onFormat: function (type) {
-switch (type) {
-case 'block': // n and c
-return '<a>' + this.value + '</a>';
-case 'next': // >
-return '<a>&gt;</a>';
-case 'prev': // <
-return '<a>&lt;</a>';
-case 'first': // [
-return '<a>first</a>';
-case 'last': // ]
-return '<a>last</a>';
+		format: '[< nncnn >]',
+		onSelect: function (page) {
+		var post_data={page: page};
+		ajaxhelper.post(post_data,"__MODULE__/Sample/ajaxSampleList/",paging_callback);		
+		},
+		onFormat: function (type) {
+		switch (type) {
+		case 'block': // n and c
+			if(!this.active)
+					return '<li><a>' + this.value + '</a></li>';
+			else if(this.value != this.page)
+					return '<li><a>' + this.value + '</a></li>';
+			return "<li class='active'><a>" + this.value + "</a></li>";
+
+		case 'next': // >
+			if(this.active)
+				return '<li class="active"><a>&raquo;</a></li>';
+			return '<li ><a>&raquo;</a></li>';
+		case 'prev': // <
+			if(this.active)
+				return '<li class="active"><a>&laquo;</a></li>';
+			return '<li><a>&laquo;</a></li>';
+		case 'first': // [
+			if(this.active)
+				return '<li class="active"><a>first</a></li>';
+			return '<li ><a>first</a></li>';
+		case 'last': // ]
+			if(this.active)
+				return '<li class="active"><a>last</a></li>';
+			return '<li ><a>last</a></li>';
 }
 }
 });

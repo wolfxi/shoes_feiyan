@@ -72,53 +72,70 @@
 					<tbody id="select_sample">
 
 					</tbody>
-					</table>
-				</div>
-				<div class="row" >
-					<div class="col-md-2 col-md-offset-10" >
-						<button type="submit" class="btn btn-primary" >添加订单 </button>
-					</div>
-				</div>
-			</div>
-		</form>
-		<div class="hrdivblack"></div>
-		<div class="container">
-			<div class="row" id="sample-div">
+				</table>
 			</div>
 			<div class="row" >
-				<div class="col-md-5 col-md-offset-4" id="pagination"></div>
+				<div class="col-md-2 col-md-offset-10" >
+					<button type="submit" class="btn btn-primary" >添加订单 </button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="hrdivblack"></div>
+	<div class="container">
+		<div class="row" id="sample-div">
+		</div>
+		<div class="row" >
+			<div class="col-md-5 col-md-offset-4">
+				<ul id="pagination" class="pagination">
+				</ul>
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
-	<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
-	<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
-	<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
-	<script type="text/javascript" src="__STATIC__js/jquery.paging.js"></script>
-	<script type="text/javascript" >
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jquery.paging.js"></script>
+<script type="text/javascript" >
 $(function(){
 
 		$("#pagination").paging(<{$sample_count}>, {
-			format: '[< nncnn >]',
-			onSelect: function (page) {
-				var post_data={page: page};
-				ajaxhelper.post(post_data,"__MODULE__/Sample/ajaxSampleList/",paging_callback);		
-			},
-			onFormat: function (type) {
-				switch (type) {
-					case 'block': // n and c
-						return '<a>' + this.value + '</a>';
-					case 'next': // >
-						return '<a>&gt;</a>';
-					case 'prev': // <
-						return '<a>&lt;</a>';
-					case 'first': // [
-						return '<a>first</a>';
-					case 'last': // ]
-						return '<a>last</a>';
-				}
-			}
-		});
+format: '[< nncnn >]',
+onSelect: function (page) {
+var post_data={page: page};
+ajaxhelper.post(post_data,"__MODULE__/Sample/ajaxSampleList/",paging_callback);		
+},
+onFormat: function (type) {
+switch (type) {
+case 'block': // n and c
+if(!this.active)
+return '<li><a>' + this.value + '</a></li>';
+else if(this.value != this.page)
+return '<li><a>' + this.value + '</a></li>';
+return "<li class='active'><a>" + this.value + "</a></li>";
+
+case 'next': // >
+if(this.active)
+return '<li class="active"><a>&raquo;</a></li>';
+return '<li ><a>&raquo;</a></li>';
+case 'prev': // <
+if(this.active)
+	return '<li class="active"><a>&laquo;</a></li>';
+return '<li><a>&laquo;</a></li>';
+case 'first': // [
+if(this.active)
+	return '<li class="active"><a>first</a></li>';
+return '<li ><a>first</a></li>';
+case 'last': // ]
+if(this.active)
+	return '<li class="active"><a>last</a></li>';
+return '<li ><a>last</a></li>';
+
+}
+}
+});
 
 })
 

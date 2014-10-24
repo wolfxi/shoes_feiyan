@@ -47,31 +47,159 @@ class ProduceApi extends Api{
 		}
 	}
 
+	/**
+	 * 获取一个订单的生产跟踪信息
+	 * @param $data array
+	 * return success array
+	 * 		false false
+	 */
+	public function getFollowProduce($data){
+		$models=M();
+		$orders=$this->ordersapi->getOneOrders($data['o_id']);
+		$ordersdetail=$this->ordersdetailmodel->relation(true)->where("o_id = %d",$orders['o_id'])->select();
+		if($ordersdetail && is_array($ordersdetail)){
+			$temp=array();
+			foreach($ordersdetail as $one){
+				$one['od_attribute']=unserialize($one['od_attribute']);
+				$one['sample']['s_attribute']=unserialize($one['sample']['s_attribute']);
+				$one['img']=$models->table("image")->where("s_id =%d",$one['sample']['s_id'])->find();
+				$one['epiboly']=$models->table("epiboly")->where("fp_id =%d",$one['followproduce']['fp_id'])->select();
+				array_push($temp,$one);
+			}
+			$ordersdetail=$temp;
+		}else{
+			return false;
+		}
+
+		$result['orders']=$orders;
+		$result['ordersdetail']=$ordersdetail;
+		return $result;
+	}
 
 
 	/**
 	 * 获取单个生产跟踪信息
-	 * @param $id  生产跟踪编号
-	 * @patam $o_id 订单编号
+	 * @param $id  ordersdetail 编号
 	 * return  array  一维数组
 	 */
-	public function getOneFollowProduce($id ,$o_id=null){
-		$map=array();
-		if(empty($id)){
-			$map['o_id']=array("EQ",intval($o_id));
-		}else{
-			$map['fp_id']=array("EQ",intval($id));
+	public function getOneFollowProduce($id){
+
+		$ordersdetail=$this->ordersdetailmodel->relation(true)->where("od_id = %d",$id)->find();
+		$models=M();
+		$models->startTrans();
+		if(!is_array($ordersdetail['followproduce']) || count($ordersdetail['followproduce'])<=0){
+			$orderstatus=C("ORDERS_STATUS");
+			//创建跟踪表
+			$follow['o_id']=$ordersdetail['o_id'];
+			$follow['od_id']=$ordersdetail['od_id'];
+			$follow['fp_starttime']=date("Y-m-d :H:i:s");	
+			$follow['fp_progress']="刚创建跟踪";
+			$follow['fp_status']=$orderstatus['ORDERS_PRODUCE'];
+			$follow['fp_models']=$ordersdetail['s_models'];
+			$follow['fp_number']=$ordersdetail['od_number'];
+			$follow['fp_finishnum']=0;
+			$follow['fp_totalnum']=$ordersdetail['od_number'];
+			$flag=$models->table("followproduce")->data($follow)->add();
+			if(!$flag){
+				$this->rollback();
+				return false;
+			}
+			$models->commit();
 		}
-		$result=$this->model->getOneFollowproduce($map);
-		if($result && is_array($result)){
-			$result['orders']['o_attributes']=unserialize($result['orders']['o_attributes']);
-			$result['orders']['o_size']=unserialize($result['orders']['o_size']);
-			$result['orderstatus']=$this->ordersapi->getOrdersStatus();
-			return $result;
+
+		$result=$this->ordersdetailmodel->relation(true)->where("od_id =%d ",$id)->find();
+		$result['od_attribute']=unserialize($result['od_attribute']);
+		$result['sample']['s_attribute']=unserialize($result['sample']['s_attribute']);
+		$result['img']=$models->table("image")->where("s_id = %d",$result['sample']['s_id'])->find();
+		$epiboly=$models->table("epiboly")->where("fp_id = %d",$result['followproduce']['fp_id'])->select();
+		$result['epiboly']=$epiboly;
+		return $result;
+
+	}
+
+
+	/**
+	 * 完成订单
+	 * @id 订单编号
+	 * return success true
+	 * 		false  false
+	 */
+	public function doneOrders($id){
+		$models=M();
+		$orderdetail=$models->table("ordersdetail")->where("o_id = %d",$id)->select();
+		$follow=$models->table("followproduce")->where("o_id = %d",$id)->select();
+
+		$check=true;
+		foreach($ordersdetail as $one){
+			if(!$one['od_isproduce']){
+				$check=false;
+			}
+		}
+		foreach($follow as $one){
+			if($one['fp_number']!=$one['fp_finishnum']){
+				if($check){
+					$check=false;
+				}
+				break;
+			}
+		}
+		if($check){
+			$models->startTrans();
+			//修改订单状态为完成
+			$orderstatus=C("ORDERS_STATUS");
+			$orders['os_id']=$this->ordersapi->getOrdersStatus($orderstatus['ORDERS_OK']);
+			$flag=$models->table("orders")->where("o_id = %d ",$id)->data($orders)->save();
+
+			$flag1=true;
+			foreach($ordersdetail as $one){
+				//添加成品鞋数量
+				$goods=$this->StorehouseApi->getOneGoodsByModels($one['s_models']);
+				$flag2=true;
+				if($goods && is_array($goods)){
+					$flag2=$models->table("goodslist")->where("gl_id = %d",$goods['gl_id'])->setInc("gl_number",$one['od_number']);
+				}else{
+					$ordersdetailtmp=$this->ordersdetailmodel->relation(true)->where("od_id = %d",$one['od_id'])->find();
+					$temp['gl_name']=$ordersdetailtmp['sample']['s_name'];
+					$temp['gl_models']=$one['s_models'];
+					$temp['gl_number']=$one['od_number'];
+					$temp['gl_material']=$one['sample']['s_material'];
+					$temp['gl_format']=$ordersdetailtmp['od_sizes'];
+					$temp['gl_measurementunits']="双";
+					$temp['gl_color']=$ordersdetailtmp['od_attribute']['shoes']['color'];
+					$gk=$models->table("goodskind")->where("gk_name ='%s'","成品鞋")->find();
+					$temp['gk_id']=$gk['gk_id'];
+					$flag2=$models->table("goodslist")->data($temp)->add();
+				}
+
+				//添加成品鞋入库记录
+				$storerecord['gl_id']=is_array($goods) ? $goods['gl_id'] : $flag2;
+				$storerecord['sr_orderid']=$id;
+				$storerecord['sr_time']=date("Y-m-d :H:i:s");
+				$storerecord['sr_number']=$one['od_number'];
+				$storerecord['sr_settled']=1;
+				$flag3=$models->table("storerecord")->data($storerecord)->add();		
+
+
+				if($flag3 && $flag2){
+					continue ;
+				}else{
+					$flag1=false;
+					break;
+				}
+			}
+			if($flag && $flag1){
+				$models->commit();
+				return true;
+			}else{
+				$models->rollback();
+				return false;
+			}
 		}else{
 			return false;
 		}
+
 	}
+
 
 
 
@@ -86,31 +214,20 @@ class ProduceApi extends Api{
 		$models=M();
 		$models->startTrans();
 		$os_name=$this->ordersapi->getOrdersStatus(null,$data['fp_status']);
-		//修改订单信息
-		$orders['os_id']=$data['fp_status'];
-		$orders['o_number']=$data['fp_number'];
-		$flag1=$models->table("orders")->where("o_id = %d", intval($data['o_id']))->data($orders)->save();
 
 		//修改跟踪单信息
 		$followproduce['fp_progress']=$data['fp_progress'];
 		$followproduce['fp_status']=$os_name;
-		$followproduce['fp_number']=$data['fp_number'];
 		$followproduce['fp_finishnum']=$data['fp_finishnum'];
-		$flag2=$models->table("followproduce")->where("fp_id = %d",$data['fp_id'])->data($followproduce)->save();
+		$flag=$models->table("followproduce")->where("fp_id = %d",$data['fp_id'])->data($followproduce)->save();
 
-		if($flag2){
+		if($flag){
 			$models->commit();
 			return true;
 		}else{
 			$models->rollback();
 			return false;
 		}
-
-
-		$flag2=$models->table("followproduce")->where("fp_id = %d ",intval($data['fp_id']))->data()->save();
-
-
-		return $flag;
 	}
 
 
@@ -296,11 +413,8 @@ class ProduceApi extends Api{
 	 * 			false  false
 	 */
 	public function sendGoods($data){
-		$fp_result=$this->model->relation(true)->where("fp_id =%d ",intval($data['fp_id']))->find();
-		if(!$fp_result || !is_array($fp_result)){
-			return false;	
-		}
-		$os_id=$this->ordersapi->getOrdersStatus("发货完结");
+		$orderstatus=C("ORDERS_STATUS");
+		$os_id=$this->ordersapi->getOrdersStatus($orderstatus['ORDERS_SEND']);
 
 
 		$models=M();
@@ -310,65 +424,82 @@ class ProduceApi extends Api{
 		$orders['os_id']=$os_id;	
 		$flag1=$models->table("orders")->where("o_id = %d",intval($data['o_id']))->data($orders)->save();
 
-		//修改跟踪单信息
-		$followproduce['fp_endtime']=date("Y-m-d :H:i:s");
-		$followproduce['fp_progress']="交易结束";
-		$followproduce['fp_status']="发货完结";
-		$followproduce['fp_finishnum']=$fp_result['fp_number'];
-		$flag2=$models->table("followproduce")->where("fp_id = %d",intval($data['fp_id']))->data($followproduce)->save();
+		//获取订单中的所有产品
+		$orders_result=$this->getFollowProduce($data);
 
-		//货物发货物品的信息
-		$storehouseapi=new StorehouseApi();
-		$goods=$storehouseapi->getOneGoodsByModels($fp_result['fp_models']);
+		if(!is_array($orders_result) && !$orders_result){
+			return false;
+		}
+
+
+		$flagall=true;
+
+		foreach($orders_result['ordersdetail'] as $one){
+
+			//修改跟踪单信息
+			$followproduce['fp_endtime']=date("Y-m-d :H:i:s");
+			$followproduce['fp_progress']="交易结束";
+			$followproduce['fp_status']=$orderstatus['ORDERS_SEND'];
+			$flag2=$models->table("followproduce")->where("fp_id = %d",intval($one['followproduce']['fp_id']))->data($followproduce)->save();
+
+
+
+
+
+			//减少仓库货物记录(内盒，外箱，鞋子成品)
+			$flag4=$models->table("goodslist")->where("gl_models = '%s'",$one['od_attribute']['innerbox']['models'])->setDec("gl_number",$one['od_number']);
+			$flag5=$models->table("goodslist")->where("gl_models = '%s'",$one['od_attribute']['outerbox']['models'])->setDec("gl_number",ceil($one['od_number']/$one['od_bunchnum']));
+			$flag6=$models->table("goodslist")->where("gl_models = '%s'",$one['s_models'])->setDec("gl_number",$one['od_number']);
+
+
+			//添加仓库进出库记录
+			$storerecord['sr_time']=date("Y-m-d :H:i:s");
+			$storerecord['sr_signer']=$data['sendperson'];
+			$storerecord['sr_orderid']=$data['o_id'];
+			$storerecord['sr_settled']= 0;
+
+			$storehouseapi=new StorehouseApi();
+
+			//鞋子出库记录
+			$shoes=$storehouseapi->getOneGoodsByModels($one['s_models']);
+			$storerecord['gl_id']=$shoes['gl_id'];
+			$storerecord['sr_number']=$one['od_number'];
+			$flag7=$models->table("storerecord")->data($storerecord)->add();
+
+			//内箱出库记录
+			$innerbox=$storehouseapi->getOneGoodsByModels($one['od_attribute']['innerbox']['models']);
+			$storerecord['gl_id']=$innerbox['gl_id'];
+			$flag8=$models->table("storerecord")->data($storerecord)->add();
+
+			//外箱出库记录
+			$storerecord['sr_number']=ceil($one['od_number']/$one['od_bunchnum']);
+			$outerbox=$storehouseapi->getOneGoodsByModels($one['od_attribute']['outerbox']['models']);
+			$storerecord['gl_id']=$outerbox['gl_id'];
+			$flag9=$models->table("storerecord")->data($storerecord)->add();
+
+			if($flag7 && $flag8 && $flag9){
+				continue;
+			}else{
+				$flagall=false;
+				break;
+			}
+
+		}
+
+
 
 		//增加发货记录
-		$delivergoods['gl_id']=$goods['gl_id'];
 		$delivergoods['o_id']=$data['o_id'];
-		$delivergoods['dg_productname']=$goods['gl_name'];
-		$delivergoods['dg_models']=$goods['gl_models'];
 		$delivergoods['dg_person']=$data['sendperson'];
-		$delivergoods['dg_number']=$fp_result['fp_finishnum'];
-		$delivergoods['dg_customer']=$fp_result['orders']['o_customer'];
-		$delivergoods['dg_totalnum']=$fp_result['fp_number'];
-		$delivergoods['dg_leavenum']=$fp_result['fp_number']-$fp_result['fp_finishnum'];
-		$delivergoods['dg_price']=$fp_result['orders']['o_price'];
-		$delivergoods['dg_totalprice']=$fp_result['orders']['o_price'] * $fp_result['fp_finishnum'];
-		$delivergoods['dg_status']="已发货";
+		$delivergoods['dg_customer']=$orders_result['orders']['o_customer'];
+		$delivergoods['dg_totalnum']=$orders_result['orders']['o_number'];
+		$delivergoods['dg_totalprice']=$orders_result['orders']['o_totalprice'];
+		$delivergoods['dg_status']=$orderstatus['ORDERS_SEND'];
 		$delivergoods['dg_time']=date("Y-m-d :H:i:s");
 		$flag3=$models->table("delivergoods")->data($delivergoods)->add();
 
 
-		//减少仓库货物记录(内盒，外箱，鞋子成品)
-		$flag4=$models->table("goodslist")->where("gl_models = '%s'",$fp_result['orders']['s_models'])->setDec("gl_number",$delivergoods['dg_number']);
-		$flag5=$models->table("goodslist")->where("gl_models = '%s'",$fp_result['orders']['o_attributes']['innerbox']['models'])->setDec("gl_number",$delivergoods['dg_number']);
-		$flag6=$models->table("goodslist")->where("gl_models = '%s'",$fp_result['orders']['o_attributes']['outerbox']['models'])->setDec("gl_number",ceil($delivergoods['dg_number']/$fp_result['orders']['o_bunchnum']));
-
-
-		//添加仓库进出库记录
-		$storerecord['sr_time']=date("Y-m-d :H:i:s");
-		$storerecord['sr_signer']=$data['sendperson'];
-		$storerecord['sr_orderid']=$fp_result['o_id'];
-		$storerecord['sr_settled']= 0;
-
-		//鞋子出库记录
-		$storerecord['gl_id']=$goods['gl_id'];
-		$storerecord['sr_number']=$fp_result['fp_finishnum'];
-		$flag7=$models->table("storerecord")->data($storerecord)->add();
-
-		//内箱出库记录
-		$storerecord['sr_number']=$fp_result['fp_finishnum'];
-		$innerbox=$storehouseapi->getOneGoodsByModels($fp_result['orders']['o_attributes']['innerbox']['models']);
-		$storerecord['gl_id']=$innerbox['gl_id'];
-		$flag8=$models->table("storerecord")->data($storerecord)->add();
-
-		//外箱出库记录
-		$storerecord['sr_number']=ceil($fp_result['fp_finishnum']/$fp_result['orders']['o_bunchnum']);
-		$outerbox=$storehouseapi->getOneGoodsByModels($fp_result['orders']['o_attributes']['outerbox']['models']);
-		$storerecord['gl_id']=$outerbox['gl_id'];
-		$flag9=$models->table("storerecord")->data($storerecord)->add();
-
-
-		if($flag1 && $flag2 && $flag3  && $flag7 && $flag8 && $flag9){
+		if($flag1 && $flagall && $flag3){
 			$models->commit();
 			return TRUE;
 		}else{
@@ -442,18 +573,29 @@ class ProduceApi extends Api{
 	 * return  int   新增的外包编号
 	 */
 	public function addEpiboly($data){
+		$shoes_models=$data['shoes_models'];
+		$o_displayid=$data['o_id'];
+		unset($data['o_id']);
+		unset($data['shoes_models']);
 		$epiboly=$data;
 		$epiboly['e_posttime']=date("Y-m-d :H:i:s");
 		$epiboly['e_iscallback']=0;
 
-		//查询跟踪单号
-		$fp_result=$this->getOneFollowProduce(null,$epiboly['o_id']);
-
 		$models=M();
-		$models->startTrans();
+
+		$orders=$models->table("orders")->where("o_displayid = '%s'",$o_displayid)->find();
+
+
+		$ordersdetail=$models->table("ordersdetail")->where("o_id = %d AND s_models = '%s'",$orders['o_id'],$shoes_models)->find();
+
+		//查询跟踪单号
+		$fp_result=$models->table("followproduce")->where("od_id = %d",$ordersdetail['od_id'])->find();
+
 
 		//添加外包记录
+		$models->startTrans();
 		$epiboly['fp_id']=$fp_result['fp_id'];
+		$epiboly['o_id']=$orders['o_id'];
 		$flag1=$models->table("epiboly")->data($epiboly)->add();
 
 		//添加出库记录

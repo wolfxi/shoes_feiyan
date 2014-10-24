@@ -47,14 +47,13 @@
 		<table class="table table-bordered table-hover table-margin" id="table1">
 			<thead>
 				<tr>
-					<th>订单编号</th>
-					<th>鞋样型号</th>
+					<th>工厂订单号</th>
 					<th>订单客户</th>
+					<th>客户订单号</th>
 					<th>生产双数</th>
-					<th>已经生产</th>
-					<th>开始时间</th>
+					<th>交易金额</th>
+					<th>下单时间</th>
 					<th>生产状态</th>
-					<th>生产进程</th>
 					<th>查看详情</th>
 					<th >操作</th>
 				</tr>
@@ -62,16 +61,15 @@
 			<tbody>
 			<%foreach name="datalist" item="one" %>
 			<tr>
-				<td><{$one.o_id}></td>
-				<td><{$one.fp_models}></td>
-				<td><{$one.orders.o_customer}></td>
-				<td><{$one.fp_number}></td>
-				<td><{$one.fp_finishnum}></td>
-				<td><{$one.fp_starttime}></td>
-				<td><{$one.fp_status}></td>
-				<td><{$one.fp_progress}></td>
-				<td><a href="__CONTROLLER__/deliberGoodsUi/id/<{$one.fp_id}>">查看</a></td>
-				<td><a href="__CONTROLLER__/deliberGoodsUi/id/<{$one.fp_id}>">发货</a></td>
+				<td><{$one.o_displayid}></td>
+				<td><{$one.o_customer}></td>
+				<td><{$one.oc_id}></td>
+				<td><{$one.o_number}></td>
+				<td><{$one.o_totalprice}></td>
+				<td><{$one.o_time}></td>
+				<td><{$one.orderstatus.os_name}></td>
+				<td><a href="__CONTROLLER__/deliberGoodsUi/id/<{$one.o_id}>">查看</a></td>
+				<td><a href="__CONTROLLER__/deliberGoodsUi/id/<{$one.o_id}>">发货</a></td>
 			</tr>
 			<%/foreach%>
 			</tbody>

@@ -25,7 +25,7 @@
 				<a href="#">/</a>
 				</li>
 				<li >
-				<a href="#">生产单详情</a>
+				<a href="#">订单生产总览</a>
 				</li>
 			</ul>
 		</div>
@@ -36,23 +36,23 @@
 			<tbody>
 			<tr>
 				<td colspan="2">订单客户：</td>
-				<td colspan="2"><{$result.o_customer}></td>
+				<td colspan="2"><{$orders.o_customer}></td>
 				<td>工厂订单号：</td>
-				<td colspan="2"><{$result.o_displayid}></td>
+				<td colspan="2"><{$orders.o_displayid}></td>
 				<td colspan="2">客户订单号</td>
-				<td colspan="2"><{$result.oc_id}></td>
+				<td colspan="2"><{$orders.oc_id}></td>
 				<td colspan="2">下单时间：</td>
-				<td colspan="3"><{$result.o_time}></td>
+				<td colspan="3"><{$orders.o_time}></td>
 			</tr>
 			<tr>
-				<td colspan="2">双数：</td>
-				<td colspan="2"><{$result.o_number}></td>
-				<td>金额：</td>
-				<td colspan="2"><{$result.o_totalprice}></td>
+				<td colspan="2">总双数：</td>
+				<td colspan="2"><{$orders.o_number}></td>
+				<td>总金额：</td>
+				<td colspan="2"><{$orders.o_totalprice}></td>
 				<td colspan="2">订单状态：</td>
-				<td colspan="2"><{$result.orderstatus.os_name}></td>
+				<td colspan="2"><{$orders.orderstatus.os_name}></td>
 				<td colspan="2">备注：</td>
-				<td colspan="3"><{$result.o_remark}></td>
+				<td colspan="3"><{$orders.o_remark}></td>
 			</tr>
 
 			<tr class="info">
@@ -69,14 +69,14 @@
 				<td>内盒型号</td>
 				<td>大底</td>
 				<td>车线</td>
-				<td>生产进程</td>
+				<td>备注</td>
 				<td>工艺单</td>
 				<td>跟踪单</td>
 			</tr>
 
-			<%foreach name="result['ordersdetail']" item="one"%>
+			<%foreach name="ordersdetail" item="one"%>
 			<tr>
-				<td><img src="__ROOT__/<{$imgurl}><{$one.imgurl}>"/ width="150px" height="80px"></td>
+				<td><img src="__ROOT__/<{$imgurl}><{$one.img.i_url}>"/ width="150px" height="80px"></td>
 				<td><{$one.s_models}></td>
 				<td><{$one.od_sizes}></td>
 				<td><{$one.od_attribute.shoes.color}></td>
@@ -93,20 +93,42 @@
 				<td><a href="__CONTROLLER__/processOrdersDetailUi/od_id/<{$one.od_id}>">工艺单</a></td>
 				<td><a href="__CONTROLLER__/followOneProduce/od_id/<{$one.od_id}>">跟踪单</a></td>
 			</tr>
+			<tr class="active">
+				<td colspan="2">状态：</td>
+				<td colspan="2"><{$one.followproduce.fp_status}></td>
+				<td colspan="2">是否投入生产:</td>
+				<td colspan="2"><%if condition="$one.od_isproduce eq 1"%>已投入生产<%else/%>未投入生产<%/if%></td>
+				<td colspan="2">完成量:</td>
+				<td colspan="2"><{$one.followproduce.fp_finishnum}></td>
+				<td colspan="2">生产进程:</td>
+				<td colspan="2"><{$one.followproduce.fp_progress}></td>
+			</tr>
+			<tr class="info">
+				<td colspan="2">外包物品型号</td>
+				<td colspan="3">外包工序</td>
+				<td colspan="2">外包数量</td>
+				<td colspan="3">发包时间</td>
+				<td colspan="3">收包时间</td>
+				<td colspan="2">外包商</td>
+				<td colspan="2">发包人</td>
+			</tr>
+			<%foreach name="one['epiboly']" item="one_one"%>
+			<tr>
+				<td colspan="2"><{$one_one.e_models}> </td>
+				<td colspan="3"><{$one_one.e_producename}> </td>
+				<td colspan="2"><{$one_one.e_number}></td>
+				<td colspan="3"><{$one_one.e_posttime}> </td>
+				<td colspan="3"><{$one_one.e_gettime}> </td>
+				<td colspan="2"><{$one_one.e_contractor}> </td>
+				<td colspan="2"><{$one_one.e_signer}> </td>
+			</tr>
+
+			<%/foreach%>
 			<%/foreach%>
 
 			</tbody>
+
 		</table>
-		<div class="row" >
-		<%if condition="$result['orderstatus']['os_name'] eq $orderstatus['ORDERS_PRODUCE']"%>
-			<form name="okform" method="post" action="__CONTROLLER__/ordersIsDone">
-			<div class="col-md-2 col-md-offset-10">
-				<button type="submit" class="btn btn-primary" />生产完成</button>
-			</div>
-			<input type="hidden" value="<{$result.o_id}>" name="o_id"/>
-			</form>
-		<%/if%>
-		</div>
 
 	</div>
 

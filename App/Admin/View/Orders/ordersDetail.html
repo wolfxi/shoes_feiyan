@@ -158,6 +158,24 @@
 			</div>
 		</div>
 
+		<%if condition="$orders.o_isproduce eq 0"%>
+		<div class="col-md-6">
+			<form name="produceform" method="post" action="__CONTROLLER__/produceOrders/"> 
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label"></label>
+					<div class="col-md-8">
+						<input name="o_id" value="<{$orders.o_id}>" type="hidden"/>
+						<button type="submit" class="btn btn-warning" >投入生产</button>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</form>
+		</div>
+		<%/if%>
+
 	</div>
 
 	<div class="row">

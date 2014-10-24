@@ -18,7 +18,7 @@ class ProduceController extends AdminController{
 	}
 
 	/**
-	 * 现在生产跟踪着的单子
+	 * 现在生产着的单子
 	 */
 	public function index(){
 
@@ -42,9 +42,12 @@ class ProduceController extends AdminController{
 	 * 待发货的单
 	 */
 	public function waitSendGoodsList(){
-
-		$map['fp_status']= array("EQ", "生产完结");
-		$result=$this->produceapi->getFollowProduceList($map);
+		$orderstatus=C("ORDERS_STATUS");
+		$os_id=$this->ordersapi->getOrdersStatus($orderstatus['ORDERS_OK']);
+		$orders['os_id'] = array("EQ",$os_id);
+		$orders['o_isdelete'] = array("EQ",0);
+		$orders['o_isproduce'] = array("EQ",1);
+		$result=$this->ordersapi->getOrdersList($orders);
 		if($result){
 			$this->assign("datalist",$result['datalist']);
 			$this->assign("page",$result['page']);
@@ -66,6 +69,7 @@ class ProduceController extends AdminController{
 			$result=$this->ordersapi->getOneOrders($id);
 			if($result && is_array($result)){
 				$this->assign("result",$result);
+				$this->assign("orderstatus",C("ORDERS_STATUS"));
 				$this->display();
 			}else{
 				$this->error("获取信息失败！！！");
@@ -73,6 +77,47 @@ class ProduceController extends AdminController{
 		}else{
 			$this->error("请选择要查看的单子");
 		}
+	}
+
+
+	/**
+	 * 获取一个订单的跟踪信息
+	 */
+	public function followProduce(){
+		$o_id=I("get.id");	
+		if(!empty($o_id)){
+			$data['o_id']=$o_id;
+			$result=$this->produceapi->getFollowProduce($data);
+			if($result && is_array($result)){
+				$this->assign("orders",$result['orders']);
+				$this->assign("ordersdetail",$result['ordersdetail']);
+				$this->display();
+			
+			}else{
+				$this->error("获取信息失败！！！");
+			}
+		}else{
+			$this->error("请选择要查看的订单");
+		}
+	}
+
+	/**
+	 * 一个订单中的一个产品跟踪信息
+	 */
+	public function followOneProduce(){
+		$od_id=I("get.od_id");
+		if(!empty($od_id)){
+			$result=$this->produceapi->getOneFollowProduce($od_id);	
+			if($result && is_array($result)){
+				$this->assign("result",$result);
+				$this->display();
+			}else{
+				$this->error("获取信息失败！！！");
+			}
+		}else{
+			$this->error("选择要查看跟踪的产品!!!");
+		}
+	
 	}
 
 
@@ -91,6 +136,10 @@ class ProduceController extends AdminController{
 			$sample=$models->table("sample")->where("s_id = %d",$ordersdetail['s_id'])->find();
 
 			$img=$models->table("image")->where("s_id = %d",$sample['s_id'])->find();
+
+			if($sample['s_isproduce']==1){
+				$ordersdetail['od_attribute']=unserialize($sample['s_attribute']);
+			}
 
 			$this->assign("ordersdetail",$ordersdetail);
 			$this->assign("orders",$orders);
@@ -138,6 +187,25 @@ class ProduceController extends AdminController{
 		}
 	}
 
+	/**
+	 * 完成订单
+	 */
+	public function ordersIsDone(){
+		$o_id=I("post.o_id");
+		if(!empty($o_id)){
+			$flag=$this->produceapi->doneOrders($o_id);
+			if($flag){
+				$this->success("生产完结，请及时发货！！！");
+			}else{
+				$this->error("订单完成失败！！请确定该订单下的产品是否都生产结束！！！");
+			}
+		
+		}else{
+			$this->error("请选择要完成的订单");
+		
+		}
+
+	}
 
 
 
@@ -147,14 +215,16 @@ class ProduceController extends AdminController{
 	/**
 	 * 修改生产跟踪单相关信息界面
 	 */
-	public function updateProduceUi(){
-		$id=I("get.id");
-		if(empty($id)){
-			$this->error("请选择要修改的跟踪单");
+	public function updateOneProduceUi(){
+		$od_id=I("get.od_id");
+		if(empty($od_id)){
+			$this->error("请选择要跟进的产品");
 		}else{
-			$result=$this->produceapi->getOneFollowProduce($id);
+			$result=$this->produceapi->getOneFollowProduce($od_id);
+			$orderstatus=$this->ordersapi->getOrdersStatus();
 			if($result && is_array($result)){
 				$this->assign("result",$result);
+				$this->assign("orderstatus",$orderstatus);
 				$this->display();	
 			}else{
 				$this->error("获取信息失败！！！");
@@ -166,12 +236,10 @@ class ProduceController extends AdminController{
 	/**
 	 * 修改生产跟踪单相关信息
 	 */
-	public function updateProduce(){
+	public function updateOneProduce(){
 		$result['fp_id']=I("post.fp_id");
-		$result['o_id']=I("post.o_id");
 		$result['fp_status']=I("post.fp_status");
 		$result['fp_progress']=I("post.progress");
-		$result['fp_number']=I("post.number");
 		$flag=true;
 		foreach($result as $one ){
 			if(empty($one)){
@@ -199,9 +267,11 @@ class ProduceController extends AdminController{
 	public function deliberGoodsUi(){
 		$id=I("get.id");
 		if(!empty($id)){
-			$result=$this->produceapi->getOneFollowProduce($id);
+			$orders['o_id']=$id;
+			$result=$this->produceapi->getFollowProduce($orders);
 			if($result && is_array($result)){
-				$this->assign("result",$result);
+				$this->assign("ordersdetail",$result['ordersdetail']);
+				$this->assign("orders",$result['orders']);
 				$this->display();
 			}else{
 				$this->error("获取信息失败！！！");
@@ -216,14 +286,11 @@ class ProduceController extends AdminController{
 	 * 发货操作
 	 */
 	public function deliberGoods(){
-
-		$fp_id=I("post.fp_id");
 		$o_id=I("post.o_id");
 		$data['sendperson']=I("post.sendperson");
-		if(empty($fp_id) || empty($o_id)){
+		if(empty($o_id)){
 			$this->error("选择发货的单号错误！！！");
 		}else{
-			$data['fp_id']=$fp_id;
 			$data['o_id']=$o_id;	
 			$result=$this->produceapi->sendGoods($data);
 			if($result){

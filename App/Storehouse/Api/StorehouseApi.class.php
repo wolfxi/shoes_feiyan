@@ -69,8 +69,8 @@ class StorehouseApi extends Api{
 	 */ 
 	//获取货物类型
 	public function getGoodType(){
-		$this->model1=D('Goodskind');
-		$result=$this->model1->select();
+		$models=D('Goodskind');
+		$result=$models->select();
 		return $result;
 	}
 
@@ -81,8 +81,8 @@ class StorehouseApi extends Api{
 	 */
 	//修改货物类型类型
 	public function modifyGoodType($gk_id){
-		$this->model1=D('Goodskind');
-		$result=$this->model1->where("gk_id='%d'",$gk_id)->find();
+		$models=D('Goodskind');
+		$result=$models->where("gk_id='%d'",$gk_id)->find();
 		return $result;
 	}
 

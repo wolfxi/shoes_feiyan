@@ -69,6 +69,9 @@ class OrdersApi extends Api{
 				$one['od_attribute']=unserialize($one['od_attribute']);
 				//获取样品信息
 				$one['sample']=$models->table("sample")->where("s_id = %d",$one['s_id'])->find();
+				if($one['sample']['s_isproduce'] && count($one['od_attribute'])<=1){
+					$one['od_attribute']=unserialize($one['sample']['s_attribute']);
+				}
 				array_push($ordersdetail,$one);	
 			}
 

@@ -195,6 +195,26 @@ class OrdersController extends AdminController{
 	}
 
 
+	/**
+	 * 订单投产
+	 */
+	public function intoProduceOrders(){
+		$o_id=I("post.o_id");
+		if(empty($o_id)){
+			$this->error("请选择要投产的订单");
+		}else{
+			$orderstatus=C("ORDERS_STATUS");
+			$orders['os_id']=$this->getOrdersStatus($orderstatus['ORDERS_PRODUCE']);
+			$flag=$this->ordersapi->updateOrders($o_id,$orders);
+			if($flag){
+				$this->success("投产成功，请及时填写工艺单");
+			}else{
+				$this->error("投产失败！！！");
+			}
+		}
+	
+	
+	}
 
 
 	/**
@@ -317,16 +337,15 @@ class OrdersController extends AdminController{
 
 	/**
 	 * 将订单投入生产
-	 * 生成订单所需要的材料文档 
 	 */
 	public function produceOrders(){
-		$id=I("get.o_id");	
+		$id=I("o_id");	
 		if(empty($id)){
 			$this->error("请选择投入生产的订单");
 		}else{
 			$flag=$this->ordersapi->produceOrders($id);
 			if($flag){
-				$this->redirect("/Produce/getProduceMaterial/",array('id'=>intval($id)));
+				$this->redirect("/Produce/produceDetail/",array("id"=>intval($id)),1,"请及时填写工艺单。。。");
 			}else{
 				$this->error("投入生产失败");
 			}
