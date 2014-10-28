@@ -568,6 +568,34 @@ class ProduceController extends AdminController{
 	}
 
 
+	/**
+	 * 生成工艺单 excel 文件
+	 */
+	public function excelProcess(){
+		if(IS_AJAX){
+			$od_id=I("od_id");
+			if(!empty($od_id)){
+				$result=$this->produceapi->ececlOneProcess($od_id);
+				if($result && is_string($result)){
+					$data['flag']=true;
+					$data['message']=$result;
+					$this->ajaxReturn($data);
+				}else{
+					$data['flag']=false;
+					$data['message']="获取文件失败！！！";
+					$this->ajaxReturn($data);
+				}
+			
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要下载的鞋样工艺单！！！";
+				$this->ajaxReturn($data);
+			}
+		}else{
+			exit();
+		}
+	
+	}
 
 
 

@@ -89,12 +89,12 @@
 						<%/if%>
 						<%foreach name="one['ordersdetail']" item="one_one" key="key_key"%>
 						<tr>
-							<td><img src="__ROOT__/<{$img_url}><{$one_one.imgurl}>"></td>
-							<td><{$one_one.s_models}></td>
-							<td><{$one_one.od_sizes}></td>
-							<td><{$one_one.od_price}></td>
-							<td><{$one_one.od_number}></td>
-							<td><{$one_one.od_bunchnum}></td>
+							<td width="73px"><img src="__ROOT__/<{$img_url}><{$one_one.imgurl}>"></td>
+							<td width="73px"><{$one_one.s_models}></td>
+							<td width="73px"><{$one_one.od_sizes}></td>
+							<td width="73px"><{$one_one.od_price}></td>
+							<td width="73px"><{$one_one.od_number}></td>
+							<td width="73px"><{$one_one.od_bunchnum}></td>
 						</tr>
 
 						<%/foreach%>
@@ -168,9 +168,10 @@
 $(function(){
 		//鞋底
 		$("#downloadbtn").click(function(){
+			var types="<{$title_name}>";
 			var select_time=$("#select_time").val();
 			if(select_time.length>0){
-			var post_data={select_time : select_time };
+			var post_data={select_time : select_time, types : types };
 			ajaxhelper.post(post_data,"__CONTROLLER__/excelOrders/",download_callback);
 			}else{
 			jshelper.show_message("请选择要下载的订单!");

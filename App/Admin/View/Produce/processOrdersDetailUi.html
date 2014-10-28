@@ -28,6 +28,9 @@
 				<a href="#">工艺单</a>
 				</li>
 			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="javascript:return void(0);" class="btn btn-primary" id="downloadbtn">下载工艺单</a></li>
+			</ul>
 		</div>
 	</div>
 
@@ -67,7 +70,7 @@
 					<td colspan="2"> <input type="text"  value="<{$ordersdetail.od_attribute.material1.method}>" class="form-control" name="material1[method]"/> </td>
 					<td colspan="2" rowspan="7">
 						<textarea class="form-control" name="shoes[zhencheinfo]" rows="14">
- <{$ordersdetail.od_attribute.shoes.zhencheinfo}> 
+							<{$ordersdetail.od_attribute.shoes.zhencheinfo}> 
 						</textarea>
 					</td>
 				</tr>
@@ -266,7 +269,7 @@
 					</td>
 					<td colspan="7">
 						<textarea class="form-control" name="shoes[xiaoliaopipiinfo]" cols="" rows="">
-<{$ordersdetail.od_attribute.shoes.xiaoliaopipiinfo}>
+							<{$ordersdetail.od_attribute.shoes.xiaoliaopipiinfo}>
 						</textarea>
 					</td>
 				</tr>
@@ -331,18 +334,18 @@
 $(function(){
 
 
-			var yardag=$("#sizes").val();
-			if(yardag.length>0){
-			$("#sizesdiv").empty();
-			var minyarbag = yardag.substring(0,2);
-			var maxyarbag = yardag.substring(3,5);
-			for(i=minyarbag;i<=maxyarbag;i++){
-			var sizes_element="<div class='col-md-6'><div class='form-horizontal'><div class='form-group'><label  class='col-sm-4 control-label'>"+i+"码：</label><div class='col-md-8'><p class='input-group'><span class='input-group-addon'>：</span><input class='form-control' value='<{$ordersdetail['od_attribute']['sizes']["+i+"]}>' name='sizes["+i+"]'  type='text' /> </p></div></div></div></div>";
-			$("#sizesdiv").append(sizes_element);   
-			}   
-			}else{
-			jshelper.show_message("请输入正确格式的码段范围！！！");
-			}
+		var yardag=$("#sizes").val();
+		if(yardag.length>0){
+		$("#sizesdiv").empty();
+		var minyarbag = yardag.substring(0,2);
+		var maxyarbag = yardag.substring(3,5);
+		for(i=minyarbag;i<=maxyarbag;i++){
+		var sizes_element="<div class='col-md-6'><div class='form-horizontal'><div class='form-group'><label  class='col-sm-4 control-label'>"+i+"码：</label><div class='col-md-8'><p class='input-group'><span class='input-group-addon'>：</span><input class='form-control' value='<{$ordersdetail['od_attribute']['sizes']["+i+"]}>' name='sizes["+i+"]'  type='text' /> </p></div></div></div></div>";
+		$("#sizesdiv").append(sizes_element);   
+		}   
+		}else{
+		jshelper.show_message("请输入正确格式的码段范围！！！");
+		}
 
 
 
@@ -350,5 +353,32 @@ $(function(){
 
 
 </script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		$("#downloadbtn").click(function(){
+
+			var od_id=<{$ordersdetail.od_id}>;
+			if(od_id != "" ){
+			var post_data={od_id: od_id};
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelProcess/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的工艺单!");
+			return;
+			}
+			})
+
+		})
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+}
+
+</script>
+
 </body>
 </html>

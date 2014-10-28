@@ -81,9 +81,43 @@
 		</div>
 
 	</div>
+	<div class="row">
+		<div class="col-md-offset-10">
+			<a href="javascript:void(0);" id="downloadbtn" class="btn btn-primary" >下载样品</a>
+		</div>
+	</div>
+
+
 	<!--分页 end-->
 </div>
 <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
 <script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		$("#downloadbtn").click(function(){
+			var types="yes";
+			if(types.length>0){
+			var post_data={soldout: types };
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelSample/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的样品订单!");
+			return;
+			}
+			})
+
+		})
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+
+}
+
+</script>
+
 </body>
 </html>

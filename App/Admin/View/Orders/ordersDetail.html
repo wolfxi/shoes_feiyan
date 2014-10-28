@@ -161,19 +161,37 @@
 		<%if condition="$orders.o_isproduce eq 0"%>
 		<div class="col-md-6">
 			<form name="produceform" method="post" action="__CONTROLLER__/produceOrders/"> 
-			<div class="form-horizontal" >
-				<!--一行开始 start-->
-				<div class="form-group">
-					<label for="1" class="col-sm-4 control-label"></label>
-					<div class="col-md-8">
-						<input name="o_id" value="<{$orders.o_id}>" type="hidden"/>
-						<button type="submit" class="btn btn-warning" >投入生产</button>
-					</div>
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label"></label>
+						<div class="col-md-4">
+							<input name="o_id" value="<{$orders.o_id}>" type="hidden"/>
+							<button type="submit" class="btn btn-warning" >投入生产</button>
+						</div>
+						<div class="col-md-4">
+							<a href="javascript:return void(0);" id="downloadbtn1" class="btn btn-warning" >下载预产单</a>
+						</div>
+					</div> 
+					<!--一行结束  end-->
 				</div>
-				<!--一行结束  end-->
-			</div>
-		</form>
+			</form>
 		</div>
+		<%/if%>
+		<%if condition="$orders.o_isproduce eq 1"%>
+		<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label"></label>
+						<div class="col-md-4">
+							<a href="javascript:return void(0);" id="downloadbtn2" class="btn btn-warning" >下载投产单</a>
+						</div>
+					</div> 
+					<!--一行结束  end-->
+				</div>
+		</div>
+
 		<%/if%>
 
 	</div>
@@ -209,5 +227,44 @@
 <script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
 <script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
 <script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		//鞋底
+		$("#downloadbtn1").click(function(){
+			var o_id=<{$orders.o_id}>;
+			if(o_id!=""){
+			var post_data={o_id : o_id };
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelPrevOrders/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的订单!");
+			return false;
+			}
+			})
+
+
+		$("#downloadbtn2").click(function(){
+			var o_id=<{$orders.o_id}>;
+			if(o_id!=""){
+			var post_data={o_id : o_id };
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelProduceOrders/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的订单!");
+			return false;
+			}
+			})
+
+
+		})
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+
+}
+
+</script>
+
 </body>
 </html>

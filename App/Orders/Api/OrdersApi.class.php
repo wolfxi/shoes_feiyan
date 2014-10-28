@@ -45,7 +45,7 @@ class OrdersApi extends Api{
 				array_push($datalist,$one);
 			}
 			$result['datalist']=$datalist;
-				
+
 			return $result;
 		}else{
 			return false;
@@ -128,7 +128,7 @@ class OrdersApi extends Api{
 		$orders['o_isdelete']=0;
 		$orders['o_isproduce']=0;
 
-		
+
 		$models=M();
 		$models->startTrans();
 		$result1=$models->table("orders")->data($orders)->add();
@@ -162,7 +162,7 @@ class OrdersApi extends Api{
 		}else{
 			$models->rollback();
 			return FALSE; 
-		$id=$this->model->data($orders)->add();
+			$id=$this->model->data($orders)->add();
 		} 
 	}
 
@@ -176,7 +176,7 @@ class OrdersApi extends Api{
 	 * 			flase: false 
 	 */
 	public function updateOrders($id,$data){
-		
+
 		$models=M();
 		$models->startTrans();
 
@@ -276,7 +276,7 @@ class OrdersApi extends Api{
 		}else{
 			return false;
 		}
-	
+
 	}
 
 
@@ -296,7 +296,7 @@ class OrdersApi extends Api{
 		$orderdetail['s_id']=$sample_result['s_id'];
 		$orderdetail['s_models']=$sample_result['s_models'];
 		$orderdetail['od_isproduce']=0;
-		
+
 		$models=M();
 
 		$flag=$models->table("ordersdetail")->where("o_id =%d AND s_id= %d",$data['o_id'],$data['s_id'])->find();
@@ -321,7 +321,7 @@ class OrdersApi extends Api{
 	 * @param $time  数据处于什么时间段
 	 * return  string   文件路劲
 	 */
-	public function createOrdersExcel($time){
+	public function createOrdersExcel($time,$types){
 		$map=array();
 		switch ($time){
 		case "month":
@@ -356,6 +356,13 @@ class OrdersApi extends Api{
 			$map=array();
 			$name="所有的订单";
 		}
+		if($types=="全部订单"){
+
+		}else if($types=="作废订单"){
+			$map['o_isdelete']=array("EQ",1);
+		}else{
+			$map['os_id']=array("EQ",$this->getOrdersStatus($types));
+		}
 		$result=$this->model->relation(true)->where($map)->select();
 		if($result && is_array($result)){
 			import('Vendor.PhpExcel.PHPExcel');
@@ -367,37 +374,64 @@ class OrdersApi extends Api{
 				->setDescription("This document for Office 2007 XLSX.")
 				->setKeywords("office 2007 ")
 				->setCategory("office 2007");
+
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(24);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(24);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(24);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(24);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(24);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('I')->setWidth(40);
+
+
+
 			//设置表头
 			$objPHPExcel->setActiveSheetIndex(0)
-				->setCellValue('A1', '订单编号')
-				->setCellValue('B1', '样品型号')
-				->setCellValue('C1', '订单客户')
-				->setCellValue('D1', '订单装数')
-				->setCellValue('E1', '订单双数')
-				->setCellValue('F1', '订单码段')
-				->setCellValue('G1', '订单单价')
-				->setCellValue('H1', '订单金额')
-				->setCellValue('J1', '订单状态')
-				->setCellValue('I1', '订单时间');
+				->setCellValue('A1', '订单工厂编号')
+				->getRowDimension('1')->setRowHeight(30);
 
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B1', '订单客户编号')
+				->getRowDimension('1')->setRowHeight(30);
+
+
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', '订单客户')
+				->getRowDimension('1')->setRowHeight(30);
+
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('D1', '订单双数')
+				->getRowDimension('1')->setRowHeight(30);
+
+			$objPHPExcel->setActiveSheetIndex(0)	->setCellValue('E1', '订单金额')
+				->getRowDimension('1')->setRowHeight(30);
+
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('F1', '订单状态')
+				->getRowDimension('1')->setRowHeight(30);
+
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('G1', '订单时间')
+				->getRowDimension('1')->setRowHeight(30);
+
+
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('H1', '订单是否作废')
+				->getRowDimension('1')->setRowHeight(30);
+
+			$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I1', '订单备注')
+				->getRowDimension('1')->setRowHeight(30);
+
+			$objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(15);
 			//设置内容数据
 			$counter=2;
 			foreach($result as $one){
-				$sizes=unserialize($one['o_size']);
-				sort($sizes);
-				$min=$sizes[0];
-				$max=$sizes[count($sizes)-1];
 				$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('A'.$counter, $one['o_id'])
-					->setCellValue('B'.$counter, $one['s_models'])
+					->setCellValue('A'.$counter, $one['o_displayid'])
+					->setCellValue('B'.$counter, $one['oc_id'])
 					->setCellValue('C'.$counter, $one['o_customer'])
-					->setCellValue('D'.$counter, $one['o_bunchnum'])
-					->setCellValue('E'.$counter, $one['o_number'])
-					->setCellValue('F'.$counter, $min."-".$max)
-					->setCellValue('G'.$counter, $one['o_price'])
-					->setCellValue('H'.$counter, $one['o_totalprice'])
-					->setCellValue('I'.$counter, $one['orderstatus']['os_name'])
-					->setCellValue('J'.$counter, $one['o_time']);
+					->setCellValue('D'.$counter, $one['o_number'])
+					->setCellValue('E'.$counter, $one['o_totalprice'])
+					->setCellValue('F'.$counter, $one['orderstatus']['os_name'])
+					->setCellValue('G'.$counter, $one['o_time'])
+					->setCellValue('H'.$counter, $one['o_isdelete'] ? "作废" : "有效单")
+					->setCellValue('I'.$counter, $one['o_remark']);
 
 				$counter++;
 			}
@@ -415,10 +449,254 @@ class OrdersApi extends Api{
 	}
 
 
+	/**
+	 * 生成预产订单EXCEL文件
+	 * @param $o_id   订单编号
+	 * return  success  $filename
+	 * 			false  false
+	 */
+	public function excelPrevOrders($o_id){
+		$orders_result=$this->getOneOrders($o_id);
+		if($orders_result && is_array($orders_result)){
+			import('Vendor.PhpExcel.PHPExcel');
+			Vendor("PhpExcel.PHPExcel.Style");
+			Vendor("PhpExcel.PHPExcel.Worksheet.Drawing");
+			Vendor("PHPExcel.PHPExcel.Style.Alignment");
+			Vendor("PHPExcel.PHPExcel.Style.Fill");
+			$objPHPExcel= new \PHPExcel();
+			$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+				->setLastModifiedBy("Maarten Balliauw")
+				->setTitle("Office 2007 XLSX Test Document")
+				->setSubject("Office 2007 XLSX Test Document")
+				->setDescription("This document for Office 2007 XLSX.")
+				->setKeywords("office 2007 ")
+				->setCategory("office 2007");
+
+
+			//订单总览
+			$objPHPExcel->setActiveSheetIndex(0)
+				->mergeCells('A1:F1')
+				->setCellValue('A1',$orders_result['o_displayid'] ."#计划订单")
+				->getRowDimension('1')->setRowHeight(30);
+
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setSize(20);
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle("A1")->getFont()->setBold(true);
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(24);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("B")->setWidth(5);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("C")->setWidth(22);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(24);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("E")->setWidth(5);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("F")->setWidth(22);
+
+			$counter=2;
+			$array_length=count($orders_result['ordersdetail']);
+			for($i=0;$i<$array_length;$i+=2){
+				$one=$orders_result['ordersdetail'][$i];
+				$objPHPExcel->setActiveSheetIndex(0)->mergeCells("A".$counter.":F".$counter);
+				$objPHPExcel->setActiveSheetIndex(0)->getStyle('A'.$counter)->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
+				$objPHPExcel->setActiveSheetIndex(0)->getStyle('A'.$counter)->getFill()->getStartColor()->setARGB('FFCCCCCC');
 
 
 
+				$objDrawing = new \PHPExcel_Worksheet_Drawing();
+				$objDrawing->setName('Logo');
+				$objDrawing->setDescription('Logo');
+				$objDrawing->setPath(C("UPLOADIMG_DIR").$one['imgurl']);
+				$objDrawing->setWidth(250);
+				$objDrawing->setHeight(150);
+				$objDrawing->setCoordinates('A'.($counter+1));
+				$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+
+
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue("B".($counter+1),$one['od_id'])
+					->setCellValue("B".($counter+2),"面料")
+					->setCellValue("B".($counter+3),"内里")
+					->setCellValue("B".($counter+4),"大底")
+					->setCellValue("B".($counter+5),"配码")
+					->setCellValue("B".($counter+6),"数量")
+					->setCellValue("B".($counter+7),"单价")
+					->setCellValue("B".($counter+8),"备注");
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue("C".($counter+1),$one['s_models'])
+					->setCellValue("C".($counter+2),$one['sample']['s_material'])
+					->setCellValue("C".($counter+3),$one['sample']['s_neili'])
+					->setCellValue("C".($counter+4),$one['sample']['s_dadi'])
+					->setCellValue("C".($counter+5),$one['od_sizes'])
+					->setCellValue("C".($counter+6),$one['od_number'])
+					->setCellValue("C".($counter+7),$one['od_price'])
+					->setCellValue("C".($counter+8),$one['s_remark']); 
+
+
+				unset($one);
+				if($array_length <= ($i+1)){
+					break;
+				}
+				$one=$orders_result['ordersdetail'][$i+1];
+
+				$objDrawing = new \PHPExcel_Worksheet_Drawing();
+				$objDrawing->setName('Logo');
+				$objDrawing->setDescription('Logo');
+				$objDrawing->setPath(C("UPLOADIMG_DIR").$one['imgurl']);
+				$objDrawing->setWidth(250);
+				$objDrawing->setHeight(150);
+				$objDrawing->setCoordinates('D'.($counter+1));
+				$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue("E".($counter+1),$one['od_id'])
+					->setCellValue("E".($counter+2),"面料")
+					->setCellValue("E".($counter+3),"内里")
+					->setCellValue("E".($counter+4),"大底")
+					->setCellValue("E".($counter+5),"配码")
+					->setCellValue("E".($counter+6),"数量")
+					->setCellValue("E".($counter+7),"单价")
+					->setCellValue("E".($counter+8),"备注");
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue("F".($counter+1),$one['s_models'])
+					->setCellValue("F".($counter+2),$one['sample']['s_material'])
+					->setCellValue("F".($counter+3),$one['sample']['s_neili'])
+					->setCellValue("F".($counter+4),$one['sample']['s_dadi'])
+					->setCellValue("F".($counter+5),$one['od_sizes'])
+					->setCellValue("F".($counter+6),$one['od_number'])
+					->setCellValue("F".($counter+7),$one['od_price'])
+					->setCellValue("F".($counter+8),$one['s_remark']);
+				$counter=$counter+9;
+
+			}
+
+
+			Vendor("PhpExcel.PHPExcel.IOFactory");
+			$objWriter =\PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$filename=time()."prevorders.xls";
+			$path_name=C("DOCUMENT_SAVE_PATH").$filename;
+			$objWriter->save($path_name);
+			return $filename;
+
+		}else{
+			return false;
+		}
+	}
+
+	/**
+	 * 下载投产单子
+	 * @param $o_id 订单编号
+	 * return success @filename
+	 * 			false  false
+	 */
+	public function excelProduceOrders($o_id){
+		$orders_result=$this->getOneOrders($o_id);
+		if($orders_result && is_array($orders_result)){
+			import('Vendor.PhpExcel.PHPExcel');
+			Vendor("PhpExcel.PHPExcel.Style");
+			Vendor("PhpExcel.PHPExcel.Worksheet.Drawing");
+			Vendor("PHPExcel.PHPExcel.Style.Alignment");
+			Vendor("PHPExcel.PHPExcel.Style.Fill");
+			$objPHPExcel= new \PHPExcel();
+			$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+				->setLastModifiedBy("Maarten Balliauw")
+				->setTitle("Office 2007 XLSX Test Document")
+				->setSubject("Office 2007 XLSX Test Document")
+				->setDescription("This document for Office 2007 XLSX.")
+				->setKeywords("office 2007 ")
+				->setCategory("office 2007");
+
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(20);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('B')->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('C')->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(8);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('E')->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('F')->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('G')->setWidth(20);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('H')->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('I')->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('J')->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('K')->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('L')->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('M')->setWidth(15);
+
+			$objPHPExcel->setActiveSheetIndex(0)->mergeCells('F1:I1');
+
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("A1",$orders_result['o_customer'])
+				->setCellValue("B1","订货时间")
+				->setCellValue("C1",$orders_result['o_time'])
+				->setCellValue("E1","工厂订单号")
+				->setCellValue("F1",$orders_result['o_displayid']);
+
+			$objPHPExcel->setActiveSheetIndex(0)->mergeCells("A2:M3");
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("A2","客户订单号")
+				->setCellValue("B2","发货时间")
+				->setCellValue("C2","########")
+				->setCellValue("D2","订单双数")
+				->setCellValue("E2",$orders_result['o_number'])
+				->setCellValue("F2","订单金额")
+				->setCellValue("G2",$orders_result['o_totalprice'])
+				->setCellValue("H2","备注")
+				->setCellValue("I2",$orders_result['o_remark']);
+
+			$objPHPExcel->setActiveSheetIndex(0)->getRowDimension(4)->setRowHeight(25);
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("A4","图片")
+				->setCellValue("B4","货号")
+				->setCellValue("C4","规格")
+				->setCellValue("D4","颜色")
+				->setCellValue("E4","件数")
+				->setCellValue("F4","双数")
+				->setCellValue("G4","材料")
+				->setCellValue("H4","楦头号")
+				->setCellValue("I4","鞋底号")
+				->setCellValue("J4","大底")
+				->setCellValue("K4","内盒")
+				->setCellValue("L4","车线")
+				->setCellValue("M4","备注");
+
+			$counter=5;
+			foreach($orders_result['ordersdetail'] as $one){
+				$objPHPExcel->setActiveSheetIndex(0)->getRowDimension($counter)->setRowHeight(90);
+
+				$objDrawing = new \PHPExcel_Worksheet_Drawing();
+				$objDrawing->setName('Logo');
+				$objDrawing->setDescription('Logo');
+				$objDrawing->setPath(C("UPLOADIMG_DIR").$one['imgurl']);
+				$objDrawing->setWidth(220);
+				$objDrawing->setHeight(100);
+				$objDrawing->setCoordinates('A'.$counter);
+				$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue("B".$counter,$one['s_models'])
+					->setCellValue("C".$counter,$one['od_sizes'])
+					->setCellValue("D".$counter,$one['od_attribute']['shoes']['color'])
+					->setCellValue("E".$counter,ceil($one['od_number']/$one['od_bunchnum']))
+					->setCellValue("F".$counter,$one['od_number'])
+					->setCellValue("G".$counter,$one['sample']['s_material'])
+					->setCellValue("H".$counter,$one['od_attribute']['shoes']['mould'])
+					->setCellValue("I".$counter,$one['od_attribute']['xiedi']['models'])
+					->setCellValue("J".$counter,$one['od_attribute']['shoes']['dadi'])
+					->setCellValue("K".$counter,$one['od_attribute']['innerbox']['models'])
+					->setCellValue("L".$counter,$one['sample']['s_chexian'])
+					->setCellValue("M".$counter,$one['sample']['s_remark']);
+
+				$counter++;
+			}
+
+			Vendor("PhpExcel.PHPExcel.IOFactory");
+			$objWriter =\PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$filename=time()."produceOrders.xls";
+			$path_name=C("DOCUMENT_SAVE_PATH").$filename;
+			$objWriter->save($path_name);
+			return $filename;
+
+		}else{
+			return false;
+		}
+
+
+
+	}
 }
-
-
 

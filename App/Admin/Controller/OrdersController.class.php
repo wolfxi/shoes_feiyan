@@ -51,17 +51,22 @@ class OrdersController extends AdminController{
 		if(isset($status_name)){
 			$map['os_id']=array("EQ",$this->ordersapi->getOrdersStatus($status_name));
 			$map['o_isdelete']=array("EQ",0);
-			$this->assign("title_name",$status_name);
 		}
 		if(isset($is_delete)){
 			$map['o_isdelete']=array("EQ",$is_delete);
-			$this->assign("title_name","作废的订单");
 		}
 		$result=$this->ordersapi->getOrdersList($map);	
 		if($result){
+			if($type=="all"){
+				$status_name="全部订单";
+			}
+			if($type=="null"){
+				$status_name="作废订单";
+			}
 			$this->assign("datalist",$result['datalist']);
 			$this->assign("orderstatus",$orderstatus);
 			$this->assign('page',$result['page']);
+			$this->assign("title_name",$status_name);
 			$this->assign("img_url",C("UPLOADIMG_URL"));
 			$this->display();
 		}else{
@@ -212,8 +217,8 @@ class OrdersController extends AdminController{
 				$this->error("投产失败！！！");
 			}
 		}
-	
-	
+
+
 	}
 
 
@@ -390,8 +395,9 @@ class OrdersController extends AdminController{
 	public function excelOrders(){
 		if(IS_AJAX){
 			$select_time=I("post.select_time");
-			if(!empty($select_time)){
-				$result=$this->ordersapi->createOrdersExcel($select_time);
+			$types=I("post.types");
+			if(!empty($select_time) && !empty($types)){
+				$result=$this->ordersapi->createOrdersExcel($select_time,$types);
 				if($result && is_string($result)){
 					$data['flag']=true;
 					$data['message']=$result;
@@ -465,6 +471,67 @@ class OrdersController extends AdminController{
 		}else{
 			exit();
 		}
+	}
+
+
+	/**
+	 * 生成预产订单的excel文件
+	 * 返回文件名
+	 */
+	public function excelPrevOrders(){
+		if(IS_AJAX){
+			$o_id=I("post.o_id");
+			if(!empty($o_id)){
+				$result=$this->ordersapi->excelPrevOrders($o_id);
+				if($result){
+					$data['flag']=true;
+					$data['message']=$result;
+					$this->ajaxReturn($data);
+				}else{
+					$data['flag']=false;
+					$data['message']="获取数据失败！！";
+					$this->ajaxReturn($data);
+				}
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要下载的预产单";
+				$this->ajaxReturn($data);
+			}
+
+		}else{
+			exit();
+		}
+	}
+
+
+	/**
+	 * 生成投产订单的excel文件
+	 */
+	public function excelProduceOrders(){
+		if(IS_AJAX){
+			$o_id=I("post.o_id");
+			if(!empty($o_id)){
+				$result=$this->ordersapi->excelProduceOrders($o_id);
+				if($result){
+					$data['flag']=true;
+					$data['message']=$result;
+					$this->ajaxReturn($data);
+				}else{
+					$data['flag']=false;
+					$data['message']="获取数据失败！！";
+					$this->ajaxReturn($data);
+				}
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要下载的投产单";
+				$this->ajaxReturn($data);
+			}
+
+		}else{
+			exit();
+		}
+
+
 	}
 
 

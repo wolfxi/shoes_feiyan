@@ -24,13 +24,20 @@ class SampleController extends AdminController{
 
 		$type=I("get.type");
 		$map['s_soldout']=array('EQ',0);
-		if(isset($type)){
+		$types="all";
+		if($type!=""){
 			$map['s_isproduce']=array("EQ",$type);
+			if($type){
+				$types="produce";
+			}else{
+				$types="noproduce";
+			}
 		}
 		$result=$this->sampleapi->getSampleList($map);
 		if($result && is_array($result)){
 			$this->assign('datalist',$result['datalist']);
 			$this->assign('page',$result['page']);
+			$this->assign("types",$types);
 			$this->display();
 		}else{
 			$this->error('还没有样品，请新建样品');
@@ -262,24 +269,46 @@ class SampleController extends AdminController{
 	}
 
 
+	/**
+	 * 生成样品excel文件
+	 */
+	public function excelSample(){
+		if(IS_AJAX){
+			$types=I("post.types");
+			$soldout=I("post.soldout");
+			$data=array();
+			//样品是否投产
+			switch ($types){
+			case "all":
+				break;
+			case "produce":
+				$data['s_isproduce']=array("EQ",1);
+				break;
+			case "noproduce":
+				$data['s_isproduce']=array("EQ",0);
+				break;
+			default :
+				break;
+			}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+			//下架的
+			if($soldout!=""){
+				$data['s_soldout']=array("EQ",1);
+			}
+			$result=$this->sampleapi->createExcelSample($data);
+			if($result){
+				$message['flag']=true;
+				$message['message']=$result;
+				$this->ajaxReturn($message);
+			}else{
+				$message['flag']=false;
+				$message['message']="下载失败";
+				$this->ajaxReturn($message);
+			}
+		}else{
+			exit();
+		}
+	}
 
 
 }

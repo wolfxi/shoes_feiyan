@@ -804,15 +804,134 @@ class ProduceApi extends Api{
 	}
 
 
+	/**
+	 * 生成一个产品的工艺单 excel文件
+	 * @param od_id 订单详情编号
+	 * return   success filename
+	 * 			false  false
+	 */
+	public function ececlOneProcess($od_id){
+
+		//获取数据
+		$ordersdetail=$this->getOneFollowProduce($od_id);
+		if($ordersdetail && is_array($ordersdetail)){
+			$templete_path=C("STENCIL_PATH");
+			import('Vendor.PhpExcel.PHPExcel');
+			Vendor("PhpExcel.PHPExcel.IOFactory");
+			$objReader = \PHPExcel_IOFactory::createReader('Excel5');
+			$objPHPExcel = $objReader->load($templete_path."gongyidan.xls");
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('C3', $ordersdetail['orders']['oc_id'])
+				->setCellValue('H3', $ordersdetail['orders']['o_displayid'])
+				->setCellValue('L3', $ordersdetail['od_attribute']['shoes']['c_sampleid'])
+				->setCellValue('B4', $ordersdetail['s_models'])
+				->setCellValue('F4', $ordersdetail['od_attribute']['shoes']['mould'])
+				->setCellValue('L4', $ordersdetail['od_attribute']['shoes']['macha']);
+
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('B6',$ordersdetail['od_attribute']['material1']['name'])
+				->setCellValue('F6',$ordersdetail['od_attribute']['material1']['method'])
+				->setCellValue('B7',$ordersdetail['od_attribute']['material2']['name'])
+				->setCellValue('F7',$ordersdetail['od_attribute']['material2']['method'])
+				->setCellValue('B8',$ordersdetail['od_attribute']['material3']['name'])
+				->setCellValue('F8',$ordersdetail['od_attribute']['material3']['method'])
+				->setCellValue('B9',$ordersdetail['od_attribute']['toupaili']['name'])
+				->setCellValue('F9',$ordersdetail['od_attribute']['toupaili']['method'])
+				->setCellValue('B10',$ordersdetail['od_attribute']['zhongpaili']['name'])
+				->setCellValue('F10',$ordersdetail['od_attribute']['zhongpaili']['method'])
+				->setCellValue('B11',$ordersdetail['od_attribute']['zhugenli']['name'])
+				->setCellValue('F11',$ordersdetail['od_attribute']['zhugenli']['method'])
+				->setCellValue('B12',$ordersdetail['od_attribute']['xiedian']['name'])
+				->setCellValue('B13',$ordersdetail['od_attribute']['baotou']['models'])
+				->setCellValue('F13',$ordersdetail['od_attribute']['bangmian']['models'])
+				->setCellValue('B14',$ordersdetail['od_attribute']['zhongdi']['models'])
+				->setCellValue('F14',$ordersdetail['od_attribute']['zhongdi']['format']);
+
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("B15",$ordersdetail['od_attribute']['weikouliao']['format'])
+				->setCellValue("E15",$ordersdetail['od_attribute']['xieyanchen']['format'])
+				->setCellValue("H15",$ordersdetail['od_attribute']['mianxian']['format'])
+				->setCellValue("B16",$ordersdetail['od_attribute']['kousheliao']['format'])
+				->setCellValue("E16",$ordersdetail['od_attribute']['songjin']['format'])
+				->setCellValue("H16",$ordersdetail['od_attribute']['dixian']['format'])
+				->setCellValue("B17",$ordersdetail['od_attribute']['lalian']['format'])
+				->setCellValue("E17",$ordersdetail['od_attribute']['chongzi']['format'])
+				->setCellValue("H17",$ordersdetail['od_attribute']['fengbaoxian']['format'])
+				->setCellValue("B18",$ordersdetail['od_attribute']['fuqiang']['format'])
+				->setCellValue("E18",$ordersdetail['od_attribute']['xieyan']['format'])
+				->setCellValue("H18",$ordersdetail['od_attribute']['xiedai']['format'])
+				->setCellValue("B19",$ordersdetail['od_attribute']['koushi']['format'])
+				->setCellValue("E19",$ordersdetail['od_attribute']['disubiao']['format'])
+				->setCellValue("B20",$ordersdetail['od_attribute']['fangma']['a'])
+				->setCellValue("C20",$ordersdetail['od_attribute']['fangma']['b'])
+				->setCellValue("D20",$ordersdetail['od_attribute']['fangma']['c'])
+				->setCellValue("E20",$ordersdetail['od_attribute']['fangma']['d'])
+				->setCellValue("F20",$ordersdetail['od_attribute']['fangma']['e'])
+				->setCellValue("G20",$ordersdetail['od_attribute']['fangma']['f'])
+				->setCellValue("H20",$ordersdetail['od_attribute']['fangma']['g'])
+				->setCellValue("I20",$ordersdetail['od_attribute']['fangma']['h'])
+				->setCellValue("B21",$ordersdetail['od_attribute']['yajian']['a'])
+				->setCellValue("C21",$ordersdetail['od_attribute']['yajian']['b'])
+				->setCellValue("D21",$ordersdetail['od_attribute']['yajian']['c'])
+				->setCellValue("E21",$ordersdetail['od_attribute']['yajian']['d'])
+				->setCellValue("F21",$ordersdetail['od_attribute']['yajian']['e'])
+				->setCellValue("G21",$ordersdetail['od_attribute']['yajian']['f'])
+				->setCellValue("H21",$ordersdetail['od_attribute']['yajian']['g'])
+				->setCellValue("I21",$ordersdetail['od_attribute']['yajian']['h']);
+			
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("B22",$ordersdetail['od_attrobute']['gangbao']['pre'])
+				->setCellValue("F22",$ordersdetail['od_attrobute']['gangbao']['back'])
+				->setCellValue("G26",$ordersdetail['od_attrobute']['shoes']['remark'])
+				->setCellValue("J24",$ordersdetail['od_attrobute']['shoes']['chengxinginfo'])
+				->setCellValue("J6", $ordersdetail['od_attrobute']['shoes']['zhencheinfo'])
+				->setCellValue("B40",$ordersdetail['orders']['o_displayid'])
+				->setCellValue("F40",$ordersdetail['od_attrobute']['shoes']['mould'])
+				->setCellValue("I40",$ordersdetail['od_attrobute']['shoes']['dadi'])
+				->setCellValue("K43",$ordersdetail['od_attrobute']['shoes']['xiaoliaopipiinfo'])
+				->setCellValue("L40",$ordersdetail['od_attrobute']['shoes']['macha']);
+
+			Vendor("PhpExcel.PHPExcel.Worksheet.Drawing");
+
+			$objDrawing1 = new \PHPExcel_Worksheet_Drawing();
+			$objDrawing1->setName('Logo');
+			$objDrawing1->setDescription('Logo');
+			$objDrawing1->setPath(C("UPLOADIMG_DIR").$ordersdetail['img']['i_url']);
+			$objDrawing1->setWidth(500);
+			$objDrawing1->setHeight(250);
+			$objDrawing1->setCoordinates('A26');
+			$objDrawing1->setWorksheet($objPHPExcel->getActiveSheet());
+
+			$objDrawing2 = new \PHPExcel_Worksheet_Drawing();
+			$objDrawing2->setName('Logo');
+			$objDrawing2->setDescription('Logo');
+			$objDrawing2->setPath(C("UPLOADIMG_DIR").$ordersdetail['od_attribute']['image']['mianliao']);
+			$objDrawing2->setWidth(800);
+			$objDrawing2->setHeight(500);
+			$objDrawing2->setCoordinates('A43');
+			$objDrawing2->setWorksheet($objPHPExcel->getActiveSheet());
+
+
+			$objDrawing3 = new \PHPExcel_Worksheet_Drawing();
+			$objDrawing3->setName('Logo');
+			$objDrawing3->setDescription('Logo');
+			$objDrawing3->setPath(C("UPLOADIMG_DIR").$ordersdetail['od_attribute']['image']['neiliao']);
+			$objDrawing3->setWidth(800);
+			$objDrawing3->setHeight(500);
+			$objDrawing3->setCoordinates('A66');
+			$objDrawing3->setWorksheet($objPHPExcel->getActiveSheet());
+
+
+			$objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$filename=time()."gongyidan.xls";
+			$path_name=C("DOCUMENT_SAVE_PATH").$filename;
+			$objWriter->save($path_name);
+			return $filename;
+		}else{
+			return false;
+		}
+
+	}
 
 }
-
-
-
-
-
-
-
-
-
 
