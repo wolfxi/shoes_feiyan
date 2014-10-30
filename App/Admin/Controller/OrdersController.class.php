@@ -370,9 +370,9 @@ class OrdersController extends AdminController{
 		if(!empty($search_str) && !empty($search_type)){
 			$map=array();
 			if($search_type=="o_customer"){
-				$map[$search_type]=array('LIKE',$search_str);
+				$map[$search_type]=array('LIKE',"%".$search_str."%");
 			}else{
-				$map[$search_type]=array('EQ',$search_str);
+				$map[$search_type]=array('LIKE',"%".$search_str."%");
 			}
 			$result=$this->ordersapi->getOrdersList($map);
 			if($result){

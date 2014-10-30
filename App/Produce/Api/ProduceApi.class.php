@@ -633,47 +633,92 @@ class ProduceApi extends Api{
 	 * 生成跟踪单excel文件
 	 * @param $status 跟踪状态
 	 * return string 文件名
+	 * 			false   false
 	 */
 	public function createExcelProduce($data){
-		$map['fp_status']=$data['status'];
+		$orderstatus=C("ORDERS_STATUS");
+		$map['os_id']=array("EQ",$this->ordersapi->getOrdersStatus($orderstatus[$data['status']]));
 		switch ($data['time']){
 		case "month":
-			$map['fp_starttime']=array("LIKE",date("Y-m")."%");
+			$map['o_time']=array("LIKE",date("Y-m")."%");
 			$name=date("Y-m")."月份的订单跟踪";
 			break;
 		case "prevmonth":
-			$map['fp_starttime']=array("LIKE",date("Y-m",strtotime("-1 month"))."%");
+			$map['o_time']=array("LIKE",date("Y-m",strtotime("-1 month"))."%");
 			$name=date("Y-m",strtotime("-1 month"))."月份的订单跟踪";
 			break;
 		case "prev3month":
-			$map['fp_starttime']=array("EGT",date("Y-m",strtotime("-3 month")));
+			$map['o_time']=array("EGT",date("Y-m",strtotime("-3 month")));
 			$name=date("Y-m",strtotime("-3 month"))."月份至".date("Y-m-d")."的订单跟踪";
 			break;
 		case "halfyear":
-			$map['fp_starttime']=array("EGT",date("Y-m",strtotime("-6 month")));
+			$map['o_time']=array("EGT",date("Y-m",strtotime("-6 month")));
 			$name="本半年的订单跟踪";
 			break;
 		case "oneyear":
-			$map['fp_starttime']=array("LIKE",date("Y-")."%");
+			$map['o_time']=array("LIKE",date("Y-")."%");
 			$name="本年的订单跟踪";
 			break;
 		case "prevyear":
-			$map['fp_starttime']=array("LIKE",date("Y-",strtotime("-1 year"))."%");
+			$map['o_time']=array("LIKE",date("Y-",strtotime("-1 year"))."%");
 			$name="上一年的订单跟踪";
 			break;
 		case "all":
-			$map['fp_starttime']=array();
 			$name="所有的订单跟踪";
 			break;
 		default :
-			$map['fp_starttime']=array();
 			$name="所有的订单跟踪";
 		}
 
+		$orders_result=array();
+		$models=M();
 
-		$fp_result=$this->model->getFollowproduceList($map);
-		if($fp_result && is_array($fp_result)){
+		//获取订单数据
+		if(empty($data['o_id'])){
+			//多个订单的跟踪信息
+			$orders_result=$models->table("orders")->where($map)->select();
+		}else{
+			//一个订单的跟踪信息
+			$where['o_id']=array("IN",$data['o_id']);
+			$orders_result=$models->table("orders")->where($where)->select();
+		}
+
+		if(!$orders_result && !is_array($orders_result)){
+			return false;
+		}
+
+
+		//组装数据
+		$result=array();
+		foreach($orders_result as $one){
+			$one['delivergoods']=$models->table("delivergoods")->where("o_id = %d",$one['o_id'])->find();
+			$one['ordersdetail']=$models->table("ordersdetail")->where("o_id = %d",$one['o_id'])->select();
+			$one['ordersdetail']['od_attribute']=unserialize($one['ordersdetail']['od_attribute']);
+			if($one['ordersdetail'] && is_array($one['ordersdetail'])){
+				//单个样品的跟踪信息
+				$ordersdetail_temp=array();
+				foreach($one['ordersdetail'] as $one_one){
+					$one_one['followproduce']=$models->table("followproduce")->where("od_id = %d",$one_one['od_id'])->find();
+					//查找鞋包加工户
+					$one_one['xiebao']=$models->table("epiboly")->where("fp_id = %d AND e_producename= '%s'",$one_one['followproduce']['fp_id'],"鞋包")->find();
+					//鞋包库存量
+					$one_one['xiebao']['kucunliang']=$models->table("goodslist")->where("gl_models = '%s'",$one_one['xiebao']['e_models'])->find();
+					$one_one['pingmao']=$models->table("epiboly")->where("fp_id = %d AND e_producename = '%s'",$one_one['followproduce']['fp_id'],"拼毛")->find();
+					array_push($ordersdetail_temp,$one_one);
+				}
+				$one['ordersdetail']=$ordersdetail_temp;
+
+			}
+			array_push($result,$one);	
+		}
+
+
+		if($result && is_array($result)){
 			import('Vendor.PhpExcel.PHPExcel');
+			Vendor("PhpExcel.PHPExcel.Style");
+			Vendor("PHPExcel.PHPExcel.Style.Alignment");
+			Vendor("PHPExcel.PHPExcel.Style.Fill");
+
 			$objPHPExcel= new \PHPExcel();
 			$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 				->setLastModifiedBy("Maarten Balliauw")
@@ -682,59 +727,150 @@ class ProduceApi extends Api{
 				->setDescription("This document for Office 2007 XLSX.")
 				->setKeywords("office 2007 ")
 				->setCategory("office 2007");
+			//设置默认行高
+			$objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(20);
+			$objPHPExcel->getActiveSheet()->getRowDimension('1')->setRowHeight(30);
+
+
+			//设置列宽
+			$objPHPExcel->getActiveSheet()->getColumnDimension('E')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('F')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('G')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('H')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('I')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('J')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('K')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('L')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('M')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('N')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('O')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('P')->setWidth('5');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('Q')->setWidth('5');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('R')->setWidth('5');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('S')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('T')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('X')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('Z')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setWidth('6');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setWidth('6');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AD')->setWidth('6');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AE')->setWidth('6');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AF')->setWidth('6');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AG')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AH')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AI')->setWidth('4');
+			$objPHPExcel->getActiveSheet()->getColumnDimension('AJ')->setWidth('4');
+
 			//设置表头
+			$objPHPExcel->setActiveSheetIndex(0)->mergeCells('A1:AL1')->setCellValue("A1","飞燕鞋业生产跟踪单");
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setSize(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle("A1")->getFont()->setBold(true);
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
 			$objPHPExcel->setActiveSheetIndex(0)
-				->setCellValue('A1', '客户订单编号')
-				->setCellValue('B1', '发货日期')
-				->setCellValue('C1', '商标')
-				->setCellValue('D1', '鞋样型号')
-				->setCellValue('E1', '码段')
-				->setCellValue('F1', '颜色')
-				->setCellValue('G1', '件数')
-				->setCellValue('H1', '装数')
-				->setCellValue('J1', '双数')
-				->setCellValue('I1', '材料')
-				->setCellValue('K1', '鞋包加工户')
-				->setCellValue('L1', '鞋包进库日期')
-				->setCellValue('M1', '鞋包出库日期')
-				->setCellValue('N1', '成型合计')
-				->setCellValue('O1', '库存量')
-				->setCellValue('P1', '剩余量')
-				->setCellValue('Q1', '备注');
+				->setCellValue('A2', '成型更新日期')
+				->setCellValue('B2', date("Y-m-d"))
+				->setCellValue('E2', '鞋包更新日期')
+				->setCellValue('F2', date("Y-m-d"));
+			$objPHPExcel->setActiveSheetIndex(0)->mergeCells("B2:D2");
+			$objPHPExcel->setActiveSheetIndex(0)->mergeCells("F2:H2");
+
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("A3","客户订单号")
+				->setCellValue("B3","出货日期")
+				->setCellValue("C3","商标")
+				->setCellValue("D3","型号")
+				->setCellValue("E3","码段")
+				->setCellValue("F3","颜色")
+				->setCellValue("G3","件数")
+				->setCellValue("H3","装数")
+				->setCellValue("I3","")
+				->setCellValue("J3","")
+				->setCellValue("K3","")
+				->setCellValue("L3","")
+				->setCellValue("M3","")
+				->setCellValue("N3","")
+				->setCellValue("O3","双数")
+				->setCellValue("P3","鞋底")
+				->setCellValue("Q3","")
+				->setCellValue("R3","材料")
+				->setCellValue("S3","截断包面")
+				->setCellValue("T3","截断包面")
+				->setCellValue("U3","鞋包加工户")
+				->setCellValue("V3","拼毛")
+				->setCellValue("W3","鞋包出库日期")
+				->setCellValue("X3","鞋包出库")
+				->setCellValue("Y3","鞋包入库日期")
+				->setCellValue("Z3","鞋包入库")
+				->setCellValue("AA3","缺包")
+				->setCellValue("AB3","成型1")
+				->setCellValue("AC3","成型2")
+				->setCellValue("AD3","成型3")
+				->setCellValue("AE3","成型4")
+				->setCellValue("AF3","成型合计")
+				->setCellValue("AG3","鞋包库存")
+				->setCellValue("AH3","件数")
+				->setCellValue("AI3","其他客户")
+				->setCellValue("AJ3","剩余")
+				->setCellValue("AK3","备注")
+				->setCellValue("AL3","备注");
 
 			//填充数据
-			$counter=2;
-			foreach($fp_result as $one){
-				$sizes=unserialize($one['orders']['o_size']);
-				sort($sizes);
-				$min=$sizes[0];
-				$max=$sizes[count($sizes)-1];
-				$shoes=unserialize($one['orders']['o_attributes']);
-				$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('A'.$counter, $one['o_id'])
-					->setCellValue('B'.$counter, $one['fp_endtime'])
-					->setCellValue('C'.$counter, $one['fp_logo'])
-					->setCellValue('D'.$counter, $one['fp_models'])
-					->setCellValue('E'.$counter, $min."-".$max)
-					->setCellValue('F'.$counter, $shoes['shoes']['color'])
-					->setCellValue('G'.$counter, ceil($one['orders']['o_number']/$one['orders']['o_bunchnum']))
-					->setCellValue('H'.$counter, $one['orders']['o_bunchnum'])
-					->setCellValue('I'.$counter, $shoes['shoes']['material'])
-					->setCellValue('J'.$counter, $one['orders']['o_number'])
-					->setCellValue('K'.$counter, $one['shoesbag']['e_contractor'])
-					->setCellValue('L'.$counter, $one['shoesbag']['e_gettime'])
-					->setCellValue('M'.$counter, $one['shoesbag']['e_posttime'])
-					->setCellValue('N'.$counter, $one['orders']['o_number'])
-					->setCellValue('O'.$counter, $one['store']['gl_number'])
-					->setCellValue('P'.$counter, $one['store']['gl_number']-$one['orders']['o_number'])
-					->setCellValue('Q'.$counter, $one['orders']['o_remark']);
+			$counter=4;
+			foreach($result as $one){
+
+				foreach($one['ordersdetail'] as $one_one){
+
+					$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue("A".$counter,$one['o_displayid'])
+						->setCellValue("B".$counter,$one['delivergoods']['dg_time'] ? $one['delivergoods']['dg_time'] : "未发货")
+						->setCellValue("C".$counter,$one_one['od_attribute']['shoes']['shangbiao'])
+						->setCellValue("D".$counter,$one_one['s_models'])
+						->setCellValue("E".$counter,$one_one['od_sizes'])
+						->setCellValue("F".$counter,$one_one['od_attribute']['shoes']['color'])
+						->setCellValue("G".$counter,ceil($one_one['od_number']/$one_one['od_bunchnum']))
+						->setCellValue("H".$counter,$one_one['od_bunchnum'])
+						->setCellValue("I".$counter,"")
+						->setCellValue("J".$counter,"")
+						->setCellValue("K".$counter,"")
+						->setCellValue("L".$counter,"")
+						->setCellValue("M".$counter,"")
+						->setCellValue("N".$counter,"")
+						->setCellValue("O".$counter,$one_one['od_bunchnum'])
+						->setCellValue("P".$counter,$one_one['od_attribute']['xiedi']['models'])
+						->setCellValue("Q".$counter,"")
+						->setCellValue("R".$counter,$one_one['od_attribute']['shoes']['material'])
+						->setCellValue("S".$counter, $one_one['followproduce']['fp_progress'] ? "是" : " ")
+						->setCellValue("T".$counter,"")
+						->setCellValue("U".$counter,$one_one['xiebao']['e_contractor'])
+						->setCellValue("V".$counter,$one_one['pingmao']['e_contractor'])
+						->setCellValue("W".$counter,$one_one['xiebao']['e_posttime'])
+						->setCellValue("X".$counter,$one_one['xiebao']['e_number'])
+						->setCellValue("Y".$counter,$one_one['xiebao']['e_gettime'])
+						->setCellValue("Z".$counter,$one_one['xiebao']['e_number'])
+						->setCellValue("AA".$counter,"")
+						->setCellValue("AB".$counter,$one_one['followproduce']['fp_finishnum'])
+						->setCellValue("AC".$counter,"")
+						->setCellValue("AD".$counter,"")
+						->setCellValue("AE".$counter,"")
+						->setCellValue("AF".$counter,$one_one['followproduce']['fp_finishnum'])
+						->setCellValue("AG".$counter,$one_one['xiebao']['kucunliang'])
+						->setCellValue("AH".$counter,"")
+						->setCellValue("AI".$counter,"")
+						->setCellValue("AJ".$counter,$one_one['followproduce']['fp_number']-$one_one['followproduce']['fp_finishnum'])
+						->setCellValue("AK".$counter,$one_one['od_attribute']['shoes']['remark'])
+						->setCellValue("AL".$counter,"");
+
+				}
+
 
 				$counter++;
 			}
 			$objPHPExcel->getActiveSheet()->setTitle($name);
 			Vendor("PhpExcel.PHPExcel.IOFactory");
 			$objWriter =\PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-			$filename=time()."orders.xls";
+			$filename=time()."跟踪单.xls";
 			$path_name=C("DOCUMENT_SAVE_PATH").$filename;
 			$objWriter->save($path_name);
 			return $filename;
@@ -878,7 +1014,7 @@ class ProduceApi extends Api{
 				->setCellValue("G21",$ordersdetail['od_attribute']['yajian']['f'])
 				->setCellValue("H21",$ordersdetail['od_attribute']['yajian']['g'])
 				->setCellValue("I21",$ordersdetail['od_attribute']['yajian']['h']);
-			
+
 			$objPHPExcel->setActiveSheetIndex(0)
 				->setCellValue("B22",$ordersdetail['od_attrobute']['gangbao']['pre'])
 				->setCellValue("F22",$ordersdetail['od_attrobute']['gangbao']['back'])
@@ -930,6 +1066,129 @@ class ProduceApi extends Api{
 		}else{
 			return false;
 		}
+
+	}
+
+	/**
+	 * 生成外包excel文件
+	 * @param $data  搜索条件
+	 * return success   $filename
+	 * 			false false
+	 */
+	public function createExcelEpiboly($data){
+		$map=array();
+		switch ($data['time']){
+		case "month":
+			$map['e_posttime']=array("LIKE",date("Y-m")."%");
+			break;
+		case "prevmonth":
+			$map['e_posttime']=array("LIKE",date("Y-m",strtotime("-1 month"))."%");
+			break;
+		case "prev3month":
+			$map['e_posttime']=array("EGT",date("Y-m",strtotime("-3 month")));
+			break;
+		case "halfyear":
+			$map['e_posttime']=array("EGT",date("Y-m",strtotime("-6 month")));
+			break;
+		case "oneyear":
+			$map['e_posttime']=array("LIKE",date("Y-")."%");
+			break;
+		case "prevyear":
+			$map['e_posttime']=array("LIKE",date("Y-",strtotime("-1 year"))."%");
+			break;
+		case "all":
+			break;
+		default :
+		}
+
+		switch ($data['type']){
+		case "all":
+			break;
+		case "yes":
+			$map['e_iscallback']=array("EQ",1);
+			break;
+		case "no":
+			$map['e_iscallback']=array("EQ",0);
+			break;
+		default :
+		}
+
+		$models=M();
+		$epiboly_result=$models->table("epiboly")->where($map)->select();
+		if($epiboly_result && is_array($epiboly_result)){
+			import('Vendor.PhpExcel.PHPExcel');
+			Vendor("PhpExcel.PHPExcel.Style");
+			Vendor("PHPExcel.PHPExcel.Style.Alignment");
+			Vendor("PHPExcel.PHPExcel.Style.Fill");
+			$objPHPExcel= new \PHPExcel();
+			$objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+				->setLastModifiedBy("Maarten Balliauw")
+				->setTitle("Office 2007 XLSX Test Document")
+				->setSubject("Office 2007 XLSX Test Document")
+				->setDescription("This document for Office 2007 XLSX.")
+				->setKeywords("office 2007 ")
+				->setCategory("office 2007");
+
+			$objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(20);
+
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('A')->setWidth(20);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("B")->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("C")->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension('D')->setWidth(15);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("E")->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("F")->setWidth(10);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("G")->setWidth(20);
+			$objPHPExcel->setActiveSheetIndex(0)->getColumnDimension("H")->setWidth(20);
+
+			$objPHPExcel->setActiveSheetIndex(0)->mergeCells("A1:Y1");
+			$objPHPExcel->setActiveSheetIndex(0)->getRowDimension('1')->setRowHeight(30);
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("A1","飞燕鞋业外包记录");
+
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getFont()->setSize(20);
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle("A1")->getFont()->setBold(true);
+			$objPHPExcel->setActiveSheetIndex(0)->getStyle('A1')->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+
+			$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue("A2","订单编号")
+				->setCellValue("B2","外包商")
+				->setCellValue("C2","外包工艺名")
+				->setCellValue("D2","外包型号")
+				->setCellValue("E2","外包数量")
+				->setCellValue("F2","外包是否收回")
+				->setCellValue("G2","发包时间")
+				->setCellValue("H2","收包时间")
+				->setCellValue("I2","发包人");
+
+			$counter=3;
+			foreach($epiboly_result as $one){
+				$order=$models->table("orders")->where("o_id = %d",$one['o_id'])->find();
+				$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue("A".$counter,$order['o_displayid'])
+					->setCellValue("B".$counter,$one['e_contractor'])
+					->setCellValue("C".$counter,$one['e_producename'])
+					->setCellValue("D".$counter,$one['e_models'])
+					->setCellValue("E".$counter,$one['e_number'])
+					->setCellValue("F".$counter,$one['e_iscallback'] ? "已收回" : "未收回")
+					->setCellValue("G".$counter,$one['e_posttime'])
+					->setCellValue("H".$counter,$one['e_gettime'])
+					->setCellValue("I".$counter,$one['e_signer']);
+				$counter++;
+			}
+			Vendor("PhpExcel.PHPExcel.IOFactory");
+			$objWriter =\PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+			$filename=time()."外包记录.xls";
+			$path_name=C("DOCUMENT_SAVE_PATH").$filename;
+			$objWriter->save($path_name);
+			return $filename;
+
+
+		}else{
+			return false;
+		}
+
+
 
 	}
 

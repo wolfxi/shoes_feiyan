@@ -373,6 +373,7 @@ class ProduceController extends AdminController{
 			$this->assign("page",$result['page']);
 			$this->assign("datalist",$result['datalist']);
 			$this->assign("kindepiboly",$kindepiboly);
+			$this->assign("types",$type);
 			$this->display();
 		}else{
 			$this->error("还没有外包记录");
@@ -491,7 +492,7 @@ class ProduceController extends AdminController{
 		$search_type=I("post.search_type");
 		$search_str=I("post.search_str");
 		if(!empty($search_str) && !empty($search_type)){
-			$map[$search_type]=array("LIKE",$search_str);
+			$map[$search_type]=array("LIKE","%".$search_str."%");
 			$result=$produceapi->getFollowProduceList($map);
 			if($result){
 				$this->assign('datalist',$result['datalist']);
@@ -520,8 +521,17 @@ class ProduceController extends AdminController{
 		$search_type=I("post.search_type");
 		$search_str=I("post.search_str");
 		if(!empty($search_str) && !empty($search_type)){
-			$map[$search_type]=array("LIKE",$search_str);
-			$result=$this->produceapi->getEpibolyList($map);
+			if($search_type=="o_displayid"){
+				$map['o_displayid']=array("LIKE","%".$search_type."%");
+				$models=M();
+				$orders=$models->table("orders")->where($map)->getField("o_id",true);
+				$tempmap['o_id']=array("IN",$orders);
+				$result=$this->produceapi->getEpibolyList($tempmap);
+			}else{
+				$map[$search_type]=array("LIKE","%".$search_str."%");
+				$result=$this->produceapi->getEpibolyList($map);
+
+			}
 			if($result){
 				$this->assign('datalist',$result['datalist']);
 				$this->assign('page',$result['page']);
@@ -540,9 +550,39 @@ class ProduceController extends AdminController{
 
 
 	/**
+	 * 下载单个订单的跟踪单
+	 */
+	public function excelProduceOne(){
+		if(IS_AJAX){
+			$data['o_id']=I("post.o_id");
+			if(!empty($data['o_id']) ){
+				$result=$this->produceapi->createExcelProduce($data);
+				if($result && is_string($result)){
+					$data['flag']=true;
+					$data['message']=$result;
+					$this->ajaxReturn($data);
+				}else{
+					$data['flag']=false;
+					$data['message']="下载失败！！！";
+					$this->ajaxReturn($data);
+				}
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要下载的订单！！！";
+				$this->ajaxReturn($data);
+			}
+			
+		}else{
+			exit();
+		}
+	}
+
+
+
+	/**
 	 * 生成跟踪单excel文件
 	 */
-	public function excelProduce(){
+	public function excelProduces(){
 		if(IS_AJAX){
 			$data['status']=I("post.select_status");
 			$data['time']=I("post.select_time");
@@ -589,6 +629,32 @@ class ProduceController extends AdminController{
 			}else{
 				$data['flag']=false;
 				$data['message']="请选择要下载的鞋样工艺单！！！";
+				$this->ajaxReturn($data);
+			}
+		}else{
+			exit();
+		}
+	
+	}
+
+	public function excelEpiboly(){
+		if(IS_AJAX){
+			$data['time']=I("post.select_time");
+			$data['type']=I("post.select_type");
+			if(!empty($data['type']) && !empty($data['time'])){
+				$result=$this->produceapi->createExcelEpiboly($data);
+				if($result && is_string($result)){
+					$data['flag']=true;
+					$data['message']=$result;
+					$this->ajaxReturn($data);
+				}else{
+					$data['flag']=false;
+					$data['message']="下载失败！！！";
+					$this->ajaxReturn($data);
+				}
+			}else{
+				$data['flag']=false;
+				$data['message']="请选择要下载的外包！！！";
 				$this->ajaxReturn($data);
 			}
 		}else{

@@ -115,7 +115,7 @@ class CustomerController extends AdminController{
 		$search_type=I("post.search_type");
 		$search_str=I("post.search_str");
 		if(!empty($search_str) && !empty($search_type)){
-			$map[$search_type]=array("LIKE",$search_str);
+			$map[$search_type]=array("LIKE","%".$search_str."%");
 			$result=$this->customerapi->searchFirm($map);
 			if($result){
 				$this->assign("list",$result['datalist']);

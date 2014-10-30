@@ -33,6 +33,7 @@ class SampleApi extends Api{
 		$sample['s_sizes']=$data['sizes'];
 		$sample['s_price']=$data['price'];
 		$sample['s_mould']=$data['mould'];
+		$sample['s_color']=$data['color'];
 		$sample['s_soldout']= 0;
 		$sample['s_isproduce']=0;
 		$sample['s_neili']=$data['neili'];
@@ -128,11 +129,11 @@ class SampleApi extends Api{
 	 */
 	public function searchSampleList($data){
 
-		$count = $this->model->where($data)->count();// 查询满足要求的总记录数
+		$count = $this->model->relation(true)->where($data)->count();// 查询满足要求的总记录数
 		$Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(15)
 		$show = $Page->show();// 分页显示输出
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-		$list = $this->model->where($data)->order('s_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
+		$list = $this->model->relation(true)->where($data)->order('s_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
 
 		$result['page']=$show;
 		$result['datalist']=$list;

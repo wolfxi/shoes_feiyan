@@ -251,9 +251,9 @@ class SampleController extends AdminController{
 	 */
 	public function searchSample(){
 		$search_type=I("post.search_type");
-		$search_str=I("post.seatch_str");
+		$search_str=I("post.search_str");
 		if(!empty($search_str) && !empty($search_type)){
-			$data[$search_type]=array("LIKE",$search_str);	
+			$data[$search_type]=array("LIKE","%".$search_str."%");	
 			$result=$this->sampleapi->searchSampleList($data);
 			if($result && is_array($result)){
 				$this->assign("search","类型为".$search_type.",搜索".$search_str."的结果如下");

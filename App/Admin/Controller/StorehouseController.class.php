@@ -339,10 +339,10 @@ class StorehouseController extends AdminController
 		if(!empty($search_str) && !empty($search_type)){
 			$map=array();
 			if($search_type=="gl_models"){
-				$map[$search_type]=array('LIKE',$search_str);
+				$map[$search_type]=array('LIKE',"%".$search_str."%");
 			}else{
 				$map["gk_id"]=array('EQ',$search_type);
-				$map['gl_name']=array("LIKE",$search_str);
+				$map['gl_name']=array("LIKE","%".$search_str."%");
 			}
 			$result=$this->storehouseapi->searchGoods($map);
 			if($result){
