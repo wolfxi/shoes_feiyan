@@ -76,7 +76,7 @@
 					<tbody id="select_sample">
 					<%foreach name="orders['ordersdetail']" item="one"%>
 					<tr id="<{$one.s_id}>">
-						<td><img src="__ROOT__/<{$img_url}><{$one.imgurl}>"/></td>
+						<td><img src="__ROOT__/<{$img_url}><{$one.imgurl}>" style="width:150px;height:80px;"/></td>
 						<td><{$one.s_models}></td>
 						<td><{$one.sample.s_name}></td>
 						<td><input name="orderdetail<{$one.od_id}>[number]" value="<{$one.od_number}>" type="text" class="form-control"/></td>

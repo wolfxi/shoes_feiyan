@@ -13,13 +13,19 @@ class AdminController extends Controller{
 
 		}else{
 			//跳到登录界面：TODO：：
-			$this->redirect('Index/index');
+			//			$this->redirect('Index/index');
+			 echo "<script type='text/javascript'>window.parent.location.href='".U('Index/index')."'; </script>";
 			exit();	
 		}
 
 		/**对输入的变量进行过滤**/
 		$_POST=self::filterInput($_POST);
 	}
+
+	public function _empty(){
+		$this->display('Empty/index');
+	}
+
 
 
 

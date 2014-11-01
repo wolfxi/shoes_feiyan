@@ -109,7 +109,7 @@ class SampleApi extends Api{
 	public function getSampleList($map){
 
 		$count = $this->model->where($map)->count();// 查询满足要求的总记录数
-		$Page = new \Think\Page($count,2);// 实例化分页类 传入总记录数和每页显示的记录数(15)
+		$Page = new \Think\Page($count,15);// 实例化分页类 传入总记录数和每页显示的记录数(15)
 		$show = $Page->show();// 分页显示输出
 		// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
 		$list = $this->model->relation(true)->where($map)->order('s_id desc')->limit($Page->firstRow.','.$Page->listRows)->select();
@@ -256,7 +256,7 @@ class SampleApi extends Api{
 				$objDrawing->setName('Logo');
 				$objDrawing->setDescription('Logo');
 				$objDrawing->setPath(C("UPLOADIMG_DIR").$one['image'][0]['i_url']);
-				$objDrawing->setWidth(250);
+				$objDrawing->setWidth(200);
 				$objDrawing->setHeight(150);
 				$objDrawing->setCoordinates('A'.$counter);
 				$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
@@ -292,7 +292,7 @@ class SampleApi extends Api{
 				$objDrawing->setName('Logo');
 				$objDrawing->setDescription('Logo');
 				$objDrawing->setPath(C("UPLOADIMG_DIR").$one['image'][0]['i_url']);
-				$objDrawing->setWidth(250);
+				$objDrawing->setWidth(200);
 				$objDrawing->setHeight(150);
 				$objDrawing->setCoordinates('D'.($counter+1));
 				$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());

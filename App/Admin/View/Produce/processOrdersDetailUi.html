@@ -281,14 +281,18 @@
 				</tr>
 				<tr>
 					<td colspan="2"> 上传面料示意图及冲料方向：</td>
-					<%if condition="$ordersdetail['od_isproduce'] eq 1"%>
-					<td colspan="2"><img src="__ROOT__/<{$imgurl}><{$ordersdetail.od_attribute.image.mianliao}>" width="200px" height="150px"class="img-rounded"/></td>
+					<%if condition="$ordersdetail['od_isproduce'] eq 1 AND $ordersdetail['od_attribute']['image']['mianliao'] neq ''"%>
+					<td colspan="2"><img src="__ROOT__/<{$imgurl}><{$ordersdetail.od_attribute.image.mianliao}>" width="200px" height="150px"class="img-rounded"/>
+						<input name="image[mianliao]" type="hidden" value="<{$ordersdetail['od_attribute']['image']['mianliao']}>"/>
+					</td>
 					<%else/%>
 					<td colspan="2"> <input type="file" name="image1" ></td>
 					<%/if%>
 					<td colspan="2"> 上传里料示意图及冲料方向：</td>
-					<%if condition="$ordersdetail['od_isproduce'] eq 1"%>
-					<td colspan="3"><img src="__ROOT__/<{$imgurl}><{$ordersdetail.od_attribute.image.neiliao}>" width="200px" height="150px"class="img-rounded"/></td>
+					<%if condition="$ordersdetail['od_isproduce'] eq 1 AND $ordersdetail['od_attribute']['image']['neiliao'] neq ''"%>
+					<td colspan="3"><img src="__ROOT__/<{$imgurl}><{$ordersdetail.od_attribute.image.neiliao}>" width="200px" height="150px"class="img-rounded"/>
+						<input name="image[neiliao]" type="hidden" value="<{$ordersdetail['od_attribute']['image']['neiliao']}>"/>
+					</td>
 					<%else/%>
 					<td colspan="3"> <input type="file" name="image2" ></td>
 					<%/if%>

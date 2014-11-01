@@ -58,7 +58,7 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 			var B1=new TreeNode('仓库列表', '__MODULE__/Storehouse/goodlist', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelB.add(B1);
 
-			var B2=new TreeNode('添加库存', '__MODULE__/Storehouse/addGoodDetailUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			var B2=new TreeNode('新建库存', '__MODULE__/Storehouse/addGoodDetailUi', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelB.add(B2);
 
 			var B2=new TreeNode('添加货物类型', '__MODULE__/Storehouse/addgoodUi', 'tree_node.gif', null, 'tree_node.gif', null);
@@ -176,7 +176,7 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 			var E1 = new TreeNode('客户列表', '__MODULE__/Customer/supplierlistUi', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelE.add(E1);
 
-			var E2 = new TreeNode('增加客户', '__MODULE__/Customer/addSupplierUi', 'tree_node.gif', null, 'tree_node.gif', null);
+			var E2 = new TreeNode('新建客户', '__MODULE__/Customer/addSupplierUi', 'tree_node.gif', null, 'tree_node.gif', null);
 			modelE.add(E2);
 
 
@@ -196,7 +196,7 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 			modelA.add(A2);
 
 
-			var A3=new TreeNode('添加员工','__MODULE__/User/adduserdetail','tree_node.gif',null,'tree_node.gif',null);
+			var A3=new TreeNode('新建员工','__MODULE__/User/adduserdetail','tree_node.gif',null,'tree_node.gif',null);
 			modelA.add(A3);
 
 
@@ -224,6 +224,9 @@ style="BACKGROUND-POSITION-Y: -120px; BACKGROUND-IMAGE: url(__IMG__bg.gif); BACK
 
 			var A66=new TreeNode('管理员类型','__MODULE__/Admininfo/addoneadminkindUi','tree_node.gif',null,'tree_node.gif',null);
 			modelAA.add(A66);
+
+			var A67=new TreeNode('退出系统','__MODULE__/Admininfo/exitsys','tree_node.gif',null,'tree_node.gif',null);
+			modelAA.add(A67);
 
 		root.add(modelAA);
 		//管理员end

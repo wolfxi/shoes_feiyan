@@ -504,7 +504,7 @@ class OrdersApi extends Api{
 				$objDrawing->setName('Logo');
 				$objDrawing->setDescription('Logo');
 				$objDrawing->setPath(C("UPLOADIMG_DIR").$one['imgurl']);
-				$objDrawing->setWidth(250);
+				$objDrawing->setWidth(180);
 				$objDrawing->setHeight(150);
 				$objDrawing->setCoordinates('A'.($counter+1));
 				$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
@@ -540,7 +540,7 @@ class OrdersApi extends Api{
 				$objDrawing->setName('Logo');
 				$objDrawing->setDescription('Logo');
 				$objDrawing->setPath(C("UPLOADIMG_DIR").$one['imgurl']);
-				$objDrawing->setWidth(250);
+				$objDrawing->setWidth(180);
 				$objDrawing->setHeight(150);
 				$objDrawing->setCoordinates('D'.($counter+1));
 				$objDrawing->setWorksheet($objPHPExcel->getActiveSheet());

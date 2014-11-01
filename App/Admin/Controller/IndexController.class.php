@@ -14,7 +14,7 @@ class IndexController extends Controller{
 	private $userapi=null;
 
 	public function _initialize(){
-		$this->userapi=new UserApi();
+		$this->userapi=new UserApi;
 	}
 
 
@@ -29,6 +29,7 @@ class IndexController extends Controller{
 	public function check_account(){
 		if(IS_AJAX){
 			$account=I("post.account");
+	
 			if(empty($account)){
 				$data['flag']=false;
 				$data['message']="请填写账号";

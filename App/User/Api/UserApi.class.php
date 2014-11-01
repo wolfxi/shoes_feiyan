@@ -245,6 +245,7 @@ class UserApi extends Api{
 	public function checkAccount($account){
 		if(!empty($account)){
 			$result=$this->model->where('m_account="%s"',$account)->find();
+			var_dump($result);
 			if($result && is_array($result)){
 				return TRUE;
 			}else{

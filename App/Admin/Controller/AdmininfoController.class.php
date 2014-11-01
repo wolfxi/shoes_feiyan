@@ -241,6 +241,12 @@ class AdmininfoController extends AdminController{
 	}
 
 
+	//退出系统
+	public function exitsys(){
+		session(null);
+		echo "<script type='text/javascript'>window.parent.location.href='".U('Index/index')."'; </script>";
+		exit();
+	}
 
 
 

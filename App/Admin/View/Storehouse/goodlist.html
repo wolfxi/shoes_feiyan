@@ -40,12 +40,21 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="container">
+			<div class="btn-toolbar" role="toolbar">
+				<a class="btn btn-primary" href="__CONTROLLER__/addGoodDetailUi/">新建库存</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/addgoodUi/">新建库存类型</a>
+				<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+			</div>
+		</div>
+	</div>
 	<div class="hrdivblack"></div>
 	<!--导航线 end-->
 	<div class="row ">
 		<!--form开始-->
 		<form name="form" method="post" id="form" action=" ">
-			<table class="table table-bordered table-hover table-margin" id="table1">
+			<table class="table table-bordered table-hover " id="table1">
 				<thead>
 					<tr>
 						<th width="10px"></th>
@@ -97,13 +106,15 @@
 				<!--  <tr><td colspan="9"><input type="checkbox" id="selAll" onclick="selectAll();" />全选/反选&nbsp;&nbsp;<a href="#">/</a>&nbsp;&nbsp;
 				 <button type="submit"  onclick="delMuti()" >删除</button>
 				<?=$show?></td></tr>  -->
-				<tr>
-					<td colspan="12"><?=$show?></td>
-				</tr>
 				</tbody>
 			</table>
 			<!--form结束-->
 		</form>
+	</div>
+	<div class="row">
+		<div class="col-md-offset-5">
+			<{$show}>
+		</div>
 	</div>
 	<div class="pull-right">
 		<button type="button" class="btn btn-primary" id="downloadbtn" >下载仓库数据</button>

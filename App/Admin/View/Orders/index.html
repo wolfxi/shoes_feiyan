@@ -43,6 +43,19 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+			<div class="btn-toolbar" role="toolbar">
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_pre">预产订单</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_produce">投产订单</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/all">所有订单</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/null">作废订单</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_ok">待发货订单</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_send">已发货订单</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/addOrdersUi">新建订单</a>
+				<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+			</div>
+	</div>
+
 	<div class="hrdivblack"></div>
 	<!--导航线 end-->
 	<div class="row ">
@@ -88,7 +101,7 @@
 						<%/if%>
 						<%foreach name="one['ordersdetail']" item="one_one" key="key_key"%>
 						<tr>
-							<td width="73px"><img src="__ROOT__/<{$img_url}><{$one_one.imgurl}>"></td>
+							<td width="73px"><img src="__ROOT__/<{$img_url}><{$one_one.imgurl}>" style="width:150px;height:80px;"></td>
 							<td width="73px"><{$one_one.s_models}></td>
 							<td width="73px"><{$one_one.od_sizes}></td>
 							<td width="73px"><{$one_one.od_price}></td>

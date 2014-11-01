@@ -157,21 +157,19 @@ class ProduceController extends AdminController{
 	 * 保存工艺单
 	 */
 	public function saveProcessOrdersDetail(){
+
+		$data=I("post.");
 		$img_info=$this->upload_img();
 		if(!$img_info && !is_array($img_info) && count($img_info)<=0 ){
 			//文件上传不成功
-			$this->error('文件上传不成功！！！');   
-			return ;
+			$data['image']['mianliao']=$img_info['image1']['savepath'].$img_info['image1']['savename'];
+			$data['image']['neiliao']=$img_info['image2']['savepath'].$img_info['image2']['savename'];
+
 		}   
-
-		$data=I("post.");
-
-		$data['image']['mianliao']=$img_info['image1']['savepath'].$img_info['image1']['savename'];
-		$data['image']['neiliao']=$img_info['image2']['savepath'].$img_info['image2']['savename'];
 		if(!empty($data['o_id']) && !empty($data['s_id']) && !empty($data['od_id']) ){
 			$map['od_id']=array("EQ",$data['od_id']);
 			$ordersdetail=$this->produceapi->getOneOrdersDetail($map);
-			if(!$ordersdetail['od_isproduce']){
+			if($ordersdetail){
 				$flag=$this->produceapi->saveProcess($data);
 				if($flag){
 					$this->success("保存成功！！！");
@@ -180,7 +178,7 @@ class ProduceController extends AdminController{
 				}
 
 			}else{
-				$this->error("已经投入生产，无法操作");
+				$this->error("该样品鞋不存在 ！！！");
 			}
 		}else{
 			$this->error("请填写工艺单相关信息！！！");
