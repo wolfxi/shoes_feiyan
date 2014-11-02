@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">订单管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">订单详情</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_pre">预产订单</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_produce">投产订单</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_ok">待发货订单</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/addOrdersUi">新建订单</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+
+	<div class="row">
+
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">工厂订单号：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" value="<{$orders.o_displayid}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">客户订单号：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" value="<{$orders.oc_id}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">客人名称：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" value="<{$orders.o_customer}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">订单双数：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" value="<{$orders.o_number}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">订单金额：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" value="<{$orders.o_totalprice}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">订单状态：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" value="<{$orders.orderstatus.os_name}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">订单备注：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<textarea class="form-control" ><{$orders.o_remark}></textarea> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+
+		<%if condition="$orders.o_isproduce eq 0"%>
+		<div class="col-md-6">
+			<form name="produceform" method="post" action="__CONTROLLER__/produceOrders/"> 
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label"></label>
+						<div class="col-md-4">
+							<input name="o_id" value="<{$orders.o_id}>" type="hidden"/>
+							<button type="submit" class="btn btn-warning" >投入生产</button>
+						</div>
+						<div class="col-md-4">
+							<a href="javascript:return void(0);" id="downloadbtn1" class="btn btn-warning" >下载预产单</a>
+						</div>
+					</div> 
+					<!--一行结束  end-->
+				</div>
+			</form>
+		</div>
+		<%/if%>
+		<%if condition="$orders.o_isproduce eq 1"%>
+		<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label"></label>
+						<div class="col-md-4">
+							<a href="javascript:return void(0);" id="downloadbtn2" class="btn btn-warning" >下载投产单</a>
+						</div>
+					</div> 
+					<!--一行结束  end-->
+				</div>
+		</div>
+
+		<%/if%>
+
+	</div>
+
+	<div class="row">
+		<%foreach name="orders['ordersdetail']" item="one"%>
+		<div class="col-md-6 " style="border:1px solid #BBBBBB">
+			<div class="row">
+				<div class="col-md-5">
+					<img src="__ROOT__/<{$img_url}><{$one.imgurl}>" style="width:180px;height:180px;"  class="img-rounded">
+				</div>
+
+				<div class="col-md-7">
+					<ul class="list-group">
+						<li class="list-group-item">工厂货号:<span class="pull-right"><{$one.s_id}></span></li>
+						<li class="list-group-item">面料:<span class="pull-right"><{$one.sample.s_material}></span></li>
+						<li class="list-group-item">内里：<span class="pull-right"><{$one.sample.s_neili}></span></li>
+						<li class="list-group-item">车线：<span class="pull-right"><{$one.sample.s_chexian}></span></li>
+						<li class="list-group-item">大底：<span class="pull-right"><{$one.sample.s_dadi}></span></li>
+						<li class="list-group-item">数量：<span class="pull-right"><{$one.od_number}></span></li>
+						<li class="list-group-item">单价：<span class="pull-right"><{$one.od_price}></span></li>
+						<li class="list-group-item">尺码：<span class="pull-right"><{$one.od_sizes}></span></li>
+						<li class="list-group-item">备注：<span class="pull-right"><{$one.od_attribute.remark}></span></li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+		<%/foreach%>
+	</div>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		//鞋底
+		$("#downloadbtn1").click(function(){
+			var o_id=<{$orders.o_id}>;
+			if(o_id!=""){
+			var post_data={o_id : o_id };
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelPrevOrders/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的订单!");
+			return false;
+			}
+			})
+
+
+		$("#downloadbtn2").click(function(){
+			var o_id=<{$orders.o_id}>;
+			if(o_id!=""){
+			var post_data={o_id : o_id };
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelProduceOrders/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的订单!");
+			return false;
+			}
+			})
+
+
+		})
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+
+}
+
+</script>
+
+</body>
+</html>

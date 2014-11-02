@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">生产管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#"><{$kindepiboly}></a>
+				</li>
+			</ul>
+			<div class="pull-right">
+				<form class="navbar-form navbar-left" role="search" method="post" action="__CONTROLLER__/searchEpiboly/">
+					<div class="form-group">
+						<input type="text" class="form-control" name="search_str" placeholder="请输入要查找的外包信息"></div>
+					<select class="form-control"  name="search_type">
+						<option value="o_displayid">订单编号 </option>
+						<option value="e_models">外包货号</option>
+						<option value="e_contractor">外包厂商<option>
+					</select>
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/index">生产订单</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/addEpibolyUi/">新建外包</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<div class="row ">
+		<table class="table table-bordered table-hover " id="table1">
+			<thead>
+				<tr>
+					<th>订单编号</th>
+					<th>外包工艺</th>
+					<th>外包物品型号</th>
+					<th>外包数量</th>
+					<th>外包商</th>
+					<th>外包时间</th>
+					<th>查看详情</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%foreach name="datalist" item="one" %>
+			<tr>
+				<td><{$one.o_id}></td>
+				<td><{$one.e_producename}></td>
+				<td><{$one.e_models}></td>
+				<td><{$one.e_number}></td>
+				<td><{$one.e_contractor}></td>
+				<td><{$one.e_posttime}></td>
+				<td><a href="__CONTROLLER__/detailEpiboly/id/<{$one.e_id}>">查看</a></td>
+				<td><a href="__CONTROLLER__/updateEpibolyUi/id/<{$one.e_id}>">修改</a></td>
+			</tr>
+			<%/foreach%>
+			</tbody>
+		</table>
+	</div>
+	<div class="pull-right">
+		<form method="post" class="navbar-form navbar-left" role="search" name="excelform">
+		<select class="form-control" id="select_time" name="select_time">
+			<option value="month">本月</option>
+			<option value="prevmonth">上月</option>
+			<option value="prev3month">前三月</option>
+			<option value="halfyear">半年</option>
+			<option value="oneyear">本年</option>
+			<option value="prevyear">上一年</option>
+			<option value="all">全部</option>
+		</select>
+
+		<button type="button" class="btn btn-primary" id="downloadbtn" >下载数据</button>
+	</form>
+	</div>
+
+	<!--分页 start-->
+	<div class="row">
+		<div class="col-md-offset-3">
+			<{$page}>
+		</div>
+
+	</div>
+	<!--分页 end-->
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		$("#downloadbtn").click(function(){
+			var select_type="<{$types}>";
+			var select_time=$("#select_time").val();
+
+			if(select_time.length>0){
+			var post_data={select_type : select_type ,select_time :select_time};
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelEpiboly/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的订单!");
+			return;
+			}
+			})
+
+
+		})
+
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+}
+
+</script>
+
+</body>
+</html>

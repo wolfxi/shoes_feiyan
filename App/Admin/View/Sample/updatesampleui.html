@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">样品管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">修改样品信息</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar-sm" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/addSampleUi/">新建样品</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/1">投产样品</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/0">未投产样品</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<form name="sampleform" action="__CONTROLLER__/updateSample/" method="post" enctype="multipart/form-data">
+		<div class="row ">
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品型号：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control"  type="text" value="<{$sample.s_models}>" readonly="readonly"/> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品名称：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="name" type="text" value="<{$sample.s_name}>"/> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品面料：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="material" type="text" value="<{$sample.s_material}>" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品码段：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="sizes" type="text" value="<{$sample.s_sizes}>" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品价格：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="price" type="text" value="<{$sample.s_price}>"/> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品内里：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="neili" type="text" value="<{$sample.s_neili}>" />
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品车线：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="chexian" type="text" value="<{$sample.s_chexian}>" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品大底：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="dadi" type="text" value="<{$sample.s_dadi}>"/> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品楦型：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="mould" type="text" value="<{$sample.s_mould}>"/> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">备注：</label>
+						<div class="col-md-8">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<textarea class="form-control" name="remark" ><{$sample.s_remark}></textarea> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+
+
+		</div>
+
+
+
+
+		<div class="row">
+				<div class="comtainer col-md-offset-1" id="imgview">
+					<!--图片展示区-->
+					<%foreach name="sample.image" item="image_one"%>
+					<div class="col-md-4">
+						<img src="__ROOT__<{$upload_img}><{$image_one.i_url}>" style="width:250px;height:180px;"/>
+					</div>
+					<%/foreach%>
+				</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-2 col-md-offset-9">
+				<input name="s_id" value="<{$sample.s_id}>" type="hidden" />
+				<button class="btn btn-primary col-md-10" type="submit" > 保存</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__JS__fileupload.js"></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+ <link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+  <link rel="stylesheet" href="__CSS__manager.css"/>
+  <script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+
+  <div class="container content-main">
+    <!--导航线 start-->
+    <div class="row">
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li >
+            <a href="#">我的面板</a>
+          </li>
+          <li >
+            <a href="#">/</a>
+          </li>
+          <li>
+            <a href="#">仓库管理</a>
+          </li>
+          <li >
+            <a href="#">/</a>
+          </li>
+          <li >
+            <a href="#">仓库信息修改</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+	<div class="row">
+		<div class="container">
+			<div class="btn-toolbar" role="toolbar">
+				<a class="btn btn-primary" href="__CONTROLLER__/addGoodDetailUi/">新建库存</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/addgoodUi/">新建库存类型</a>
+				<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+			</div>
+		</div>
+	</div>
+
+    <div class="hrdivblack"></div>
+    <!--导航线 end-->
+
+    <form method="post" action="__MODULE__/Storehouse/modifygood">
+      <!--左边 start-->
+      <div class="col-md-6">
+          <div class="form-horizontal" >
+            <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物编号</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                 <input readonly="readonly"  id="gl_id" style="border:0px;width:200px" type="text" name="gl_id" value="<?php echo $result['gl_id']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+
+             <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物名称</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                   ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                  <input id="gl_name" style="border:0px;width:200px" type="text" name="gl_name" value="<?php echo $result['gl_name']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+            <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物型号</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                    <input  id="gl_models" style="border:0px;width:200px" type="text" name="gl_models" value="<?php echo $result['gl_models']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end--   
+
+             <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物数量</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                    <input  id="gl_number" style="border:0px;width:200px" type="text" name="gl_number" value="<?php echo $result['gl_number']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            
+            <!--一行结束  end-->       
+             <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物颜色</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                    <input  id="gl_color" style="border:0px;width:200px" type="text" name="gl_color" value="<?php echo $result['gl_color']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            
+            <!--一行结束  end-->      
+          
+          </div>
+      </div>
+      <!--左边 end-->
+
+
+      <!--右边 start-->
+       <div class="col-md-6">
+          <div class="form-horizontal" >
+              <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物材料</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                    <input  id="gl_material" style="border:0px;width:200px" type="text" name="gl_material" value="<?php echo $result['gl_material']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            
+            <!--一行结束  end-->       
+            <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物商标</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                  <input  id="gl_logo" style="border:0px;width:200px" type="text" name="gl_logo" value="<?php echo $result['gl_logo']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+             <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物规格</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                   <input  id="gl_format" style="border:0px;width:200px" type="text" name="gl_format" value="<?php echo $result['gl_format']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+              <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">货物单价</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                 <input  id="gl_price" style="border:0px;width:200px" type="text" name="gl_price" value="<?php echo $result['gl_price']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+              <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">供应商</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                 <input  id="gl_supplier" style="border:0px;width:200px" type="text" name="gl_supplier" value="<?php echo $result['gl_supplier']; ?>">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+               <!--一行开始 start-->
+            <div class="form-group">
+             <label for="1" class="col-sm-4 control-label"></label>
+              <div class="col-md-8">
+                <p class="input-group pull-right">
+                  <!--<span class="input-group-addon">
+                  </span> -->
+                  <label  id="1" >
+                    <button type="submit" style="width:100px;height:30px"  value="修改" >确定修改</button> 
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+          </div>
+      </div>
+      <!--右边 end-->
+
+    </form>
+
+  </div>
+  <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+  <script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+</body>
+</html>

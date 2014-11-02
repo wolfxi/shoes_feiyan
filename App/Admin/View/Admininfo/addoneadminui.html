@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+ <link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+  <link rel="stylesheet" href="__CSS__manager.css"/>
+  <script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+
+  <div class="container content-main">
+    <!--导航线 start-->
+    <div class="row">
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li >
+            <a href="#">我的面板</a>
+          </li>
+          <li >
+            <a href="#">/</a>
+          </li>
+          <li>
+            <a href="#">管理员</a>
+          </li>
+          <li >
+            <a href="#">/</a>
+          </li>
+          <li >
+            <a href="#">添加管理员</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+	<div class="row">
+		<div class="btn-toolbar" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/adminList">管理员组</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/addoneadminkindUi">管理员类型</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+    <div class="hrdivblack"></div>
+    <!--导航线 end-->
+
+    <form action="__MODULE__/Admininfo/addoneadmin" method="post">
+      <!--左边 start-->
+      <div class="col-md-6">
+          <div class="form-horizontal" >
+            <input type="hidden" name="m_isadmin" value="1">
+             <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">管理员账号</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                   ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                  <input   id="m_account" style="border:0px;width:200px" type="text" name="m_account" >
+
+                  </label>
+                    <label id="accounterror" class="input-group-addon small color-white">*</label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+            <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">管理员密码</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                    <input   id="m_passwords" style="border:0px;width:200px" type="text" name="m_passwords" >
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end--   
+            
+              <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">管理员电话</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                    <input  id="m_phone" style="border:0px;width:200px" type="text" name="m_phone" >
+                  </label>
+                  </p>
+              </div>
+            </div>
+            
+            <!--一行结束  end-->     
+              <!--一行开始 start-->
+            <div class="form-group ">
+              <label for="1" class="col-sm-4 control-label">管理员类型</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <select class="form-control" name="mk_id">
+                   <%volist name="casetype" id="vo"%>
+                    <option  value="<{$vo.mk_id}>"><{$vo.mk_name}></option>
+                  <%/volist%>
+                  </select>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->     
+          </div>
+      </div>
+      <!--左边 end-->
+
+
+      <!--右边 start-->
+       <div class="col-md-6">
+          <div class="form-horizontal" >
+             <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">管理员姓名</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                   ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                  <input   id="m_name" style="border:0px;width:200px" type="text" name="m_name" >
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+            <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">身份证号</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                  <input  id="m_idcard" style="border:0px;width:200px" type="text" name="m_idcard" >
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+             <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">管理员地址</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                   <input  id="m_address" style="border:0px;width:200px" type="text" name="m_address" >
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+              <!--一行开始 start-->
+            <div class="form-group">
+              <label for="1" class="col-sm-4 control-label">管理员备注</label>
+              <div class="col-md-8">
+                <p class="input-group">
+                  <span class="input-group-addon">
+                    ：
+                  </span>
+                  <label  class="form-control" id="1" >
+                 <input  id="m_remark" style="border:0px;width:200px" type="text" name="m_remark" >
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+               <!--一行开始 start-->
+            <div class="form-group">
+             <label for="1" class="col-sm-4 control-label"></label>
+              <div class="col-md-8">
+                <p class="input-group pull-right">
+                  <!--<span class="input-group-addon">
+                  </span> -->
+                  <label  id="1" >
+                    
+                    <input type="submit" value="确定添加" class="btn btn-primary">
+                  </label>
+                  </p>
+              </div>
+            </div>
+            <!--一行结束  end-->
+          </div>
+      </div>
+      <!--右边 end-->
+
+</form>
+
+  </div>
+  <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+  <script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+  <script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+  <script type="text/javascript">
+    $(function(){
+        //检验管理员账号是否存在
+        $("#m_account").blur(function(){
+            var account_value=$("#m_account").val();
+            if(account_value.length>0){
+                var post_data={account:account_value};
+                ajaxhelper.post(post_data,"__MODULE__/Admininfo/checkAdminAccount",check_admin_account);
+            }else{
+              jshelper.show_message("管理员账号不能为空！");
+              return ;
+            }
+        })
+    })
+
+    function check_admin_account(data){
+      var flag=data.flag;
+      if(flag==true){
+        if(!data.message){
+          $("#accounterror").text(" ").html("<span class='glyphicon glyphicon-ok'></span>");
+          return;
+        }else{
+          $("#accounterror").text(data.message);
+        }
+      }
+
+    }
+
+
+
+
+
+    
+  </script>
+</body>
+</html>

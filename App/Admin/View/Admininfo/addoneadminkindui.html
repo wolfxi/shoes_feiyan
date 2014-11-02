@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+  <link rel="stylesheet" href="__CSS__manager.css"/>
+  <script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+
+  <div class="container content-main">
+    <!--导航线 start-->
+    <div class="row">
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li >
+            <a href="#">管理员</a>
+          </li>
+          <li >
+            <a href="#">/</a>
+          </li>
+          <li>
+            <a href="#">管理员类型</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+	<div class="row">
+		<div class="btn-toolbar" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/getMemberKindByAdd">新建管理员</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/adminList">管理员组</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+    <div class="hrdivblack"></div>
+    <!--导航线 end-->
+    <div class="row ">
+      <table class="table table-bordered table-hover ">
+        <thead>
+          <tr>
+            <th>类型编号</th>
+            <th>类型名称</th>
+            <th >操作</th>
+          </tr>
+        </thead>
+        <tbody>
+        <%foreach name="list" item="lists"%>
+          <tr>
+            <td><{$lists.mk_id}></td>
+            <td><{$lists.mk_name}></td>
+             <td><a href="__MODULE__/Admininfo/deleteMemberKind?mk_id=<{$lists.mk_id}>">删除</a></td>
+          </tr>
+        <%/foreach%>
+        </tbody>
+      </table>
+
+    </div>
+    <div class="hrdivblack"></div>
+    <div class="divwhite"></div>
+    <div class="row">
+      <form action="__MODULE__/Admininfo/addMemberkindType" method="post" accept-charset="utf-8">
+        <input type="hidden" name="mk_isadmin" value="1">
+         <div class="form-group col-md-6 col-md-offset-3">
+            <label for="albumtype" class="col-sm-3 control-label">类型名称:</label>
+            <div class="col-md-8">
+              <p class="input-group">
+                <span class="input-group-addon">
+                  <span class="glyphicon glyphicon-hand-right"></span>
+                </span>
+                <input type="text" class="form-control" name="mk_name" id="mk_name" placeholder="类型名称">
+                 <label id="accounterror" class="input-group-addon small color-white">*</label>
+              </p>
+            </div>
+          </div>
+
+          <div>
+              <button type="submit" class="btn btn-primary">添加类型</button>
+              <div class="pull-right">
+              <a href="__MODULE__/Admininfo/getMemberKindByAdd" class="btn btn-primary">添加管理员</a>
+     		</div>
+          </div>
+		
+      </form>
+      
+    </div>
+
+  </div>
+  <script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+  <script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+  <script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+  <script type="text/javascript">
+      $(function(){
+          $("#mk_name").blur(function(){
+              var mkname_value=$("#mk_name").val();
+              if(mkname_value.length>0){
+                var post_data={mkname:mkname_value};
+                ajaxhelper.post(post_data,"__MODULE__/Admininfo/checkMemberKind",check_member_kind);
+
+              }else{
+                jshelper.show_message("管理员类型不能不为空！！！");
+                return ;
+              }
+          })
+      })
+
+      function check_member_kind(data){
+        var flag=data.flag;
+        if(flag==true){
+          if(!data.message){
+             $("#accounterror").text(" ").html("<span class='glyphicon glyphicon-ok'></span>");
+             return;
+          }else{
+             $("#accounterror").text(data.message);
+          }
+        }else{
+           $("#accounterror").text(data.message);
+        }
+      }
+  </script>
+</body>
+</html>

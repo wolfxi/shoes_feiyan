@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">生产管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">跟进生产单信息</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<!--==========================================样品基本属性start===============================================-->
+	<form method="post" name="editorform" action="__CONTROLLER__/updateOneProduce/">
+	<div class="row ">
+		<!--左边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">工厂订单号：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly" value="<{$result.orders.o_displayid}>" id="o_id" name="o_id" type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--左边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">订单客户：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control"  value="<{$result.orders.o_customer}>" name="customer" type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+	</div>
+
+	<div class="row ">
+		<!--左边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">鞋样货号：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly"  value="<{$result.s_models}>" type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--左边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">楦型：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly" value="<{$result.od_attribute.shoes.mould}>"  type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">生产双数：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control"  value="<{$result.od_number}>" readonly="readonly" name="number" type="text" p /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">完成双数：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control"  value="<{$result.followproduce.fp_finishnum}>" name="finishnumber" type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">未完成量：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control"  readonly="readonly" value="<{$result['followproduce']['fp_number'] - $result['followproduce']['fp_finishnum']}>"  type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">生产进程：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" placeholder="请输入生产进程" value="<{$result.followproduce.fp_progress}>" name="progress" type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">生产状态：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<select name="fp_status" class="form-control">
+							<%foreach name="orderstatus" item="one" key="key_one"%>
+								<%if condition="$one['os_name'] eq $result['followproduce']['fp_status']" %>
+									<option value="<{$one.os_id}>" selected="selected"><{$one.os_name}> </option>
+								<%else/%>
+									<option value="<{$one.os_id}>"><{$one.os_name}> </option>
+								<%/if%>
+							<%/foreach%>
+						</select>
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">开始时间：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly" value="<{$result.followproduce.fp_starttime}>"  type="text"  /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+	</div>
+
+
+
+	<div class="row">
+		<div class="container">
+			<input name="fp_id" value="<{$result.followproduce.fp_id}>" type="hidden"/>
+			<button type="submit" class=" btn btn-primary col-md-2 col-md-offset-10" >修改 </button>
+		</div>
+	</div>
+	</form>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+</body>
+</html>

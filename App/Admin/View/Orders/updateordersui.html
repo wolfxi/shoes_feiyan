@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">订单管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">修改订单</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_pre">预产订单</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_produce">投产订单</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/orders_send">已发货订单</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/addOrdersUi">新建订单</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+	<form name="editorform" method="post" action="__CONTROLLER__/updateOrders/"/>
+		<div class="container">
+			<div class="row" >
+				<table class=" table table-bordered table-condensed" >
+					<tr>
+						<td>工厂订单号：</td>
+						<td><input name="display_id" class="form-control" value="<{$orders.o_displayid}>" type="text" /></td>
+						<td>客人订单号：</td>
+						<td><input name="oc_id" type="text" value="<{$orders.oc_id}>" class="form-control" /></td>
+						<td>订单客户：</td>
+						<td><input name="customer" type="text" class="form-control" value="<{$orders.o_customer}>" /></td>
+						<td>订单状态： </td>
+						<td><input type="text" class="form-control" readonly="readonly" value="<{$orders.orderstatus.os_name}>"/></td>
+					</tr>
+
+					<tr>
+						<td>订单双数：</td>
+						<td><input name="number" type="text" class="form-control" value="<{$orders.o_number}>" /></td>
+						<td>订单总价：</td>
+						<td><input name="totalprice" type="text" class="form-control" value="<{$orders.o_totalprice}>" /> </td>
+						<td>订单时间：</td>
+						<td><input  type="text" class="form-control" readonly="readonly" value="<{$orders.o_time}>" /> </td>
+						<td>订单备注：</td>
+						<td>
+							<textarea name="remark" class="form-control" ><{$orders.o_remark}> </textarea>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="row">
+				<table  class="table table-bordered table-condensed">
+					<thead>
+						<tr>
+							<th>样品图片</th>
+							<th>样品型号</th>
+							<th>样品名</th>
+							<th>样品双数</th>
+							<th>样品单价</th>
+							<th>样品装数</th>
+							<th>样品样品码段</th>
+							<th>删除</th>
+						</tr>
+					</thead>
+					<tbody id="select_sample">
+					<%foreach name="orders['ordersdetail']" item="one"%>
+					<tr id="<{$one.s_id}>">
+						<td><img src="__ROOT__/<{$img_url}><{$one.imgurl}>" style="width:150px;height:80px;"/></td>
+						<td><{$one.s_models}></td>
+						<td><{$one.sample.s_name}></td>
+						<td><input name="orderdetail<{$one.od_id}>[number]" value="<{$one.od_number}>" type="text" class="form-control"/></td>
+						<td><input name="orderdetail<{$one.od_id}>[price]" type="text" value="<{$one.od_price}>" class="form-control"/></td>
+						<td><input name="orderdetail<{$one.od_id}>[bunchnum]" type="text" value="<{$one.od_bunchnum}>" class="form-control"</td>
+						<td><input name="orderdetail<{$one.od_id}>[sizes]" type="text" value="<{$one.od_sizes}>" class="form-control"></td>
+						<td>
+							<button type="button" class="btn btn-primary" onclick="remove_sample(<{$one.od_id}>,<{$one.s_id}>)">删除</button>
+							<input name="orderdetail<{$one.od_id}>[od_id]" type="hidden" value="<{$one.od_id}>"/>
+							<input name="orderdetail<{$one.od_id}>[s_id]" type="hidden" value="<{$one.s_id}>"/>
+							<input name="orderdetail<{$one.od_id}>[s_models]" type="hidden" value="<{$one.s_models}>"/>
+						</td>
+					</tr>
+					<%/foreach%>
+
+
+					</tbody>
+				</table>
+			</div>
+			<div class="row" >
+				<div class="col-md-2 col-md-offset-10" >
+					<input type="hidden" value="<{$orders.o_id}>" name="o_id"/>
+					<button type="submit" class="btn btn-primary" >保存订单 </button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="hrdivblack"></div>
+	<div class="container">
+		<div class="row" id="sample-div">
+		</div>
+		<div class="row" >
+			<div class="col-md-5 col-md-offset-4" >
+				<ul class="pagination" id="pagination"></ul>	
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jquery.paging.js"></script>
+<script type="text/javascript" >
+$(function(){
+
+		$("#pagination").paging(<{$sample_count}>, {
+		format: '[< nncnn >]',
+		onSelect: function (page) {
+		var post_data={page: page};
+		ajaxhelper.post(post_data,"__MODULE__/Sample/ajaxSampleList/",paging_callback);		
+		},
+		onFormat: function (type) {
+		switch (type) {
+		case 'block': // n and c
+			if(!this.active)
+					return '<li><a>' + this.value + '</a></li>';
+			else if(this.value != this.page)
+					return '<li><a>' + this.value + '</a></li>';
+			return "<li class='active'><a>" + this.value + "</a></li>";
+
+		case 'next': // >
+			if(this.active)
+				return '<li class="active"><a>&raquo;</a></li>';
+			return '<li ><a>&raquo;</a></li>';
+		case 'prev': // <
+			if(this.active)
+				return '<li class="active"><a>&laquo;</a></li>';
+			return '<li><a>&laquo;</a></li>';
+		case 'first': // [
+			if(this.active)
+				return '<li class="active"><a>first</a></li>';
+			return '<li ><a>first</a></li>';
+		case 'last': // ]
+			if(this.active)
+				return '<li class="active"><a>last</a></li>';
+			return '<li ><a>last</a></li>';
+}
+}
+});
+
+})
+
+function paging_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		$("#sample-div").empty();
+		var content=data.message;
+		console.log(content);
+		$("#sample-div").append(content);
+	}else{
+		jshelper.show_message(data.message);
+	}
+}
+
+function into_orders(id){
+
+	if(id.length<0){
+		jshelper.show_message("请选择要添加的样品！！");
+		return false;
+	}else{
+		var post_data={s_id: id ,o_id:<{$orders.o_id}>};
+		ajaxhelper.post(post_data,"__CONTROLLER__/ajaxAddNewSample",into_orders_callback);
+	}
+}
+
+function into_orders_callback(data){
+	console.log(data);
+	var flag=data.flag;
+	if(flag==true){
+		var content=data.message;
+		var id=data.id;
+		var has=$("tr[id="+id+"]");
+		if(has.length>0){
+			return false;
+		}else{
+			$("#select_sample").append(content);
+			return false;
+		}
+	}else{
+		jshelper.show_message(data.message);
+		return false;
+	}
+
+}
+
+function remove_sample(od_id,s_id){
+	var post_data={od_id: od_id ,s_id: s_id};
+	ajaxhelper.post(post_data,"__CONTROLLER__/deleteOrderDetail",remove_callback);
+	return false;
+}
+
+function remove_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var id=data.message;
+		$("#"+id).remove();
+		return false;
+	}else{
+		jshelper.show_message(data.message);
+		return false;
+	}
+}
+
+
+
+</script>
+</body>	
+</html>

@@ -58,11 +58,13 @@ class StorehouseController extends AdminController
 			}
 		}
 	}
+
+
 	//获取货物类型
 	public function addGoodUi(){
 		$result=$this->storehouseapi->getGoodType();
-			$this->assign('list',$result);
-			$this->display();
+		$this->assign('list',$result);
+		$this->display();
 	}
 	//添加货物类型名称
 	public function addGoodKind(){

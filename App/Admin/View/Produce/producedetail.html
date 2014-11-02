@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">生产管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">生产单详情</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/waitSendGoodsList">待发货单子</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/getEpibolyList/type/all">外包</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/addEpibolyUi/">新建外包</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<table class="table table-hover table-bordered">
+			<tbody>
+			<tr>
+				<td colspan="2">订单客户：</td>
+				<td colspan="2"><{$result.o_customer}></td>
+				<td>工厂订单号：</td>
+				<td colspan="2"><{$result.o_displayid}></td>
+				<td colspan="2">客户订单号</td>
+				<td colspan="2"><{$result.oc_id}></td>
+				<td colspan="2">下单时间：</td>
+				<td colspan="3"><{$result.o_time}></td>
+			</tr>
+			<tr>
+				<td colspan="2">双数：</td>
+				<td colspan="2"><{$result.o_number}></td>
+				<td>金额：</td>
+				<td colspan="2"><{$result.o_totalprice}></td>
+				<td colspan="2">订单状态：</td>
+				<td colspan="2"><{$result.orderstatus.os_name}></td>
+				<td colspan="2">备注：</td>
+				<td colspan="3"><{$result.o_remark}></td>
+			</tr>
+
+			<tr class="info">
+				<td>图片</td>
+				<td>货号</td>
+				<td>规格</td>
+				<td>颜色</td>
+				<td>件数</td>
+				<td>双数</td>
+				<td>材料</td>
+				<td>内里</td>
+				<td>楦头型号</td>
+				<td>鞋底型号</td>
+				<td>内盒型号</td>
+				<td>大底</td>
+				<td>车线</td>
+				<td>生产进程</td>
+				<td>工艺单</td>
+				<td>跟踪单</td>
+			</tr>
+
+			<%foreach name="result['ordersdetail']" item="one"%>
+			<tr>
+				<td><img src="__ROOT__/<{$imgurl}><{$one.imgurl}>"/ width="150px" height="80px"></td>
+				<td><{$one.s_models}></td>
+				<td><{$one.od_sizes}></td>
+				<td><{$one.od_attribute.shoes.color}></td>
+				<td><{$one['od_number']/$one['od_bunchnum']|ceil}></td>
+				<td><{$one.od_number}></td>
+				<td><{$one.sample.s_material}></td>
+				<td><{$one.sample.s_neili}></td>
+				<td><{$one.od_attribute.shoes.xuantou}></td>
+				<td><{$one.od_attribute.sole.models}></td>
+				<td><{$one.od_attribute.innerbox.models}></td>
+				<td><{$one.od_attribute.shoes.dadi}></td>
+				<td><{$one.sample.s_chexian}></td>
+				<td><{$one.od_attribute.shoes.remark}></td>
+				<td><a href="__CONTROLLER__/processOrdersDetailUi/od_id/<{$one.od_id}>">工艺单</a></td>
+				<td><a href="__CONTROLLER__/followOneProduce/od_id/<{$one.od_id}>">跟踪单</a></td>
+			</tr>
+			<%/foreach%>
+
+			</tbody>
+		</table>
+		<div class="row" >
+		<%if condition="$result['orderstatus']['os_name'] eq $orderstatus['ORDERS_PRODUCE']"%>
+			<form name="okform" method="post" action="__CONTROLLER__/ordersIsDone">
+			<div class="col-md-2 col-md-offset-10">
+				<button type="submit" class="btn btn-primary" />生产完成</button>
+			</div>
+			<input type="hidden" value="<{$result.o_id}>" name="o_id"/>
+			</form>
+		<%/if%>
+		</div>
+
+	</div>
+
+
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+</body>
+</html>

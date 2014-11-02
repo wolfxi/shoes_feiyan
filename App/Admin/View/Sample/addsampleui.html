@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">样品管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">新建样品</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+			<div class="btn-toolbar" role="toolbar">
+				<a class="btn btn-primary" href="__CONTROLLER__/index/">样品库</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/1">投产样品</a>
+				<a class="btn btn-primary" href="__CONTROLLER__/index/type/0">未投产样品</a>
+				<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+			</div>
+	</div>
+
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<form name="sampleform" action="__CONTROLLER__/addSample" method="post" enctype="multipart/form-data">
+		<div class="row ">
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品型号：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="models" type="text" placeholder="请输入样品型号" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品名称：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="name" type="text" placeholder="请输入样品名称" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品面料：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="material" type="text" placeholder="请输入样品面料" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品码段：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="sizes" type="text" placeholder="请输入样品码段" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品价格：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="price" type="text" placeholder="请输入样品单价" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--右边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品内里：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="neili" type="text" placeholder="请输入样品内里" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--右边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品车线：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="chexian" type="text" placeholder="请输入样品车线" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品大底：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="dadi" type="text" placeholder="请输入样品大底" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">样品楦型：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<input class="form-control" name="mould" type="text" placeholder="请输入样品大底" /> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">备注：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<textarea class="form-control" name="remark"  placeholder="请输入样品备注信息"></textarea> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+			<!--左边 start-->
+			<div class="col-md-6">
+				<div class="form-horizontal" >
+					<!--一行开始 start-->
+					<div class="form-group">
+						<label for="1" class="col-sm-4 control-label">颜色：</label>
+						<div class="col-md-6">
+							<p class="input-group">
+							<span class="input-group-addon">
+								：
+							</span>
+							<textarea class="form-control" name="color"  placeholder="请输入样品备注信息"></textarea> 
+							</p>
+						</div>
+					</div>
+					<!--一行结束  end-->
+				</div>
+			</div>
+			<!--左边 end-->
+
+
+		</div>
+
+
+
+
+		<div class="row" >
+			<div class="col-md-6 col-md-offset-1">
+
+				<small>	<button type="button" class="btn btn-primary col-md-offset-1" onclick="choseImage('imgview','sampleimage[]');"  > 上传图片</button></small>
+			</h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="comtainer col-md-offset-1" id="imgview">
+			<!--图片展示区-->
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-2 col-md-offset-9">
+			<button class="btn btn-primary col-md-10" type="submit" > 添加</button>
+		</div>
+	</div>
+</form>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__JS__fileupload.js"></script>
+  <script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+  <script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+</body>
+</html>

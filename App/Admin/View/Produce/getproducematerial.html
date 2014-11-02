@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">生产管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">配料表</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<!--==========================================样品基本属性start===============================================-->
+	<div class="row ">
+		<!--左边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">订单编号：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly" value="<{$material.order_id}>" id="models" name="models" type="text" placeholder="请输入样品型号" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--左边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">订单客户：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly" value="<{$material.customer}>" name="customer" type="text" placeholder="请输入订单客户" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+	</div>
+
+	<div class="row ">
+		<!--左边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">鞋样货号：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly" name="bunchnum" value="<{$material.shoes_models}>" type="text" placeholder="请输入订单装数" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--左边 end-->
+		<!--右边 start-->
+		<div class="col-md-6">
+			<div class="form-horizontal" >
+				<!--一行开始 start-->
+				<div class="form-group">
+					<label for="1" class="col-sm-4 control-label">楦型：</label>
+					<div class="col-md-8">
+						<p class="input-group">
+						<span class="input-group-addon">
+							：
+						</span>
+						<input class="form-control" readonly="readonly" value="<{$material.mould}>" name="number" type="text" placeholder="请输入订单双数" /> 
+						</p>
+					</div>
+				</div>
+				<!--一行结束  end-->
+			</div>
+		</div>
+		<!--右边 end-->
+	</div>
+
+	<div class="hrdivblack"></div>
+	<div class="row ">
+		<table class="table table-bordered table-hover table-margin" id="table1">
+			<thead>
+				<tr>
+					<%foreach name="material.sizes" item="one" key="key_one"%>
+					<th><{$key_one}>码</th>
+					<%/foreach%>
+				</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<%foreach name="material.sizes" item="one" key="key_one"%>
+				<th><{$one}>双</th>
+				<%/foreach%>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="hrdivblack"></div>
+
+	<div class="row ">
+		<table class="table table-bordered table-hover " id="table1">
+			<thead>
+				<tr>
+					<th>材料名</th>
+					<th>材料型号</th>
+					<th>材料规格</th>
+					<th>所需量</th>
+					<th>库存量</th>
+					<th>应采购量</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%foreach name="material" item="one" key="key_one"%>
+			<%if condition="is_array($one) && $key_one!='sizes' "%>
+			<tr>
+				<td><{$one.display_name}></td>
+				<td><{$one.models}></td>
+				<td><{$one.stores.gl_format}></td>
+				<td><{$one.number}></td>
+				<td><{$one.stores.gl_number}></td>
+				<%if condition="($one['stores']['gl_number'] - $one['number']) lt 0"%>
+					<td><{$one['stores']['gl_number']-$one['number']}></td>
+				<%else/%>
+					<td>0</td>
+				<%/if%>
+			</tr>
+			<%/if%>
+			<%/foreach%>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="hrdivblack"></div>
+	<div class="row">
+		<div class="col-md-2 col-md-offset-9" id="submitdiv">
+			<a class="btn btn-primary col-md-10" href="__CONTROLLER__/downloadBurden/filename/<{$file_name}>" > 下载配料表</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+</body>
+</html>

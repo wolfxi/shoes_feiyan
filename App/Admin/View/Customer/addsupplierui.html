@@ -14,16 +14,15 @@
       <ul class="nav navbar-nav">
         <li > <a href="#">我的面板</a> </li>
         <li > <a href="#">/</a> </li>
-        <li> <a href="#">员工管理</a> </li>
+        <li> <a href="#">管理客户</a> </li>
         <li > <a href="#">/</a> </li>
-        <li > <a href="#">员工单价修改</a> </li>
+        <li > <a href="#">增加客户</a> </li>
       </ul>
     </div>
   </div>
   <div class="row">
 	  <div class="btn-toolbar" role="toolbar">
-		  <a class="btn btn-primary" href="__CONTROLLER__/usertype">员工种类</a>
-		  <a class="btn btn-primary" href="__CONTROLLER__/adduserdetail">新建员工</a>
+		  <a class="btn btn-primary" href="__CONTROLLER__/supplierlistUi/">客户列表</a>
 		  <a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
 	  </div>
   </div>
@@ -31,17 +30,18 @@
   <div class="hrdivblack"></div>
   <!--导航线 end-->
   
-  <form method="post" action="__MODULE__/User/usermodifykind">
+  <form method="post" action="__MODULE__/Customer/addsuppliersingle">
     <!--左边 start-->
     <div class="col-md-6">
       <div class="form-horizontal" > 
+        
         <!--一行开始 start-->
         <div class="form-group">
-          <label for="1" class="col-sm-4 control-label">工种编号</label>
+          <label for="1" class="col-sm-4 control-label">客户姓名</label>
           <div class="col-md-8">
             <p class="input-group"> <span class="input-group-addon"> ： </span>
               <label  class="form-control" id="1" >
-                <input readonly="readonly"  id="mk_id" style="border:0px;width:200px" type="text" name="mk_id" value="<?php echo $result['mk_id']; ?>">
+                <input id="f_name" style="border:0px;width:200px" type="text" name="f_name" >
               </label>
             </p>
           </div>
@@ -50,11 +50,24 @@
         
         <!--一行开始 start-->
         <div class="form-group">
-          <label for="1" class="col-sm-4 control-label">工种名称</label>
+          <label for="1" class="col-sm-4 control-label">客户地址</label>
           <div class="col-md-8">
             <p class="input-group"> <span class="input-group-addon"> ： </span>
               <label  class="form-control" id="1" >
-                <input readonly="readonly" id="mk_name" style="border:0px;width:200px" type="text" name="mk_name" value="<?php echo $result['mk_name']; ?>">
+                <input  id="f_address" style="border:0px;width:200px" type="text" name="f_address" >
+              </label>
+            </p>
+          </div>
+        </div>
+        
+        <!--一行结束  end--> 
+        <!--一行开始 start-->
+        <div class="form-group">
+          <label for="1" class="col-sm-4 control-label">客户电话</label>
+          <div class="col-md-8">
+            <p class="input-group"> <span class="input-group-addon"> ： </span>
+              <label  class="form-control" id="1" >
+                <input  id="f_phone" style="border:0px;width:200px" type="text" name="f_phone" >
               </label>
             </p>
           </div>
@@ -68,21 +81,34 @@
     <!--右边 start-->
     <div class="col-md-6">
       <div class="form-horizontal" > 
+        
         <!--一行开始 start-->
         <div class="form-group">
-          <label for="1" class="col-sm-4 control-label">工种单价</label>
+          <label for="1" class="col-sm-4 control-label">客户备注</label>
           <div class="col-md-8">
             <p class="input-group"> <span class="input-group-addon"> ： </span>
               <label  class="form-control" id="1" >
-                <input  id="mk_price" style="border:0px;width:200px" type="text" name="mk_price" value="<?php echo $result['mk_price']; ?>">
+                <input  id="f_remarks" style="border:0px;width:200px" type="text" name="f_remarks" >
               </label>
             </p>
           </div>
         </div>
-        <!--一行结束  end--  ? 
-       
-       
-               <!--一行开始 start-->
+        
+        <!--一行结束  end--> 
+        <!--一行开始 start-->
+        <div class="form-group">
+          <label for="1" class="col-sm-4 control-label">客户类型</label>
+          <div class="col-md-8">
+            <p class="input-group"> <span class="input-group-addon"> ： </span>
+              <label  class="form-control" id="1" >
+                <input  id="f_kind" style="border:0px;width:200px" type="text" name="f_kind" >
+              </label>
+            </p>
+          </div>
+        </div>
+        <!--一行结束  end--> 
+        
+        <!--一行开始 start-->
         <div class="form-group">
           <label for="1" class="col-sm-4 control-label"></label>
           <div class="col-md-8">
@@ -90,7 +116,7 @@
               <!--<span class="input-group-addon">
                   </span> -->
               <label  id="1" >
-                <button type="submit"  style="width:100px;height:30px"  value="修改" >确定修改</button>
+                <button type="submit" style="width:100px;height:30px"   >确定添加</button>
               </label>
             </p>
           </div>

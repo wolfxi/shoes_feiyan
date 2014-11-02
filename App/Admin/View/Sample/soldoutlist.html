@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">样品管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">下架样品</a>
+				</li>
+			</ul>
+			<div class="pull-right">
+				<form class="navbar-form navbar-left" role="search" method="post" action="__CONTROLLER__/searchSample/">
+					<div class="form-group">
+						<input type="text" name="search_str" class="form-control" placeholder="请输入要查找的内容">
+					</div>
+					<select class="form-control"  name="search_type">
+						<option value="s_models" >样品型号</option>
+						<option value="s_mould" >样品楦性</option>
+					</select>
+					<button type="submit" class="btn btn-primary">搜索</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar-sm" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/addSampleUi/">新建样品</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/1">投产样品</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/index/type/0">未投产样品</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+	<div class="hrdivblack"></div>
+	<!--导航线 end-->
+	<div class="row ">
+		<table class="table table-bordered table-hover " id="table1">
+			<thead>
+				<tr>
+					<th>样品型号</th>
+					<th>样品名称</th>
+					<th>样品材料</th>
+					<th>样品码段</th>
+					<th>样品单价</th>
+					<th>查看详情</th>
+					<th colspan="2" class="text-center">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<%foreach name="datalist" item="one" %>
+			<tr>
+				<td><{$one.s_models}></td>
+				<td><{$one.s_name}></td>
+				<td><{$one.s_material}></td>
+				<td><{$one.s_sizes}></td>
+				<td><{$one.s_price}></td>
+				<td><a href="__CONTROLLER__/detail/id/<{$one.s_id}>">查看</a></td>
+				<td><a href="__CONTROLLER__/updateSampleUi/id/<{$one.s_id}>">修改</a></td>
+				<td><a  onclick="if(confirm('确定上架?')==false)return false;" href="__CONTROLLER__/recoverSample/id/<{$one.s_id}>" >恢复上架</a></td>
+			</tr>
+			<%/foreach%>
+			</tbody>
+		</table>
+	</div>
+	<!--分页 start-->
+	<div class="row">
+		<div class="col-md-offset-3">
+			<{$page}>
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col-md-offset-10">
+			<a href="javascript:void(0);" id="downloadbtn" class="btn btn-primary" >下载样品</a>
+		</div>
+	</div>
+
+
+	<!--分页 end-->
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+<script type="text/javascript" src="__STATIC__js/ajaxhelper.js"></script>
+<script type="text/javascript" src="__STATIC__js/jshelper.js"></script>
+<script type="text/javascript">
+$(function(){
+		$("#downloadbtn").click(function(){
+			var types="yes";
+			if(types.length>0){
+			var post_data={soldout: types };
+			ajaxhelper.post(post_data,"__CONTROLLER__/excelSample/",download_callback);
+			}else{
+			jshelper.show_message("请选择要下载的样品订单!");
+			return;
+			}
+			})
+
+		})
+function download_callback(data){
+	var flag=data.flag;
+	if(flag==true){
+		var filename=data.message;
+		window.location.href="__CONTROLLER__/downloadFile/filename/"+filename;
+	}
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="__STATIC__css/bootstrap.css"/>
+<link rel="stylesheet" href="__CSS__manager.css"/>
+<script type="text/javascript" src="__JS__html5.js" ></script>
+</head>
+<body>
+<div class="container content-main">
+	<!--导航线 start-->
+	<div class="row">
+		<div class="collapse navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li >
+				<a href="#">系统菜单</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li>
+				<a href="#">生产管理</a>
+				</li>
+				<li >
+				<a href="#">/</a>
+				</li>
+				<li >
+				<a href="#">订单生产总览</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="btn-toolbar" role="toolbar">
+			<a class="btn btn-primary" href="__CONTROLLER__/waitSendGoodsList">待发货单子</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/getEpibolyList/type/all">外包</a>
+			<a class="btn btn-primary" href="__CONTROLLER__/addEpibolyUi/">新建外包</a>
+			<a class="btn btn-primary" href="javascript:window.history.back();">返回</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<table class="table table-hover table-bordered">
+			<tbody>
+			<tr>
+				<td colspan="2">订单客户：</td>
+				<td colspan="2"><{$orders.o_customer}></td>
+				<td>工厂订单号：</td>
+				<td colspan="2"><{$orders.o_displayid}></td>
+				<td colspan="2">客户订单号</td>
+				<td colspan="2"><{$orders.oc_id}></td>
+				<td colspan="2">下单时间：</td>
+				<td colspan="3"><{$orders.o_time}></td>
+			</tr>
+			<tr>
+				<td colspan="2">总双数：</td>
+				<td colspan="2"><{$orders.o_number}></td>
+				<td>总金额：</td>
+				<td colspan="2"><{$orders.o_totalprice}></td>
+				<td colspan="2">订单状态：</td>
+				<td colspan="2"><{$orders.orderstatus.os_name}></td>
+				<td colspan="2">备注：</td>
+				<td colspan="3"><{$orders.o_remark}></td>
+			</tr>
+
+			<tr class="info">
+				<td>图片</td>
+				<td>货号</td>
+				<td>规格</td>
+				<td>颜色</td>
+				<td>件数</td>
+				<td>双数</td>
+				<td>材料</td>
+				<td>内里</td>
+				<td>楦头型号</td>
+				<td>鞋底型号</td>
+				<td>内盒型号</td>
+				<td>大底</td>
+				<td>车线</td>
+				<td>备注</td>
+				<td>工艺单</td>
+				<td>跟踪单</td>
+			</tr>
+
+			<%foreach name="ordersdetail" item="one"%>
+			<tr>
+				<td><img src="__ROOT__/<{$imgurl}><{$one.img.i_url}>"/ width="150px" height="80px"></td>
+				<td><{$one.s_models}></td>
+				<td><{$one.od_sizes}></td>
+				<td><{$one.od_attribute.shoes.color}></td>
+				<td><{$one['od_number']/$one['od_bunchnum']|ceil}></td>
+				<td><{$one.od_number}></td>
+				<td><{$one.sample.s_material}></td>
+				<td><{$one.sample.s_neili}></td>
+				<td><{$one.od_attribute.shoes.xuantou}></td>
+				<td><{$one.od_attribute.sole.models}></td>
+				<td><{$one.od_attribute.innerbox.models}></td>
+				<td><{$one.od_attribute.shoes.dadi}></td>
+				<td><{$one.sample.s_chexian}></td>
+				<td><{$one.od_attribute.shoes.remark}></td>
+				<td><a href="__CONTROLLER__/processOrdersDetailUi/od_id/<{$one.od_id}>">工艺单</a></td>
+				<td><a href="__CONTROLLER__/followOneProduce/od_id/<{$one.od_id}>">跟踪单</a></td>
+			</tr>
+			<tr class="active">
+				<td colspan="2">状态：</td>
+				<td colspan="2"><{$one.followproduce.fp_status}></td>
+				<td colspan="2">是否投入生产:</td>
+				<td colspan="2"><%if condition="$one.od_isproduce eq 1"%>已投入生产<%else/%>未投入生产<%/if%></td>
+				<td colspan="2">完成量:</td>
+				<td colspan="2"><{$one.followproduce.fp_finishnum}></td>
+				<td colspan="2">生产进程:</td>
+				<td colspan="2"><{$one.followproduce.fp_progress}></td>
+			</tr>
+			<tr class="info">
+				<td colspan="2">外包物品型号</td>
+				<td colspan="3">外包工序</td>
+				<td colspan="2">外包数量</td>
+				<td colspan="3">发包时间</td>
+				<td colspan="3">收包时间</td>
+				<td colspan="2">外包商</td>
+				<td colspan="2">发包人</td>
+			</tr>
+			<%foreach name="one['epiboly']" item="one_one"%>
+			<tr>
+				<td colspan="2"><{$one_one.e_models}> </td>
+				<td colspan="3"><{$one_one.e_producename}> </td>
+				<td colspan="2"><{$one_one.e_number}></td>
+				<td colspan="3"><{$one_one.e_posttime}> </td>
+				<td colspan="3"><{$one_one.e_gettime}> </td>
+				<td colspan="2"><{$one_one.e_contractor}> </td>
+				<td colspan="2"><{$one_one.e_signer}> </td>
+			</tr>
+
+			<%/foreach%>
+			<%/foreach%>
+
+			</tbody>
+
+		</table>
+
+	</div>
+
+
+</div>
+<script type="text/javascript" src="__STATIC__js/jquery-1.11.0.js"></script>
+<script type="text/javascript" src="__STATIC__js/bootstrap.js" ></script>
+</body>
+</html>
